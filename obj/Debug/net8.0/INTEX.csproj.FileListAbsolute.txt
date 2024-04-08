@@ -289,3 +289,4 @@
 /Users/btoone/Desktop/School/INTEX/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.Google.dll
 /Users/btoone/Desktop/School/INTEX/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.MicrosoftAccount.dll
 /Users/btoone/Desktop/School/INTEX/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.Twitter.dll
+/Users/btoone/Desktop/School/INTEX/obj/Debug/net8.0/INTEX.sourcelink.json

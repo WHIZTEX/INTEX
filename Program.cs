@@ -19,35 +19,35 @@ services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfi
     .AddEntityFrameworkStores<ApplicationDbContext>();
 services.AddControllersWithViews();
 
-services.AddAuthentication()
-    .AddFacebook(options =>
-    {
-        options.AppId = config["Authentication:Facebook:AppId"] ??
-                       throw new InvalidOperationException("Authentication string 'Facebook:AppId' not found.");
-        options.AppSecret = config["Authentication:Facebook:AppSecret"] ??
-                       throw new InvalidOperationException("Authentication string 'Facebook:AppSecret' not found.");
-    })
-    .AddTwitter(options =>
-    {
-        options.ConsumerKey = config["Authentication:Twitter:ConsumerKey"] ??
-                       throw new InvalidOperationException("Authentication string 'Twitter:ConsumerKey' not found.");
-        options.ConsumerSecret = config["Authentication:Twitter:ConsumerSecret"] ??
-                       throw new InvalidOperationException("Authentication string 'Twitter:ConsumerSecret' not found.");
-    })
-    .AddGoogle(options =>
-    {
-        options.ClientId = config["Authentication:Google:ClientId"] ??
-                       throw new InvalidOperationException("Authentication string 'Google:ClientId' not found.");
-        options.ClientSecret = config["Authentication:Google:ClientSecret"] ??
-                       throw new InvalidOperationException("Authentication string 'Google:ClientSecret' not found.");
-    })
-    .AddMicrosoftAccount(options =>
-    {
-        options.ClientId = config["Authentication:Facebook:ClientId"] ??
-                       throw new InvalidOperationException("Authentication string 'Facebook:ClientId' not found.");
-        options.ClientSecret = config["Authentication:Facebook:ClientSecret"] ??
-                       throw new InvalidOperationException("Authentication string 'Facebook:ClientSecret' not found.");
-    });
+services.AddAuthentication();
+    // .AddFacebook(options =>
+    // {
+    //     options.AppId = config["Authentication:Facebook:AppId"] ??
+    //                    throw new InvalidOperationException("Authentication string 'Facebook:AppId' not found.");
+    //     options.AppSecret = config["Authentication:Facebook:AppSecret"] ??
+    //                    throw new InvalidOperationException("Authentication string 'Facebook:AppSecret' not found.");
+    // })
+    // .AddTwitter(options =>
+    // {
+    //     options.ConsumerKey = config["Authentication:Twitter:ConsumerKey"] ??
+    //                    throw new InvalidOperationException("Authentication string 'Twitter:ConsumerKey' not found.");
+    //     options.ConsumerSecret = config["Authentication:Twitter:ConsumerSecret"] ??
+    //                    throw new InvalidOperationException("Authentication string 'Twitter:ConsumerSecret' not found.");
+    // })
+    // .AddGoogle(options =>
+    // {
+    //     options.ClientId = config["Authentication:Google:ClientId"] ??
+    //                    throw new InvalidOperationException("Authentication string 'Google:ClientId' not found.");
+    //     options.ClientSecret = config["Authentication:Google:ClientSecret"] ??
+    //                    throw new InvalidOperationException("Authentication string 'Google:ClientSecret' not found.");
+    // })
+    // .AddMicrosoftAccount(options =>
+    // {
+    //     options.ClientId = config["Authentication:Facebook:ClientId"] ??
+    //                    throw new InvalidOperationException("Authentication string 'Facebook:ClientId' not found.");
+    //     options.ClientSecret = config["Authentication:Facebook:ClientSecret"] ??
+    //                    throw new InvalidOperationException("Authentication string 'Facebook:ClientSecret' not found.");
+    // });
 
 var app = builder.Build();
 
