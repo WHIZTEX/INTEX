@@ -9,31 +9,47 @@ var services = builder.Services;
 var config = builder.Configuration;
 
 // Add services to the container.
-var connectionString = config["ConnectionStrings:INTEX"] ??
-                       throw new InvalidOperationException("Connection string 'INTEX' not found.");
+var connectionString = config["ConnectionStrings:INTEX"] ?? throw new InvalidOperationException("Connection string 'INTEX' not found.");
 services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 services.AddDatabaseDeveloperPageExceptionFilter();
 
+// Adding Identity Services
 services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+// Configuring Cookie Notification Policy
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    // This lambda determines whether user consent for non-essential 
+    // cookies is needed for a given request.
+    options.CheckConsentNeeded = context => true;
+
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+});
+
+// Configuring additional password requirements
+services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequiredLength = 16;
+    options.Password.RequiredUniqueChars = 8;
+    options.User.RequireUniqueEmail = true;
+});
 services.AddControllersWithViews();
 
-services.AddAuthentication();
-    // .AddFacebook(options =>
-    // {
-    //     options.AppId = config["Authentication:Facebook:AppId"] ??
-    //                    throw new InvalidOperationException("Authentication string 'Facebook:AppId' not found.");
-    //     options.AppSecret = config["Authentication:Facebook:AppSecret"] ??
-    //                    throw new InvalidOperationException("Authentication string 'Facebook:AppSecret' not found.");
-    // })
-    // .AddTwitter(options =>
-    // {
-    //     options.ConsumerKey = config["Authentication:Twitter:ConsumerKey"] ??
-    //                    throw new InvalidOperationException("Authentication string 'Twitter:ConsumerKey' not found.");
-    //     options.ConsumerSecret = config["Authentication:Twitter:ConsumerSecret"] ??
-    //                    throw new InvalidOperationException("Authentication string 'Twitter:ConsumerSecret' not found.");
-    // })
+// Adding authentication and 3rd Party 
+services.AddAuthentication()
+    .AddMicrosoftAccount(options =>
+    {
+        options.ClientId = config["Authentication:Microsoft:ClientId"] ??
+                           throw new InvalidOperationException("Authentication string 'Microsoft:ClientId' not found.");
+        options.ClientSecret = config["Authentication:Microsoft:ClientSecret"] ??
+                               throw new InvalidOperationException("Authentication string 'Microsoft:ClientSecret' not found.");
+    });
     // .AddGoogle(options =>
     // {
     //     options.ClientId = config["Authentication:Google:ClientId"] ??
@@ -41,13 +57,6 @@ services.AddAuthentication();
     //     options.ClientSecret = config["Authentication:Google:ClientSecret"] ??
     //                    throw new InvalidOperationException("Authentication string 'Google:ClientSecret' not found.");
     // })
-    // .AddMicrosoftAccount(options =>
-    // {
-    //     options.ClientId = config["Authentication:Facebook:ClientId"] ??
-    //                    throw new InvalidOperationException("Authentication string 'Facebook:ClientId' not found.");
-    //     options.ClientSecret = config["Authentication:Facebook:ClientSecret"] ??
-    //                    throw new InvalidOperationException("Authentication string 'Facebook:ClientSecret' not found.");
-    // });
 
 var app = builder.Build();
 
@@ -65,6 +74,7 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseCookiePolicy();
 
 app.UseRouting();
 
