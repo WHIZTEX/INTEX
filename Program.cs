@@ -12,11 +12,11 @@ var services = builder.Services;
 var config = builder.Configuration;
 
 var vault = new SecretClient(new Uri(config["KeyVault"]!), new DefaultAzureCredential());
-string dbConn = vault.GetSecret("INTEX").Value.Value;
-string microsoftId = vault.GetSecret("MicrosoftClientId").Value.Value;
-string microsoftSecret = vault.GetSecret("MicrosoftClientSecret").Value.Value;
-string googleId = vault.GetSecret("GoogleClientId").Value.Value;
-string googleSecret = vault.GetSecret("GoogleClientSecret").Value.Value;
+var dbConn = vault.GetSecret("INTEX").Value.Value;
+var microsoftId = vault.GetSecret("MicrosoftClientId").Value.Value;
+var microsoftSecret = vault.GetSecret("MicrosoftClientSecret").Value.Value;
+var googleId = vault.GetSecret("GoogleClientId").Value.Value;
+var googleSecret = vault.GetSecret("GoogleClientSecret").Value.Value;
 
 // Add context files
 services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(dbConn));
