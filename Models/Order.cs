@@ -1,4 +1,6 @@
-﻿namespace INTEX.Models
+﻿using System;
+
+namespace INTEX.Models
 {
     public class Order
     {
