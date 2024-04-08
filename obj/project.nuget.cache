@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "ybonlJDeDNsSHWzqWL9m6qyyEdTdYHug1ZjyPLqlyqWPB4w8wswNXj3XpGwWL/2TnKGxpCqkceE5oHxZ+IuF7Q==",
+  "dgSpecHash": "gdXe+CsbNkqNPK83jEjw1lVTNQpXUmGpfcaSeo0q71lLZG9505zE+rhKxiVC4wp7JYvTflJlqaHjVXJWTKTtqw==",
   "success": true,
   "projectFilePath": "C:\\Users\\bzapa\\Source\\Repos\\INTEX_v2\\INTEX.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\bzapa\\.nuget\\packages\\azure.core\\1.36.0\\azure.core.1.36.0.nupkg.sha512",
-    "C:\\Users\\bzapa\\.nuget\\packages\\azure.identity\\1.10.4\\azure.identity.1.10.4.nupkg.sha512",
+    "C:\\Users\\bzapa\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
+    "C:\\Users\\bzapa\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
     "C:\\Users\\bzapa\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\bzapa\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\bzapa\\.nuget\\packages\\humanizer.core.af\\2.14.1\\humanizer.core.af.2.14.1.nupkg.sha512",
