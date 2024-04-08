@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ZcrQ1P8n45vRgjcU3KIzkX1jyYxP6K4k3ubRtUbEVRU=",
+  "Hash": "s/PxWb95WU3xpCRzfUmb88ZBrVmxSUZZwISvLfkKgBg=",
   "Source": "INTEX",
   "BasePath": "_content/INTEX",
   "Mode": "Default",
@@ -2333,6 +2333,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/lib/jquery/LICENSE.txt"
+    },
+    {
+      "Identity": "/Users/btoone/Desktop/School/INTEX/wwwroot/lib/qrcode/qrcode.min.js",
+      "SourceId": "INTEX",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/btoone/Desktop/School/INTEX/wwwroot/",
+      "BasePath": "_content/INTEX",
+      "RelativePath": "lib/qrcode/qrcode.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/lib/qrcode/qrcode.min.js"
     }
   ]
 }
