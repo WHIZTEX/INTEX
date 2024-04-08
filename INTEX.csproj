@@ -1,0 +1,121 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>aspnet-INTEX-BC76FFB0-FD6F-4869-8275-60391812B362</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="8.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="8.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="8.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.3" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.3">
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+          <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.3" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.3">
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+          <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Areas\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\AccessDenied.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\ConfirmEmail.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\ConfirmEmailChange.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\ExternalLogin.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\ForgotPassword.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\ForgotPasswordConfirmation.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\Lockout.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\Login.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\LoginWith2fa.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\LoginWithRecoveryCode.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\Logout.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\Manage\ChangePassword.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\Manage\DeletePersonalData.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\Manage\Disable2fa.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\Manage\DownloadPersonalData.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\Manage\Email.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\Manage\EnableAuthenticator.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\Manage\ExternalLogins.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\Manage\GenerateRecoveryCodes.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\Manage\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\Manage\PersonalData.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\Manage\ResetAuthenticator.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\Manage\SetPassword.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\Manage\ShowRecoveryCodes.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\Manage\TwoFactorAuthentication.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\Manage\_Layout.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\Manage\_ManageNav.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\Manage\_StatusMessage.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\Manage\_ViewImports.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\Register.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\RegisterConfirmation.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\ResendEmailConfirmation.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\ResetPassword.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\ResetPasswordConfirmation.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\_StatusMessage.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Account\_ViewImports.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\Error.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\_ValidationScriptsPartial.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\_ViewImports.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Identity\Pages\_ViewStart.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\AccessDenied.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\ConfirmEmail.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\ConfirmEmailChange.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\ExternalLogin.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\ForgotPassword.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\ForgotPasswordConfirmation.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\Lockout.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\Login.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\LoginWith2fa.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\LoginWithRecoveryCode.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\Logout.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\Manage\ChangePassword.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\Manage\DeletePersonalData.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\Manage\Disable2fa.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\Manage\DownloadPersonalData.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\Manage\Email.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\Manage\EnableAuthenticator.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\Manage\ExternalLogins.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\Manage\GenerateRecoveryCodes.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\Manage\Index.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\Manage\PersonalData.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\Manage\ResetAuthenticator.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\Manage\SetPassword.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\Manage\ShowRecoveryCodes.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\Manage\TwoFactorAuthentication.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\Manage\_Layout.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\Manage\_ManageNav.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\Manage\_StatusMessage.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\Manage\_ViewImports.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\Register.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\RegisterConfirmation.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\ResendEmailConfirmation.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\ResetPassword.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\ResetPasswordConfirmation.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\_StatusMessage.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Account\_ViewImports.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\Error.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\_ValidationScriptsPartial.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\_ViewImports.cshtml" />
+      <AdditionalFiles Include="Areas\Identity\Pages\_ViewStart.cshtml" />
+    </ItemGroup>
+
+</Project>
