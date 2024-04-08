@@ -1,7 +1,7 @@
 using INTEX.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-// using Azure.Identity;
+using Azure.Identity;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +11,7 @@ var services = builder.Services;
 var config = builder.Configuration;
 
 // Load configuration from Azure App Configuration
-// configuration.AddAzureAppConfiguration(options =>
+// builder.Configuration.AddAzureAppConfiguration(options =>
 // {
 //     options.Connect(connectionString);
 //
