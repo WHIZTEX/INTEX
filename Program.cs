@@ -2,10 +2,7 @@ using INTEX.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Azure.Identity;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Azure.Security.KeyVault.Secrets;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,20 +11,15 @@ var services = builder.Services;
 
 var config = builder.Configuration;
 
-// Load configuration from Azure App Configuration
-// builder.Configuration.AddAzureAppConfiguration(options =>
-// {
-//     options.Connect(connectionString);
-//
-//     options.ConfigureKeyVault(keyVaultOptions =>
-//     {
-//         keyVaultOptions.SetCredential(new DefaultAzureCredential());
-//     });
-// });
+var vault = new SecretClient(new Uri(config["KeyVault"]!), new DefaultAzureCredential());
+var dbConn = vault.GetSecret("INTEX").Value.Value;
+var microsoftId = vault.GetSecret("MicrosoftClientId").Value.Value;
+var microsoftSecret = vault.GetSecret("MicrosoftClientSecret").Value.Value;
+var googleId = vault.GetSecret("GoogleClientId").Value.Value;
+var googleSecret = vault.GetSecret("GoogleClientSecret").Value.Value;
 
 // Add context files
-services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(config["ConnectionStrings:INTEX"]));
+services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(dbConn));
 
 // Add instance of repository based off interface
 services.AddScoped<IRepo, EfRepo>();
@@ -71,13 +63,13 @@ services.AddControllersWithViews();
 services.AddAuthentication()
     .AddMicrosoftAccount(options =>
     {
-        options.ClientId = config["Authentication:Microsoft:ClientId"];
-        options.ClientSecret = config["Authentication:Microsoft:ClientSecret"];
+        options.ClientId = microsoftId;
+        options.ClientSecret = microsoftSecret;
     })
     .AddGoogle(options =>
     {
-        options.ClientId = config["Authentication:Google:ClientId"];
-        options.ClientSecret = config["Authentication:Google:ClientSecret"];
+        options.ClientId = googleId;
+        options.ClientSecret = googleSecret;
     });
 
 // Changing Redirect code to 307
