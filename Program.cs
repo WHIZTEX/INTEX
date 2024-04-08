@@ -1,6 +1,7 @@
+using INTEX.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using INTEX.Models;
+using static Microsoft.AspNetCore.Http.StatusCodes;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,18 +46,20 @@ services.AddControllersWithViews();
 services.AddAuthentication()
     .AddMicrosoftAccount(options =>
     {
-        options.ClientId = config["Authentication:Microsoft:ClientId"] ??
-                           throw new InvalidOperationException("Authentication string 'Microsoft:ClientId' not found.");
-        options.ClientSecret = config["Authentication:Microsoft:ClientSecret"] ??
-                               throw new InvalidOperationException("Authentication string 'Microsoft:ClientSecret' not found.");
+        options.ClientId = config["Authentication:Microsoft:ClientId"] ?? throw new InvalidOperationException("Authentication string 'Microsoft:ClientId' not found.");
+        options.ClientSecret = config["Authentication:Microsoft:ClientSecret"] ?? throw new InvalidOperationException("Authentication string 'Microsoft:ClientSecret' not found.");
+    })
+    .AddGoogle(options =>
+    {
+        options.ClientId = config["Authentication:Google:ClientId"] ?? throw new InvalidOperationException("Authentication string 'Google:ClientId' not found.");
+        options.ClientSecret = config["Authentication:Google:ClientSecret"] ?? throw new InvalidOperationException("Authentication string 'Google:ClientSecret' not found.");
     });
-    // .AddGoogle(options =>
-    // {
-    //     options.ClientId = config["Authentication:Google:ClientId"] ??
-    //                    throw new InvalidOperationException("Authentication string 'Google:ClientId' not found.");
-    //     options.ClientSecret = config["Authentication:Google:ClientSecret"] ??
-    //                    throw new InvalidOperationException("Authentication string 'Google:ClientSecret' not found.");
-    // })
+
+// Changing Redirect code to 307
+services.AddHttpsRedirection(options =>
+{
+    options.RedirectStatusCode = Status307TemporaryRedirect;
+});
 
 var app = builder.Build();
 
