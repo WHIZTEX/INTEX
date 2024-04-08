@@ -4,21 +4,26 @@ using INTEX.Models;
 
 namespace INTEX.Controllers;
 
-public class HomeController : Controller
+public class AdminController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<CustomerController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    public AdminController(ILogger<CustomerController> logger)
     {
         _logger = logger;
     }
 
-    public IActionResult Index()
+    public IActionResult AdminProducts()
     {
         return View();
     }
 
-    public IActionResult Privacy()
+    public IActionResult AdminUsers()
+    {
+        return View();
+    }
+
+    public IActionResult ReviewOrders()
     {
         return View();
     }
