@@ -9,13 +9,18 @@ var services = builder.Services;
 
 var config = builder.Configuration;
 
-// Add services to the container.
-var connectionString = config["ConnectionStrings:INTEX"] ?? throw new InvalidOperationException("Connection string 'INTEX' not found.");
+
+// Add context files
 services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(config["ConnectionStrings:INTEX"] ?? throw new InvalidOperationException("Connection string 'INTEX' not found.")));
+
+// Add instance of repository based off interface
+services.AddScoped<IRepo, EfRepo>();
+
+// Add exception pages
 services.AddDatabaseDeveloperPageExceptionFilter();
 
-// Adding Identity Services
+// Adding identity services
 services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -37,9 +42,14 @@ services.Configure<IdentityOptions>(options =>
     options.Password.RequireUppercase = true;
     options.Password.RequireNonAlphanumeric = true;
     options.Password.RequiredLength = 16;
+    // Number of characters in a password that must be different
+    // Prevents `Aa1!Aa1!Aa1!Aa1!` style passwords
     options.Password.RequiredUniqueChars = 8;
+    // Requires an email address to be unique
     options.User.RequireUniqueEmail = true;
 });
+
+// Configuring for controllers
 services.AddControllersWithViews();
 
 // Adding authentication and 3rd Party 
@@ -75,12 +85,15 @@ else
     app.UseHsts();
 }
 
+// Activating HTTPS/Cookie services
 app.UseHttpsRedirection();
-app.UseStaticFiles();
 app.UseCookiePolicy();
 
+// Activating static and routing
+app.UseStaticFiles();
 app.UseRouting();
 
+// Activating identity services
 app.UseAuthorization();
 app.UseAuthentication();
 
@@ -89,4 +102,5 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
+// Running app
 app.Run();
