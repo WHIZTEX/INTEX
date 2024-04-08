@@ -1,6 +1,10 @@
 {
   "version": 2,
+<<<<<<< Updated upstream
   "dgSpecHash": "gdXe+CsbNkqNPK83jEjw1lVTNQpXUmGpfcaSeo0q71lLZG9505zE+rhKxiVC4wp7JYvTflJlqaHjVXJWTKTtqw==",
+=======
+  "dgSpecHash": "UM6y4unQE0o1LxT29kgGR1K9wKOGjdA0oP+lbvfq7A1Fcw6sMCipthluTZczhPmTA1zZoDDQQFSLNV7ljQZlfw==",
+>>>>>>> Stashed changes
   "success": true,
   "projectFilePath": "C:\\Users\\bzapa\\Source\\Repos\\INTEX_v2\\INTEX.csproj",
   "expectedPackageFiles": [
