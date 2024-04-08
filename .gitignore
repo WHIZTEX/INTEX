@@ -7,6 +7,8 @@
 *.sln.docstates
 .vs/
 .idea/
+.vs
+.idea
 *.VC.db
 
 # Build results
