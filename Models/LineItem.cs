@@ -1,6 +1,6 @@
 ﻿namespace INTEX.Models
 {
-    public class Product
+    public class LineItem
     {
     }
 }
