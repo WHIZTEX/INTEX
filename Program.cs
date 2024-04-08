@@ -1,6 +1,7 @@
 using INTEX.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+// using Azure.Identity;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,10 +10,20 @@ var services = builder.Services;
 
 var config = builder.Configuration;
 
+// Load configuration from Azure App Configuration
+// configuration.AddAzureAppConfiguration(options =>
+// {
+//     options.Connect(connectionString);
+//
+//     options.ConfigureKeyVault(keyVaultOptions =>
+//     {
+//         keyVaultOptions.SetCredential(new DefaultAzureCredential());
+//     });
+// });
 
 // Add context files
 services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(config["ConnectionStrings:INTEX"] ?? throw new InvalidOperationException("Connection string 'INTEX' not found.")));
+    options.UseSqlServer(config["ConnectionStrings:INTEX"]));
 
 // Add instance of repository based off interface
 services.AddScoped<IRepo, EfRepo>();
@@ -56,13 +67,13 @@ services.AddControllersWithViews();
 services.AddAuthentication()
     .AddMicrosoftAccount(options =>
     {
-        options.ClientId = config["Authentication:Microsoft:ClientId"] ?? throw new InvalidOperationException("Authentication string 'Microsoft:ClientId' not found.");
-        options.ClientSecret = config["Authentication:Microsoft:ClientSecret"] ?? throw new InvalidOperationException("Authentication string 'Microsoft:ClientSecret' not found.");
+        options.ClientId = config["Authentication:Microsoft:ClientId"];
+        options.ClientSecret = config["Authentication:Microsoft:ClientSecret"];
     })
     .AddGoogle(options =>
     {
-        options.ClientId = config["Authentication:Google:ClientId"] ?? throw new InvalidOperationException("Authentication string 'Google:ClientId' not found.");
-        options.ClientSecret = config["Authentication:Google:ClientSecret"] ?? throw new InvalidOperationException("Authentication string 'Google:ClientSecret' not found.");
+        options.ClientId = config["Authentication:Google:ClientId"];
+        options.ClientSecret = config["Authentication:Google:ClientSecret"];
     });
 
 // Changing Redirect code to 307
