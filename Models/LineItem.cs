@@ -6,6 +6,7 @@ namespace INTEX.Models
     public class LineItem
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         
         [Required]
