@@ -19,7 +19,6 @@ var googleId = vault.GetSecret("GoogleClientId").Value.Value;
 var googleSecret = vault.GetSecret("GoogleClientSecret").Value.Value;
 
 // Add context files
-// services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(dbConn));
 services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(dbConn));
 
 // Add instance of repository based off interface
@@ -33,7 +32,7 @@ services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfi
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 // Configuring Cookie Notification Policy
-builder.Services.Configure<CookiePolicyOptions>(options =>
+services.Configure<CookiePolicyOptions>(options =>
 {
     // This lambda determines whether user consent for non-essential 
     // cookies is needed for a given request.
@@ -82,12 +81,14 @@ services.AddHttpsRedirection(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (!app.Environment.IsDevelopment())
 {
-    app.UseMigrationsEndPoint();
-}
-else
-{
+    app.Use(async (context, next) =>
+    {
+        context.Response.Headers.Append("Content-Security-Policy", "font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com");
+        await next();
+    });
+
     app.UseExceptionHandler("/Customer/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
