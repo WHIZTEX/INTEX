@@ -19,6 +19,7 @@ var googleId = vault.GetSecret("GoogleClientId").Value.Value;
 var googleSecret = vault.GetSecret("GoogleClientSecret").Value.Value;
 
 // Add context files
+// services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(dbConn));
 services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(dbConn));
 
 // Add instance of repository based off interface
@@ -101,8 +102,9 @@ app.UseStaticFiles();
 app.UseRouting();
 
 // Activating identity services
-app.UseAuthorization();
 app.UseAuthentication();
+// *MUST* be after Authentication or users cannot log out
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
