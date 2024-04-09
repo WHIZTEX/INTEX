@@ -1,4 +1,6 @@
 using INTEX.Models;
+using INTEX.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace INTEX.Controllers;
@@ -21,15 +23,17 @@ public class HomeController: Controller
     [HttpGet]
     public IActionResult Products()
     {
-        return View();
+        ProductsListViewModel model = _repo.GetProductsViewModel();
+        return View(model);
     }
 
     [HttpGet]
     public IActionResult ProductDetails(int productId)
     {
-        return View();
+        Product model = _repo.GetProductById(productId);
+        return View(model);
     }
-
+    
     [HttpGet]
     public IActionResult Cart()
     {
