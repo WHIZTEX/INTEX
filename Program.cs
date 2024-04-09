@@ -101,8 +101,9 @@ app.UseStaticFiles();
 app.UseRouting();
 
 // Activating identity services
-app.UseAuthorization();
 app.UseAuthentication();
+// *MUST* be after Authentication or users cannot log out
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
