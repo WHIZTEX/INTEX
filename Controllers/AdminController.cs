@@ -1,10 +1,7 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using INTEX.Models;
 using INTEX.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Logging;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace INTEX.Controllers;
 
