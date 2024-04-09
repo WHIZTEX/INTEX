@@ -1,10 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace INTEX.Models;
 
 public class Address
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     
     [Required(ErrorMessage = "Address Line 1 is a required field")]
@@ -13,7 +15,6 @@ public class Address
     
     [StringLength(64, ErrorMessage = "Address Line 2 must be no more than 64 characters")]
     public string? AddressLine2 { get; set; }
-    
     
     [StringLength(64, ErrorMessage = "City must be no more than 64 characters")]
     public string? City { get; set; }
@@ -27,4 +28,8 @@ public class Address
     [Required(ErrorMessage = "Country is a required field")]
     [StringLength(64, ErrorMessage = "Country must be no more than 64 characters")]
     public string Country { get; set; }
+    
+    public ICollection<Order> Orders { get; set; }
+    
+    public ICollection<Transaction> Transactions { get; set; }
 }

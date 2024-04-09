@@ -6,6 +6,7 @@ namespace INTEX.Models
     public class Customer
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         
         [ForeignKey("AspNetUser")]
@@ -31,5 +32,9 @@ namespace INTEX.Models
         [StringLength(1, ErrorMessage = "Gender must be no more than 1 character long")]
         [RegularExpression("^[MFO]$", ErrorMessage = "Gender must be M(ale), F(emale), or O(ther)")]
         public string Gender { get; set; }
+        
+        public ICollection<Order> Orders { get; set; }
+        
+        public ICollection<Rating> Ratings { get; set; }
     }
 }

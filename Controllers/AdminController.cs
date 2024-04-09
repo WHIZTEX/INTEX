@@ -8,31 +8,49 @@ namespace INTEX.Controllers;
 
 public class AdminController : Controller
 {
-    private readonly ILogger<CustomerController> _logger;
+    private readonly IRepo _repo;
 
-    public AdminController(ILogger<CustomerController> logger)
+    public AdminController(IRepo repo)
     {
-        _logger = logger;
+        _repo = repo;
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
-    public IActionResult AdminProducts()
+    public IActionResult Products()
     {
         return View();
     }
 
-    public IActionResult AdminUsers()
+    public IActionResult Users()
     {
         return View();
     }
 
-    public IActionResult ReviewOrders()
+    public IActionResult Orders()
     {
         return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

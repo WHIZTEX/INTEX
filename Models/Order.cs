@@ -7,6 +7,7 @@ namespace INTEX.Models
     public class Order
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         
         [Required]
@@ -36,5 +37,7 @@ namespace INTEX.Models
         
         [Required(ErrorMessage = "Is Fraud is a required field")]
         public bool? IsFraud { get; set; }
+        
+        public ICollection<LineItem> LineItems { get; set; }
     }
 }

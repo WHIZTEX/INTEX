@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace INTEX.Models
 {
     public class Product
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         
         [Required(ErrorMessage = "Name is a required field")]
@@ -42,5 +44,9 @@ namespace INTEX.Models
         [Required(ErrorMessage = "Category is a required field")]
         [StringLength(64, ErrorMessage = "Name must be no larger than 64 characters")]
         public string Category { get; set; }
+        
+        public ICollection<LineItem> LineItems { get; set; }
+        
+        public ICollection<Rating> Ratings { get; set; }
     }
 }

@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model Product
+
+<div class="container">
+    <div class="row">
+        <!-- First Column -->
+        <div class="col-md-6 text-center" style="padding-top: 8%;">
+            <!-- Content for the first column goes here -->
+            <!-- This image is just a placeholder for the model image -->
+            <img width="80%" src="@Model.ImgLink" />
+        </div>
+        <!-- Second Column -->
+        <div class="col-md-6" style="padding-top: 8%;">
+            <!-- Content for the second column goes here -->
+            <h2>@Model.Name</h2>
+            <p>Star rating should go here</p>
+            <br>
+            <button>Add to Cart</button>
+            <h3>@Model.Price</h3>
+            <br />
+            <hr>
+            <br />
+            <div class="container">
+                <div class="col-md-6">
+                    <p>FREE SHIPPING</p>
+                </div>
+                <div class="col-md-6">
+                    <p>FREE RETURNS</p>
+                </div>
+            </div>
+            <br />
+            <h3>DESCRIPTION</h3>
+            <p>@Model.Description</p>
+        </div>
+    </div>
+</div>

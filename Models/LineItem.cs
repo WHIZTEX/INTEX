@@ -6,12 +6,12 @@ namespace INTEX.Models
     public class LineItem
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         
-        [Required]
         [ForeignKey("Order")]
-        public int OrderId { get; set; }
-        public virtual Order Order { get; set; }
+        public int? OrderId { get; set; }
+        public virtual Order? Order { get; set; }
         
         [Required]
         [ForeignKey("Product")]

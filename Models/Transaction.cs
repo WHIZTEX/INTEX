@@ -6,12 +6,16 @@ namespace INTEX.Models;
 public class Transaction
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     
     [Required]
     [ForeignKey("Address")]
     public int AddressId { get; set; }
     public virtual Address BillingAddress { get; set; }
+        
+    [Required(ErrorMessage = "Date Time is a required field")]
+    public DateTime DateTime { get; set; }
     
     [Required(ErrorMessage = "Amount is a required field")]
     public decimal Amount { get; set; }
