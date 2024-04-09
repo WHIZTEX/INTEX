@@ -42,7 +42,7 @@ public class AdminController : Controller
     public IActionResult Orders()
     {
         OrdersListViewModel model = _repo.GetOrdersListViewModel();
-        return View();
+        return View(model);
     }
 
     [HttpGet]

@@ -22,7 +22,7 @@ public class HomeController: Controller
     [HttpGet]
     public IActionResult Products()
     {
-        ProductsListViewModel model = _repo.GetProductsViewModel();
+        ProductsListViewModel model = _repo.GetProductsListViewModel();
         return View(model);
     }
 
