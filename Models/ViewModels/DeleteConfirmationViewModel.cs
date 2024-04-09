@@ -1,3 +1,5 @@
+using INTEX.Models.DatabaseModels;
+
 namespace INTEX.Models.ViewModels;
 
 public class DeleteConfirmationViewModel

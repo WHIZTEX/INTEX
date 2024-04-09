@@ -1,4 +1,7 @@
-﻿namespace INTEX.Models.ViewModels
+﻿using INTEX.Models.DatabaseModels;
+using INTEX.Models.Infrastructure;
+
+namespace INTEX.Models.ViewModels
 {
     public class ProductsListViewModel
     {

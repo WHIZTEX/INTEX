@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using INTEX.Models;
+using INTEX.Models.DatabaseModels;
+using INTEX.Models.Infrastructure;
 using INTEX.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 
@@ -23,9 +25,9 @@ public class AdminController : Controller
     
     [HttpGet]
     [Authorize(Roles = "Administrator")]
-    public IActionResult Products()
+    public IActionResult Products(ProductsFilter filter)
     {
-        ProductsListViewModel model = _repo.GetProductsListViewModel();
+        ProductsListViewModel model = _repo.GetProductsListViewModel(filter);
         return View(model);
     }
 

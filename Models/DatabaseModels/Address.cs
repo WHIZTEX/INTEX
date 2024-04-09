@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace INTEX.Models;
+namespace INTEX.Models.DatabaseModels;
 
 public class Address
 {

@@ -1,4 +1,4 @@
-﻿namespace INTEX.Models.ViewModels
+﻿namespace INTEX.Models.Infrastructure
 {
     public class PaginationInfo
     {
