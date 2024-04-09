@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace INTEX.Models;
 
+
 public partial class ApplicationDbContext : IdentityDbContext<IdentityUser>
 {
     public ApplicationDbContext()
@@ -226,8 +227,7 @@ public partial class ApplicationDbContext : IdentityDbContext<IdentityUser>
 
             entity.HasOne<Order>(e => e.Order)
                 .WithMany(e => e.LineItems)
-                .HasForeignKey(e => e.OrderId)
-                .IsRequired();
+                .HasForeignKey(e => e.OrderId);
             entity.HasOne<Product>(e => e.Product)
                 .WithMany(e => e.LineItems)
                 .HasForeignKey(e => e.ProductId)

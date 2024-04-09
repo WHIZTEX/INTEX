@@ -1,59 +1,45 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using INTEX.Models;
-using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 namespace INTEX.Controllers;
 
 public class CustomerController : Controller
 {
-    private readonly ILogger<CustomerController> _logger;
+    private readonly IRepo _repo;
 
-    public CustomerController(ILogger<CustomerController> logger)
+    public CustomerController(IRepo repo, ApplicationDbContext context)
     {
-        _logger = logger;
+        _repo = repo;
     }
 
-    public IActionResult Home()
+    [HttpPost]
+    [Authorize(Roles = "Customer,Administrator")]
+    public IActionResult Cart(LineItem[] lineItems)
     {
-        return View();
+        Order order = new Order();
+        return RedirectToAction("OrderConfirmation", new { orderId = order.Id });
     }
 
-    public IActionResult Products()
-    {
-        return View();
-    }
-
-    public IActionResult ProductDetails()
-    {
-        return View();
-    }
-
-    public IActionResult AboutUs()
+    [HttpGet]
+    [Authorize(Roles = "Customer,Administrator")]
+    public IActionResult OrderConfirmation(int orderId)
     {
         return View();
     }
+    
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    public IActionResult Cart()
-    {
-        return View();
-    }
-
+    [HttpGet]
+    [Authorize(Roles = "Customer,Administrator")]
     public IActionResult CustomerInfo()
     {
         return View();
     }
 
-
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
+    [HttpPost]
+    [Authorize(Roles = "Customer,Administrator")]
+    public IActionResult CustomerInfo(Customer customer)
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        return RedirectToAction("Index", "Home");
     }
 }
