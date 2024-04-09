@@ -131,6 +131,7 @@ public partial class ApplicationDbContext : IdentityDbContext<IdentityUser>
             entity.Property(e => e.State).HasMaxLength(64);
             entity.Property(e => e.Code).HasMaxLength(64);
             entity.Property(e => e.Country).HasMaxLength(64).IsRequired();
+            entity.Property(e => e.IsDeleted).IsRequired();
         });
 
         modelBuilder.Entity<Customer>(entity =>
@@ -145,6 +146,7 @@ public partial class ApplicationDbContext : IdentityDbContext<IdentityUser>
             entity.Property(e => e.LastName).HasMaxLength(64).IsRequired();
             entity.Property(e => e.Gender).HasMaxLength(1).IsRequired();
             entity.Property(e => e.BirthDate).IsRequired();
+            entity.Property(e => e.IsDeleted).IsRequired();
 
             entity.HasOne<AspNetUser>(e => e.AspNetUser)
                 .WithOne()
@@ -166,6 +168,7 @@ public partial class ApplicationDbContext : IdentityDbContext<IdentityUser>
             entity.Property(e => e.EntryMode).HasMaxLength(8).IsRequired();
             entity.Property(e => e.DateTime).IsRequired();
             entity.Property(e => e.Amount).IsRequired();
+            entity.Property(e => e.IsDeleted).IsRequired();
 
             entity.HasOne<Address>(e => e.BillingAddress)
                 .WithMany(e => e.Transactions)
@@ -185,6 +188,7 @@ public partial class ApplicationDbContext : IdentityDbContext<IdentityUser>
             entity.Property(e => e.TransactionId).IsRequired();
             entity.Property(e => e.AddressId).IsRequired();
             entity.Property(e => e.DateTime).IsRequired();
+            entity.Property(e => e.IsDeleted).IsRequired();
 
             entity.HasOne<Customer>(e => e.Customer)
                 .WithMany(e => e.Orders)
@@ -214,6 +218,7 @@ public partial class ApplicationDbContext : IdentityDbContext<IdentityUser>
             entity.Property(e => e.ReleaseYear).IsRequired();
             entity.Property(e => e.Pieces).IsRequired();
             entity.Property(e => e.Price).IsRequired();
+            entity.Property(e => e.IsDeleted).IsRequired();
         });
 
         modelBuilder.Entity<LineItem>(entity =>
@@ -224,6 +229,7 @@ public partial class ApplicationDbContext : IdentityDbContext<IdentityUser>
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Quantity).IsRequired();
+            entity.Property(e => e.IsDeleted).IsRequired();
 
             entity.HasOne<Order>(e => e.Order)
                 .WithMany(e => e.LineItems)
@@ -242,6 +248,7 @@ public partial class ApplicationDbContext : IdentityDbContext<IdentityUser>
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Score).IsRequired();
+            entity.Property(e => e.IsDeleted).IsRequired();
 
             entity.HasOne<Customer>(e => e.Customer)
                 .WithMany(e => e.Ratings)
