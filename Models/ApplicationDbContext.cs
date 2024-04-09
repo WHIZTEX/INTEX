@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace INTEX.Models;
 
+
 public partial class ApplicationDbContext : IdentityDbContext<IdentityUser>
 {
     public ApplicationDbContext()
@@ -40,8 +41,6 @@ public partial class ApplicationDbContext : IdentityDbContext<IdentityUser>
     public virtual DbSet<LineItem> LineItems { get; set; }
     
     public virtual DbSet<Rating> Ratings { get; set; }
-
-    private enum Gender { M, F, O }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Name=INTEX");
@@ -228,8 +227,7 @@ public partial class ApplicationDbContext : IdentityDbContext<IdentityUser>
 
             entity.HasOne<Order>(e => e.Order)
                 .WithMany(e => e.LineItems)
-                .HasForeignKey(e => e.OrderId)
-                .IsRequired();
+                .HasForeignKey(e => e.OrderId);
             entity.HasOne<Product>(e => e.Product)
                 .WithMany(e => e.LineItems)
                 .HasForeignKey(e => e.ProductId)
