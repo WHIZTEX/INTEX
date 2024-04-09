@@ -32,6 +32,9 @@ namespace INTEX.Models
         [StringLength(1, ErrorMessage = "Gender must be no more than 1 character long")]
         [RegularExpression("^[MFO]$", ErrorMessage = "Gender must be M(ale), F(emale), or O(ther)")]
         public string Gender { get; set; }
+
+        [Required(ErrorMessage = "IsDeleted is a required field")]
+        public bool IsDeleted { get; set; } = false;
         
         public ICollection<Order> Orders { get; set; }
         

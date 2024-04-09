@@ -28,6 +28,9 @@ public class Address
     [Required(ErrorMessage = "Country is a required field")]
     [StringLength(64, ErrorMessage = "Country must be no more than 64 characters")]
     public string Country { get; set; }
+
+    [Required(ErrorMessage = "IsDeleted is a required field")]
+    public bool IsDeleted { get; set; } = false;
     
     public ICollection<Order> Orders { get; set; }
     
