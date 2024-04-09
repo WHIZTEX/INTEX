@@ -123,10 +123,4 @@
       <AdditionalFiles Include="Areas\Identity\Pages\_ViewStart.cshtml" />
     </ItemGroup>
 
-    <ItemGroup>
-      <None Include="Views\Admin\AdminProducts.cshtml" />
-      <None Include="Views\Admin\AdminUsers.cshtml" />
-      <None Include="Views\Admin\ReviewOrders.cshtml" />
-    </ItemGroup>
-
 </Project>
