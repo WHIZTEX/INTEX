@@ -41,8 +41,6 @@ public partial class ApplicationDbContext : IdentityDbContext<IdentityUser>
     
     public virtual DbSet<Rating> Ratings { get; set; }
 
-    private enum Gender { M, F, O }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Name=INTEX");
 
