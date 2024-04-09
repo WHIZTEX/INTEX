@@ -3,20 +3,27 @@ using Microsoft.AspNetCore.Mvc;
 using INTEX.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
+using INTEX.Models.ViewModels;
 
 namespace INTEX.Controllers;
 
 public class AdminController : Controller
 {
-    private readonly ILogger<CustomerController> _logger;
 
-    public AdminController(ILogger<CustomerController> logger)
+    private IProductRepository _repo;
+    public AdminController(IProductRepository temp)
     {
-        _logger = logger;
+        _repo = temp;
     }
 
     public IActionResult AdminProducts()
     {
+        int pageSize = 50;
+        var productsViewModel = new ProductsListViewModel
+        {
+            Products = _repo.Products
+        }
+
         return View();
     }
 
