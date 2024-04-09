@@ -1,4 +1,6 @@
 using INTEX.Models;
+using INTEX.Models.DatabaseModels;
+using INTEX.Models.Infrastructure;
 using INTEX.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,9 +22,9 @@ public class HomeController: Controller
     }
     
     [HttpGet]
-    public IActionResult Products()
+    public IActionResult Products(ProductsFilter filter)
     {
-        ProductsListViewModel model = _repo.GetProductsListViewModel();
+        ProductsListViewModel model = _repo.GetProductsListViewModel(filter);
         return View(model);
     }
 

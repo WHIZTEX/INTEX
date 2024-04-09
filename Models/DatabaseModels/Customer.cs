@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using INTEX.Models.DatabaseModels.Identity;
 
-namespace INTEX.Models
+namespace INTEX.Models.DatabaseModels
 {
     public class Customer
     {

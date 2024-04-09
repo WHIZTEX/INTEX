@@ -1,12 +1,13 @@
+using INTEX.Models.DatabaseModels;
 using INTEX.Models.ViewModels;
 
-namespace INTEX.Models;
+namespace INTEX.Models.Infrastructure;
 
 public interface IRepo
 {
     public CustomersListViewModel GetCustomersListViewModel();
     public OrdersListViewModel GetOrdersListViewModel();
-    public ProductsListViewModel GetProductsListViewModel();
+    public ProductsListViewModel GetProductsListViewModel(ProductsFilter filter);
     public Customer GetCustomerById(int? customerId);
     public Customer GetCustomerByAspNetUserId(int aspNetUserId);
     public Order GetOrderById(int? orderId);

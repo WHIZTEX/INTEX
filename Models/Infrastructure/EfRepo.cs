@@ -1,6 +1,7 @@
+using INTEX.Models.DatabaseModels;
 using INTEX.Models.ViewModels;
 
-namespace INTEX.Models;
+namespace INTEX.Models.Infrastructure;
 
 public class EfRepo : IRepo
 {
@@ -20,7 +21,7 @@ public class EfRepo : IRepo
         throw new NotImplementedException();
     }
 
-    public ProductsListViewModel GetProductsListViewModel()
+    public ProductsListViewModel GetProductsListViewModel(ProductsFilter filter)
     {
         throw new NotImplementedException();
     }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace INTEX.Models;
+﻿namespace INTEX.Models.DatabaseModels.Identity;
 
 public partial class AspNetRoleClaim
 {

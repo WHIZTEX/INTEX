@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using INTEX.Models.DatabaseModels;
+using INTEX.Models.DatabaseModels.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace INTEX.Models;
+namespace INTEX.Models.Infrastructure;
 
 
 public partial class ApplicationDbContext : IdentityDbContext<IdentityUser>
