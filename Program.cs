@@ -19,7 +19,13 @@ var googleId = vault.GetSecret("GoogleClientId").Value.Value;
 var googleSecret = vault.GetSecret("GoogleClientSecret").Value.Value;
 
 // Add context files
-services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(dbConn));
+services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(dbConn, sqlOptions =>
+    {
+        sqlOptions.EnableRetryOnFailure();
+    });
+});
 
 // Add instance of repository based off interface
 services.AddScoped<IRepo, EfRepo>();

@@ -28,7 +28,12 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
     /// </summary>
     /// <param name="optionsBuilder"></param>
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Name=INTEX");
+    {
+        optionsBuilder.UseSqlServer("Name=INTEX", options =>
+        {
+            options.EnableRetryOnFailure();
+        });
+    }
 
     /// <summary>
     /// This method is called after instantiation when creating models to specify
