@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using INTEX.Models.DatabaseModels;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace INTEX.Models;
+namespace INTEX.Models.Infrastructure;
 
 public class ApplicationDbContext : IdentityDbContext<Customer>
 {

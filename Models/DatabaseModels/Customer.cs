@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
-namespace INTEX.Models
+namespace INTEX.Models.DatabaseModels
 {
     public class Customer : IdentityUser
     {
