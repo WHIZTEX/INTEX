@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+@model OrdersListViewModel
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Customer ID</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Entry Mode</th>
+            <th>Amount</th>
+            <th>Type of Transaction</th>
+            <th>Country of Transaction</th>
+            <th>Edit</th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model.Orders)
+        {
+            <tr>
+                <td>@p.Id</td>
+                <td>@p.CustomerId</td>
+                <td>@p.DateTime</td>
+                <td>@p.Transaction.EntryMode</td>
+                <td>@p.Transaction.Amount</td>
+                <td>@p.Type</td>
+                <td>@p.Transaction.BillingAddress.Country</td>
+                <td><button>Edit</button></td>
+                <td><button>Remove</button></td>
+            </tr>
+        }
+    </tbody>
+</table>

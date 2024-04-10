@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace INTEX.Models;
+namespace INTEX.Models.DatabaseModels;
 
 public class Transaction
 {
@@ -31,4 +31,7 @@ public class Transaction
     [Required(ErrorMessage = "Bank is a required field")]
     [StringLength(64, ErrorMessage = "Bank must be no longer than 64 characters")]
     public string Bank { get; set; }
+
+    [Required(ErrorMessage = "IsDeleted is a required field")]
+    public bool IsDeleted { get; set; } = false;
 }

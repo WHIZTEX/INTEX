@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace INTEX.Models;
+namespace INTEX.Models.DatabaseModels;
 
 public class Rating
 {
@@ -22,4 +22,7 @@ public class Rating
     [Required(ErrorMessage = "Score is a required field")]
     [Range(1, 5, ErrorMessage = "Score must be between 1 and 5")]
     public int Score { get; set; }
+
+    [Required(ErrorMessage = "IsDeleted is a required field")]
+    public bool IsDeleted { get; set; } = false;
 }

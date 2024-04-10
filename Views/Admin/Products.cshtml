@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+@model ProductsListViewModel
+
+<div class="text-center">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Name</th>
+                <th>Year</th>
+                <th>Number of Parts</th>
+                <th>Price</th>
+                <th>Image Link</th>
+                <th>Primary Color</th>
+                <th>Edit</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model.Products)
+            {
+                <tr>
+                    <td>@p.Id</td>
+                    <td>@p.Name</td>
+                    <td>@p.ReleaseYear</td>
+                    <td>@p.Pieces</td>
+                    <td>@p.Price</td>
+                    <td>@p.ImgLink</td>
+                    <td>@p.PrimaryColor</td>
+                    <td><button>Edit</button></td>
+                    <td><button>Remove</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

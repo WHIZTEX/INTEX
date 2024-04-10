@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
+using INTEX.Models.Infrastructure;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -115,7 +116,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Customer}/{action=Home}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 // Running app

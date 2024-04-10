@@ -17,6 +17,7 @@
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.3" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.3" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.TagHelpers" Version="2.2.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.3" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.3">
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -120,12 +121,6 @@
       <AdditionalFiles Include="Areas\Identity\Pages\_ValidationScriptsPartial.cshtml" />
       <AdditionalFiles Include="Areas\Identity\Pages\_ViewImports.cshtml" />
       <AdditionalFiles Include="Areas\Identity\Pages\_ViewStart.cshtml" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Include="Views\Admin\AdminProducts.cshtml" />
-      <None Include="Views\Admin\AdminUsers.cshtml" />
-      <None Include="Views\Admin\ReviewOrders.cshtml" />
     </ItemGroup>
 
 </Project>

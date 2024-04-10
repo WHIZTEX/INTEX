@@ -1,59 +1,65 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using INTEX.Models;
-using Microsoft.Extensions.Logging;
+using INTEX.Models.DatabaseModels;
+using INTEX.Models.Infrastructure;
+using INTEX.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace INTEX.Controllers;
 
 public class CustomerController : Controller
 {
-    private readonly ILogger<CustomerController> _logger;
+    private readonly IRepo _repo;
 
-    public CustomerController(ILogger<CustomerController> logger)
+    public CustomerController(IRepo repo, ApplicationDbContext context)
     {
-        _logger = logger;
+        _repo = repo;
     }
 
-    public IActionResult Home()
+    [HttpPost]
+    [Authorize(Roles = "Customer,Administrator")]
+    public IActionResult Cart(IQueryable<LineItem> lineItems)
     {
-        return View();
+        return RedirectToAction("ConfirmOrder", new { lineItems = lineItems });
     }
 
-    public IActionResult Products()
+    [HttpGet]
+    [Authorize(Roles = "Customer,Administrator")]
+    public IActionResult ConfirmOrder(IQueryable<LineItem> lineItems)
     {
-        return View();
+        return View(lineItems);
     }
 
-    public IActionResult ProductDetails()
+    [HttpPost]
+    [Authorize(Roles = "Customer,Administrator")]
+    public IActionResult ConfirmOrder(ConfirmOrderViewModel model)
     {
-        return View();
+        Order order = _repo.ConfirmOrder(model);
+        return RedirectToAction("OrderConfirmation", new { orderId = order.Id });
     }
 
-    public IActionResult AboutUs()
+    [HttpGet]
+    [Authorize(Roles = "Customer,Administrator")]
+    public IActionResult OrderConfirmation(int orderId)
     {
-        return View();
+        Order model = _repo.GetOrderById(orderId);
+        return View(model);
+    }
+    
+
+    [HttpGet]
+    [Authorize(Roles = "Customer,Administrator")]
+    public IActionResult CustomerInfo(int aspNetUserId)
+    {
+        Customer model = _repo.GetCustomerByAspNetUserId(aspNetUserId);
+        return View(model);
     }
 
-    public IActionResult Privacy()
+    [HttpPost]
+    [Authorize(Roles = "Customer,Administrator")]
+    public IActionResult CustomerInfo(Customer customer)
     {
-        return View();
-    }
-
-    public IActionResult Cart()
-    {
-        return View();
-    }
-
-    public IActionResult CustomerInfo()
-    {
-        return View();
-    }
-
-
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        _repo.UpdateCustomer(customer);
+        return RedirectToAction("Index", "Home");
     }
 }
