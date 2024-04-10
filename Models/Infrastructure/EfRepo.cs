@@ -1,5 +1,6 @@
 using INTEX.Models.DatabaseModels;
 using INTEX.Models.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace INTEX.Models.Infrastructure;
 
@@ -75,7 +76,17 @@ public class EfRepo : IRepo
 
     public Product GetProductById(int? productId)
     {
-        throw new NotImplementedException();
+        if (productId == null)
+        {
+            // Return a new instance of Product
+            return new Product();
+        }
+        else
+        {
+            // Implement logic to retrieve product by ID
+            // For example:
+            return _context.Products.FirstOrDefault(p => p.Id == productId);
+        }
     }
 
     public Order ConfirmOrder(ConfirmOrderViewModel model)
@@ -95,7 +106,13 @@ public class EfRepo : IRepo
 
     public void UpdateProduct(Product product)
     {
-        throw new NotImplementedException();
+        if (product == null)
+        {
+            throw new ArgumentNullException(nameof(product));
+        }
+
+        _context.Products.Add(product);
+        _context.SaveChanges();
     }
 
     public void DeleteCustomer(Customer customer)

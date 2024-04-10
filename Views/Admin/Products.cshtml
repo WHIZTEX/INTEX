@@ -6,6 +6,11 @@
 @model ProductsListViewModel
 
 <div class="text-center">
+    <h1>Products - Admin</h1>
+    <a asp-controller="Admin" asp-action="ProductForm" class="btn btn-primary">Add Product</a>
+</div>
+
+<div class="text-center">
     <table class="table">
         <thead>
             <tr>
@@ -31,8 +36,8 @@
                     <td>@p.Price</td>
                     <td>@p.ImgLink</td>
                     <td>@p.PrimaryColor</td>
-                    <td><button asp-controller="Admin" asp-action="ProductForm" formmethod="get">Edit</button></td>
-                    <td><button asp-controller="Admin" asp-action="DeleteConfirmation" formmethod="get">Remove</button></td>
+                    <td><a asp-controller="Admin" asp-action="ProductForm" formmethod="get">Edit</a></td>
+                    <td><a asp-controller="Admin" asp-action="DeleteConfirmation" formmethod="get">Remove</a></td>
                 </tr>
             }
         </tbody>

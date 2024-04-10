@@ -17,14 +17,14 @@ public class AdminController : Controller
     }
 
     [HttpGet]
-    [Authorize(Roles = "Administrator")]
+    // [Authorize(Roles = "Administrator")]
     public IActionResult Index()
     {
         return View();
     }
     
     [HttpGet]
-    [Authorize(Roles = "Administrator")]
+    // [Authorize(Roles = "Administrator")]
     public IActionResult Products(ProductsFilter filter)
     {
         ProductsListViewModel model = _repo.GetProductsListViewModel(filter);
@@ -32,7 +32,7 @@ public class AdminController : Controller
     }
 
     [HttpGet]
-    [Authorize(Roles = "Administrator")]
+    // [Authorize(Roles = "Administrator")]
     public IActionResult Customers()
     {
         CustomersListViewModel model = _repo.GetCustomersListViewModel();
@@ -40,7 +40,7 @@ public class AdminController : Controller
     }
 
     [HttpGet]
-    [Authorize(Roles = "Administrator")]
+    // [Authorize(Roles = "Administrator")]
     public IActionResult Orders()
     {
         OrdersListViewModel model = _repo.GetOrdersListViewModel();
@@ -48,7 +48,7 @@ public class AdminController : Controller
     }
 
     [HttpGet]
-    [Authorize(Roles = "Administrator")]
+    // [Authorize(Roles = "Administrator")]
     public IActionResult ProductForm(int? productId)
     {
         Product model = _repo.GetProductById(productId);
@@ -56,7 +56,7 @@ public class AdminController : Controller
     }
 
     [HttpPost]
-    [Authorize(Roles = "Administrator")]
+    // [Authorize(Roles = "Administrator")]
     public IActionResult ProductForm(Product product)
     {
         _repo.UpdateProduct(product);
@@ -64,7 +64,7 @@ public class AdminController : Controller
     }
 
     [HttpGet]
-    [Authorize(Roles = "Administrator")]
+    // [Authorize(Roles = "Administrator")]
     public IActionResult CustomerForm(int? customerId)
     {
         Customer model = _repo.GetCustomerById(customerId);
@@ -72,7 +72,7 @@ public class AdminController : Controller
     }
 
     [HttpPost]
-    [Authorize(Roles = "Administrator")]
+    // [Authorize(Roles = "Administrator")]
     public IActionResult CustomerForm(Customer customer)
     {
         _repo.UpdateCustomer(customer);
@@ -80,7 +80,7 @@ public class AdminController : Controller
     }
 
     [HttpGet]
-    [Authorize(Roles = "Administrator")]
+    // [Authorize(Roles = "Administrator")]
     public IActionResult OrderForm(int? orderId)
     {
         Order model = _repo.GetOrderById(orderId);
@@ -88,7 +88,7 @@ public class AdminController : Controller
     }
 
     [HttpPost]
-    [Authorize(Roles = "Administrator")]
+    // [Authorize(Roles = "Administrator")]
     public IActionResult OrderForm(Order order)
     {
         _repo.UpdateOrder(order);
@@ -96,7 +96,7 @@ public class AdminController : Controller
     }
 
     [HttpGet]
-    [Authorize(Roles = "Administrator")]
+    // [Authorize(Roles = "Administrator")]
     public IActionResult DeleteConfirmation(object item)
     {
         DeleteConfirmationViewModel model;
@@ -117,7 +117,7 @@ public class AdminController : Controller
     }
 
     [HttpPost]
-    [Authorize(Roles = "Administrator")]
+    // [Authorize(Roles = "Administrator")]
     public IActionResult Delete(object item)
     {
         switch (item)
