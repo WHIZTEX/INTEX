@@ -1,5 +1,8 @@
 using INTEX.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.ML;
+using Microsoft.ML.OnnxRuntime;
+using Microsoft.ML.OnnxRuntime.Tensors;
 
 namespace INTEX.Controllers;
 
