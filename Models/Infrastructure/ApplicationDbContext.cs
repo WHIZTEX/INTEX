@@ -157,7 +157,7 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
         // All string fields have a max length that is a power of 2
         // - Proper names (Streets, Cities, Names, Banks, etc.) => 64 characters
         // - Qualifiers (EntryMode, Type, Colors, etc.) => 16 characters
-        // - Gender => 1 character
+        // - Gender => 32 characters
         // - Product Qualifiers (Name, ImgLink) => 256 characters
         // - Blob text (Descriptions) => 4096 characters
         
@@ -177,7 +177,7 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
         {
             entity.Property(e => e.FirstName).HasMaxLength(64).IsRequired();
             entity.Property(e => e.LastName).HasMaxLength(64).IsRequired();
-            entity.Property(e => e.Gender).HasMaxLength(1).IsRequired();
+            entity.Property(e => e.Gender).HasMaxLength(32).IsRequired();
             entity.Property(e => e.BirthDate).IsRequired();
         });
 

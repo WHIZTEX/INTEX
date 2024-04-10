@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace INTEX.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240410160135_InitialIdentityAndOperational")]
-    partial class InitialIdentityAndOperational
+    [Migration("20240410192418_InitialIdentityAndOperationalModels")]
+    partial class InitialIdentityAndOperationalModels
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace INTEX.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("INTEX.Models.Address", b =>
+            modelBuilder.Entity("INTEX.Models.DatabaseModels.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -58,6 +58,9 @@ namespace INTEX.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("State")
                         .IsRequired()
                         .HasMaxLength(64)
@@ -72,7 +75,7 @@ namespace INTEX.Migrations
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("INTEX.Models.Customer", b =>
+            modelBuilder.Entity("INTEX.Models.DatabaseModels.Customer", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -104,8 +107,11 @@ namespace INTEX.Migrations
 
                     b.Property<string>("Gender")
                         .IsRequired()
-                        .HasMaxLength(1)
-                        .HasColumnType("nvarchar(1)");
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -167,7 +173,7 @@ namespace INTEX.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("INTEX.Models.LineItem", b =>
+            modelBuilder.Entity("INTEX.Models.DatabaseModels.LineItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -175,7 +181,11 @@ namespace INTEX.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("OrderId")
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("OrderId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("ProductId")
@@ -196,7 +206,7 @@ namespace INTEX.Migrations
                     b.ToTable("LineItems");
                 });
 
-            modelBuilder.Entity("INTEX.Models.Order", b =>
+            modelBuilder.Entity("INTEX.Models.DatabaseModels.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -216,6 +226,9 @@ namespace INTEX.Migrations
 
                     b.Property<bool?>("FraudPrediction")
                         .IsRequired()
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<bool?>("IsFraud")
@@ -246,7 +259,7 @@ namespace INTEX.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("INTEX.Models.Product", b =>
+            modelBuilder.Entity("INTEX.Models.DatabaseModels.Product", b =>
                 {
                     b.Property<string>("Name")
                         .HasMaxLength(256)
@@ -273,6 +286,9 @@ namespace INTEX.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Pieces")
                         .HasColumnType("int");
 
@@ -297,7 +313,7 @@ namespace INTEX.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("INTEX.Models.Rating", b =>
+            modelBuilder.Entity("INTEX.Models.DatabaseModels.Rating", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -308,6 +324,9 @@ namespace INTEX.Migrations
                     b.Property<string>("CustomerId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("ProductId")
                         .IsRequired()
@@ -327,7 +346,7 @@ namespace INTEX.Migrations
                     b.ToTable("Ratings");
                 });
 
-            modelBuilder.Entity("INTEX.Models.Transaction", b =>
+            modelBuilder.Entity("INTEX.Models.DatabaseModels.Transaction", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -358,6 +377,9 @@ namespace INTEX.Migrations
                         .IsRequired()
                         .HasMaxLength(16)
                         .HasColumnType("nvarchar(16)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -507,26 +529,26 @@ namespace INTEX.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("INTEX.Models.Customer", b =>
+            modelBuilder.Entity("INTEX.Models.DatabaseModels.Customer", b =>
                 {
-                    b.HasOne("INTEX.Models.Address", "HomeAddress")
+                    b.HasOne("INTEX.Models.DatabaseModels.Address", "HomeAddress")
                         .WithOne()
-                        .HasForeignKey("INTEX.Models.Customer", "AddressId")
+                        .HasForeignKey("INTEX.Models.DatabaseModels.Customer", "AddressId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("HomeAddress");
                 });
 
-            modelBuilder.Entity("INTEX.Models.LineItem", b =>
+            modelBuilder.Entity("INTEX.Models.DatabaseModels.LineItem", b =>
                 {
-                    b.HasOne("INTEX.Models.Order", "Order")
+                    b.HasOne("INTEX.Models.DatabaseModels.Order", "Order")
                         .WithMany("LineItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("INTEX.Models.Product", "Product")
+                    b.HasOne("INTEX.Models.DatabaseModels.Product", "Product")
                         .WithMany("LineItems")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -537,23 +559,23 @@ namespace INTEX.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("INTEX.Models.Order", b =>
+            modelBuilder.Entity("INTEX.Models.DatabaseModels.Order", b =>
                 {
-                    b.HasOne("INTEX.Models.Address", "ShippingAddress")
+                    b.HasOne("INTEX.Models.DatabaseModels.Address", "ShippingAddress")
                         .WithMany("Orders")
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("INTEX.Models.Customer", "Customer")
+                    b.HasOne("INTEX.Models.DatabaseModels.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("INTEX.Models.Transaction", "Transaction")
+                    b.HasOne("INTEX.Models.DatabaseModels.Transaction", "Transaction")
                         .WithOne()
-                        .HasForeignKey("INTEX.Models.Order", "TransactionId")
+                        .HasForeignKey("INTEX.Models.DatabaseModels.Order", "TransactionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -564,15 +586,15 @@ namespace INTEX.Migrations
                     b.Navigation("Transaction");
                 });
 
-            modelBuilder.Entity("INTEX.Models.Rating", b =>
+            modelBuilder.Entity("INTEX.Models.DatabaseModels.Rating", b =>
                 {
-                    b.HasOne("INTEX.Models.Customer", "Customer")
+                    b.HasOne("INTEX.Models.DatabaseModels.Customer", "Customer")
                         .WithMany("Ratings")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("INTEX.Models.Product", "Product")
+                    b.HasOne("INTEX.Models.DatabaseModels.Product", "Product")
                         .WithMany("Ratings")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -583,9 +605,9 @@ namespace INTEX.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("INTEX.Models.Transaction", b =>
+            modelBuilder.Entity("INTEX.Models.DatabaseModels.Transaction", b =>
                 {
-                    b.HasOne("INTEX.Models.Address", "BillingAddress")
+                    b.HasOne("INTEX.Models.DatabaseModels.Address", "BillingAddress")
                         .WithMany("Transactions")
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -605,7 +627,7 @@ namespace INTEX.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("INTEX.Models.Customer", null)
+                    b.HasOne("INTEX.Models.DatabaseModels.Customer", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -614,7 +636,7 @@ namespace INTEX.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("INTEX.Models.Customer", null)
+                    b.HasOne("INTEX.Models.DatabaseModels.Customer", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -629,7 +651,7 @@ namespace INTEX.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("INTEX.Models.Customer", null)
+                    b.HasOne("INTEX.Models.DatabaseModels.Customer", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -638,33 +660,33 @@ namespace INTEX.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("INTEX.Models.Customer", null)
+                    b.HasOne("INTEX.Models.DatabaseModels.Customer", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("INTEX.Models.Address", b =>
+            modelBuilder.Entity("INTEX.Models.DatabaseModels.Address", b =>
                 {
                     b.Navigation("Orders");
 
                     b.Navigation("Transactions");
                 });
 
-            modelBuilder.Entity("INTEX.Models.Customer", b =>
+            modelBuilder.Entity("INTEX.Models.DatabaseModels.Customer", b =>
                 {
                     b.Navigation("Orders");
 
                     b.Navigation("Ratings");
                 });
 
-            modelBuilder.Entity("INTEX.Models.Order", b =>
+            modelBuilder.Entity("INTEX.Models.DatabaseModels.Order", b =>
                 {
                     b.Navigation("LineItems");
                 });
 
-            modelBuilder.Entity("INTEX.Models.Product", b =>
+            modelBuilder.Entity("INTEX.Models.DatabaseModels.Product", b =>
                 {
                     b.Navigation("LineItems");
 
