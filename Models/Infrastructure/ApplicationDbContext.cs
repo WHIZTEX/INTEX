@@ -332,9 +332,11 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
     /// <param name="modelBuilder">The forwarded modelBuilder from OnModelCreating</param>
     private void SeedData(ModelBuilder modelBuilder)
     {
+        const string administratorGuid = "f355dee5-b11b-40c4-89ea-6edd21ad7072";
+        const string customerGuid = "5ddff5a9-8794-4785-9598-a3c8d04d9b57";
         modelBuilder.Entity<IdentityRole>().HasData(
-            new IdentityRole { Id = Guid.NewGuid().ToString(), Name = "Administrator", NormalizedName = "ADMINISTRATOR" },
-            new IdentityRole { Id = Guid.NewGuid().ToString(), Name = "Customer", NormalizedName = "CUSTOMER" }
+            new IdentityRole { Id = administratorGuid, Name = "Administrator", NormalizedName = "ADMINISTRATOR" },
+            new IdentityRole { Id = customerGuid, Name = "Customer", NormalizedName = "CUSTOMER" }
         );
     }
 }
