@@ -180,9 +180,8 @@ namespace INTEX.Migrations
                         .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<string>("ProductId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(256)");
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -253,9 +252,11 @@ namespace INTEX.Migrations
 
             modelBuilder.Entity("INTEX.Models.DatabaseModels.Product", b =>
                 {
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Category")
                         .IsRequired()
@@ -267,12 +268,6 @@ namespace INTEX.Migrations
                         .HasMaxLength(4096)
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<string>("ImgLink")
                         .IsRequired()
                         .HasMaxLength(256)
@@ -280,6 +275,11 @@ namespace INTEX.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<int>("Pieces")
                         .HasColumnType("int");
@@ -300,7 +300,9 @@ namespace INTEX.Migrations
                         .HasMaxLength(16)
                         .HasColumnType("nvarchar(16)");
 
-                    b.HasKey("Name");
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name");
 
                     b.ToTable("Products");
                 });
@@ -320,9 +322,8 @@ namespace INTEX.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ProductId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(256)");
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Score")
                         .HasColumnType("int");
@@ -551,13 +552,13 @@ namespace INTEX.Migrations
                     b.HasOne("INTEX.Models.DatabaseModels.Order", "Order")
                         .WithMany("LineItems")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("INTEX.Models.DatabaseModels.Product", "Product")
                         .WithMany("LineItems")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Order");
@@ -576,7 +577,7 @@ namespace INTEX.Migrations
                     b.HasOne("INTEX.Models.DatabaseModels.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("INTEX.Models.DatabaseModels.Transaction", "Transaction")
@@ -597,13 +598,13 @@ namespace INTEX.Migrations
                     b.HasOne("INTEX.Models.DatabaseModels.Customer", "Customer")
                         .WithMany("Ratings")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("INTEX.Models.DatabaseModels.Product", "Product")
                         .WithMany("Ratings")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Customer");

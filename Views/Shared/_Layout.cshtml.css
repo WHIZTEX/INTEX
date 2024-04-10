@@ -7,19 +7,19 @@
 
 /* Global Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'DM Serif Display'; /* Updated to use Sarabun font */
     background: linear-gradient(to bottom, #e0f3ff, #ffffff); /* Light blue gradient background */
     margin: 0; /* Remove default body margin */
 }
 
 .container {
-    max-width: 1200px;
+    
     margin: 0 auto;
 }
 
 /* Header Styles */
 header {
-    background-color: #EDD146; /* Yellow header */
+    background-color: #f4dc7a; /* Yellow header */
     padding-top: 0px;
     padding-right: 0px;
     padding-bottom: 15px;
@@ -31,7 +31,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #EDD146; /* Yellow background for navbar */
+    background-color: #f4dc7a; /* Yellow background for navbar */
 }
 
 .navbar-brand {
@@ -63,7 +63,7 @@ header {
 
 /* Yellow Header Stripe */
 .header-stripe {
-    background-color: #EDD146; /* Yellow header stripe */
+    background-color: #f4dc7a; /* Yellow header stripe */
     height: 3px; /* Shortened stripe height */
 }
 
