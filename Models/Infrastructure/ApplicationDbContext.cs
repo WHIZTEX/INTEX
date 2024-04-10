@@ -80,7 +80,7 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
         // Product has a primary key on name
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.Name);
+            entity.HasKey(e => e.Id);
         });
 
         // LineItem has a composite key on OrderId and ProductId
@@ -131,7 +131,7 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.Name);
+            entity.HasIndex(e => e.Name);
         });
 
         modelBuilder.Entity<LineItem>(entity =>
@@ -270,7 +270,6 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
             entity.HasOne<Customer>(e => e.Customer)
                 .WithMany(e => e.Orders)
                 .HasForeignKey(e => e.CustomerId)
-                .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
             // Orders have a one to one required relationship with Transactions
             // Transactions have a one to one required reverse relationship with Orders
@@ -295,14 +294,12 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
             entity.HasOne<Order>(e => e.Order)
                 .WithMany(e => e.LineItems)
                 .HasForeignKey(e => e.OrderId)
-                .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
             // LineItems have a one to one required relationship with Products
             // Products have a one to many required reverse relationship with LineItems
             entity.HasOne<Product>(e => e.Product)
                 .WithMany(e => e.LineItems)
                 .HasForeignKey(e => e.ProductId)
-                .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
         });
 
@@ -313,14 +310,12 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
             entity.HasOne<Customer>(e => e.Customer)
                 .WithMany(e => e.Ratings)
                 .HasForeignKey(e => e.CustomerId)
-                .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
             // Ratings have a one to one required relationship with Products
             // Products have a one to many optional revers relationship with Ratings
             entity.HasOne<Product>(e => e.Product)
                 .WithMany(e => e.Ratings)
                 .HasForeignKey(e => e.ProductId)
-                .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
         });
         
