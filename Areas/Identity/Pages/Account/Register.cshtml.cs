@@ -164,7 +164,6 @@ namespace INTEX.Areas.Identity.Pages.Account
                 var user = CreateUser();
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                _logger.LogInformation("Updating all user/address attributes");
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
                 user.BirthDate = DateOnly.FromDateTime(Input.BirthDate);
