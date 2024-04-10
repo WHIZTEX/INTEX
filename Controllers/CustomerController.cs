@@ -56,25 +56,15 @@ public class CustomerController : Controller
         Order order = new Order();
 
 
-        var record = _repo.GetPredictionRecord(order);
+        var record = _repo.Orders.ToList();
+        var predictions = new List<OrderPrediction>();
 
 
         // Convert string inputs into their respective dummy variables
-        var class_type_dict = new Dictionary<string, int>
+        var class_type_dict = new Dictionary<int, string>
         {
-            {"age", age},
-            {"time", (int)time},
-            {"amount", (int)amount},
-            // For each categorical variable, check if the form input matches. If so, set to 1, else 0.
-            {"country_of_residence" + countryOfResidence, 1},
-            {"gender_" + gender, 1},
-            {"day_of_week" + dayOfWeek, 1},
-            {"entry_mode_" + entryMode, 1},
-            {"type_of_transaction" + typeOfTransaction, 1},
-            {"country_of_transaction" + countryOfTransaction, 1},
-            {"shipping_address" + shippingAddress, 1},
-            {"bank_" + bank, 1},
-            {"type_of_card" + typeOfCard, 1},
+            { 0, "Not Fraud" },
+            { 1, "Fraud" }
         };
 
 
