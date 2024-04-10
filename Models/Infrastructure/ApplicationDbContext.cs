@@ -1,4 +1,5 @@
 ﻿using INTEX.Models.DatabaseModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -49,6 +50,7 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
         ConfigureIndexes(modelBuilder);
         ConfigureProperties(modelBuilder);
         ConfigureRelationships(modelBuilder);
+        SeedData(modelBuilder);
     }
 
     /// <summary>
@@ -233,9 +235,10 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
     }
 
     /// <summary>
-    /// This method is called to add all of the 
+    /// This method is called to add all of the relationship constraints for the entities.
+    /// Relationship descriptions are described in comments.
     /// </summary>
-    /// <param name="modelBuilder"></param>
+    /// <param name="modelBuilder">The forwarded modelBuilder from OnModelCreating</param>
     private void ConfigureRelationships(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Customer>(entity =>
@@ -321,5 +324,17 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
                 .IsRequired();
         });
         
+    }
+
+    /// <summary>
+    /// This method is called to add all of seed data for the entities.
+    /// </summary>
+    /// <param name="modelBuilder">The forwarded modelBuilder from OnModelCreating</param>
+    private void SeedData(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<IdentityRole>().HasData(
+            new IdentityRole { Id = Guid.NewGuid().ToString(), Name = "Administrator", NormalizedName = "ADMINISTRATOR" },
+            new IdentityRole { Id = Guid.NewGuid().ToString(), Name = "Customer", NormalizedName = "CUSTOMER" }
+        );
     }
 }
