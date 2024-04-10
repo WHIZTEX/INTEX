@@ -1,0 +1,73 @@
+@model Customer
+
+@{
+    string title = "";
+    if (Model == null)
+    {
+        title = "Create a New Customer";
+    }
+    else
+    {
+        title = "Edit Customer";
+    }
+}
+
+<h2>@title</h2>
+
+<form asp-action="CustomerForm" method="post">
+    <div class="form-group">
+        <label for="FirstName">First Name:</label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="LastName">Last Name:</label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="BirthDate">Birth Date:</label>
+        <input asp-for="BirthDate" type="date" class="form-control" />
+        <span asp-validation-for="BirthDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Gender">Gender:</label>
+        <select asp-for="Gender" class="form-control">
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+            <option value="O">Other</option>
+        </select>
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Address.AddressLine1">Address Line 1:</label>
+        <input asp-for="HomeAddress.AddressLine1" class="form-control" />
+        <span asp-validation-for="HomeAddress.AddressLine1" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Address.AddressLine2">Address Line 2:</label>
+        <input asp-for="HomeAddress.AddressLine2" class="form-control" />
+        <span asp-validation-for="HomeAddress.AddressLine2" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Address.City">City:</label>
+        <input asp-for="HomeAddress.City" class="form-control" />
+        <span asp-validation-for="HomeAddress.City" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Address.State">State:</label>
+        <input asp-for="HomeAddress.State" class="form-control" />
+        <span asp-validation-for="HomeAddress.State" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Address.Code">Code:</label>
+        <input asp-for="HomeAddress.Code" class="form-control" />
+        <span asp-validation-for="HomeAddress.Code" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Address.Country">Country:</label>
+        <input asp-for="HomeAddress.Country" class="form-control" />
+        <span asp-validation-for="HomeAddress.Country" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Create Customer</button>
+</form>
