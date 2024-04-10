@@ -7,9 +7,13 @@
 
     <div class="admin-home-actions">
         <!-- Action buttons or links -->
-        <a asp-controller="Product" asp-action="Index" class="btn btn-primary btn-block">PRODUCTS</a>
-        <a asp-controller="User" asp-action="Index" class="btn btn-warning btn-block">USERS</a>
-        <a asp-controller="Order" asp-action="Index" class="btn btn-success btn-block">ORDERS</a>
-        <a asp-controller="Account" asp-action="ManageAccount" class="btn btn-info btn-block">MANAGE MY ACCOUNT</a>
+        <button asp-controller="Admin" asp-action="Products">Products</button>
+        <br />
+        <button asp-controller="Admin" asp-action="Customers">Users</button>
+        <br />
+        <button asp-controller="Admin" asp-action="Orders">Orders</button>
+        <br />
+        <button asp-controller="Admin" asp-action="CustomerForm">Manage my Account</button>
+        <br />
     </div>
 </div>

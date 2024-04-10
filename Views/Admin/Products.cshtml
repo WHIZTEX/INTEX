@@ -31,8 +31,8 @@
                     <td>@p.Price</td>
                     <td>@p.ImgLink</td>
                     <td>@p.PrimaryColor</td>
-                    <td><button>Edit</button></td>
-                    <td><button>Remove</button></td>
+                    <td><button asp-controller="Admin" asp-action="ProductForm" formmethod="get">Edit</button></td>
+                    <td><button asp-controller="Admin" asp-action="DeleteConfirmation" formmethod="get">Remove</button></td>
                 </tr>
             }
         </tbody>
