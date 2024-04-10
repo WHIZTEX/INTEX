@@ -17,6 +17,8 @@
             <th>Amount</th>
             <th>Type of Transaction</th>
             <th>Country of Transaction</th>
+            <th>Fraudulent? (Prediction)</th>
+            <th>Fraudulent? (Actual)</th>
             <th>Edit</th>
             <th>Remove</th>
         </tr>
@@ -32,8 +34,10 @@
                 <td>@p.Transaction.Amount</td>
                 <td>@p.Type</td>
                 <td>@p.Transaction.BillingAddress.Country</td>
-                <td><button>Edit</button></td>
-                <td><button>Remove</button></td>
+                <td>@p.FraudPrediction</td>
+                <td>@p.IsFraud</td>
+                <td><button asp-controller="Admin" asp-action="OrderForm" formmethod="get">Edit</button></td>
+                <td><button asp-controller="Admin" asp-action="DeleteConfirmation" formmethod="get">Remove</button></td>
             </tr>
         }
     </tbody>
