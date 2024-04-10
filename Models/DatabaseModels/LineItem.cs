@@ -15,7 +15,7 @@ namespace INTEX.Models.DatabaseModels
         
         [Required]
         [ForeignKey("Product")]
-        public int ProductId { get; set; }
+        public string ProductId { get; set; }
         public virtual Product Product { get; set; }
         
         [Required(ErrorMessage = "Quantity is a required field")]

@@ -11,12 +11,12 @@ public class Rating
     
     [Required]
     [ForeignKey("Customer")]
-    public int CustomerId { get; set; }
+    public string CustomerId { get; set; }
     public virtual Customer Customer { get; set; }
     
     [Required]
     [ForeignKey("Product")]
-    public int ProductId { get; set; }
+    public string ProductId { get; set; }
     public virtual Product Product { get; set; }
     
     [Required(ErrorMessage = "Score is a required field")]

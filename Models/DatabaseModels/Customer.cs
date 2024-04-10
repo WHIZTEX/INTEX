@@ -1,19 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using INTEX.Models.DatabaseModels.Identity;
+using Microsoft.AspNetCore.Identity;
 
-namespace INTEX.Models.DatabaseModels
+namespace INTEX.Models
 {
-    public class Customer
+    public class Customer : IdentityUser
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-        
-        [ForeignKey("AspNetUser")]
-        public int AspNetUserId { get; set; }
-        public virtual AspNetUser AspNetUser { get; set; }
-        
         [ForeignKey("Address")]
         public int AddressId { get; set; }
         public virtual Address HomeAddress { get; set; }
@@ -33,9 +25,6 @@ namespace INTEX.Models.DatabaseModels
         [StringLength(1, ErrorMessage = "Gender must be no more than 1 character long")]
         [RegularExpression("^[MFO]$", ErrorMessage = "Gender must be M(ale), F(emale), or O(ther)")]
         public string Gender { get; set; }
-
-        [Required(ErrorMessage = "IsDeleted is a required field")]
-        public bool IsDeleted { get; set; } = false;
         
         public ICollection<Order> Orders { get; set; }
         
