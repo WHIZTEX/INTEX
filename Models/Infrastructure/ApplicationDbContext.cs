@@ -60,7 +60,7 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
         // Address has a composite key on all fields
         modelBuilder.Entity<Address>(entity =>
         {
-            entity.HasAlternateKey(e => new { e.AddressLine1, e.AddressLine2, e.City, e.State, e.Code, e.Country });
+            entity.HasKey(e => e.Country);
         });
 
         // Transaction has a composite key on all fields except Amount
