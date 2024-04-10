@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace INTEX.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialIdentityAndOperationalModels : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,18 +19,17 @@ namespace INTEX.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AddressLine1 = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    AddressLine2 = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    City = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    State = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    AddressLine1 = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    AddressLine2 = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    City = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    State = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    Code = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
                     Country = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Addresses", x => x.Id);
-                    table.UniqueConstraint("AK_Addresses_AddressLine1_AddressLine2_City_State_Code_Country", x => new { x.AddressLine1, x.AddressLine2, x.City, x.State, x.Code, x.Country });
                 });
 
             migrationBuilder.CreateTable(
@@ -49,9 +50,9 @@ namespace INTEX.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     ReleaseYear = table.Column<int>(type: "int", nullable: false),
                     Pieces = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -64,7 +65,7 @@ namespace INTEX.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Name);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -243,7 +244,7 @@ namespace INTEX.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProductId = table.Column<string>(type: "nvarchar(256)", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
                     Score = table.Column<int>(type: "int", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -256,13 +257,13 @@ namespace INTEX.Migrations
                         column: x => x.CustomerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Ratings_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "Name",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -295,7 +296,7 @@ namespace INTEX.Migrations
                         column: x => x.CustomerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Orders_Transactions_TransactionId",
                         column: x => x.TransactionId,
@@ -311,7 +312,7 @@ namespace INTEX.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderId = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<string>(type: "nvarchar(256)", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -324,19 +325,30 @@ namespace INTEX.Migrations
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_LineItems_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "Name",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "5ddff5a9-8794-4785-9598-a3c8d04d9b57", null, "Customer", "CUSTOMER" },
+                    { "f355dee5-b11b-40c4-89ea-6edd21ad7072", null, "Administrator", "ADMINISTRATOR" }
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Addresses_AddressLine1",
+                name: "IX_Addresses_AddressLine1_AddressLine2_City_State_Code_Country",
                 table: "Addresses",
-                column: "AddressLine1");
+                columns: new[] { "AddressLine1", "AddressLine2", "City", "State", "Code", "Country" },
+                unique: true,
+                filter: "[AddressLine1] IS NOT NULL AND [AddressLine2] IS NOT NULL AND [City] IS NOT NULL AND [State] IS NOT NULL AND [Code] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -428,6 +440,11 @@ namespace INTEX.Migrations
                 name: "IX_Orders_Type",
                 table: "Orders",
                 column: "Type");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_Name",
+                table: "Products",
+                column: "Name");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ratings_CustomerId",
