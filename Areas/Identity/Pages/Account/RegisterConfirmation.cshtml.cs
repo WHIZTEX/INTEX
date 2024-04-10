@@ -65,6 +65,14 @@ namespace INTEX.Areas.Identity.Pages.Account
             DisplayConfirmAccountLink = true;
             if (DisplayConfirmAccountLink)
             {
+                var result = await _userManager.AddToRoleAsync(user, "Customer");
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
                 var userId = await _userManager.GetUserIdAsync(user);
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

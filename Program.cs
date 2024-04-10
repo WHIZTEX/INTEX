@@ -37,6 +37,7 @@ services.AddDatabaseDeveloperPageExceptionFilter();
 
 // Adding identity services
 services.AddDefaultIdentity<Customer>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 // Configuring Cookie Notification Policy

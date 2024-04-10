@@ -6,6 +6,7 @@ namespace INTEX.Models.DatabaseModels
 {
     public class Customer : IdentityUser
     {
+        [Required]
         [ForeignKey("Address")]
         public int AddressId { get; set; }
         public virtual Address HomeAddress { get; set; }
@@ -22,9 +23,11 @@ namespace INTEX.Models.DatabaseModels
         public DateOnly BirthDate { get; set; }
         
         [Required(ErrorMessage = "Gender is a required field")]
-        [StringLength(1, ErrorMessage = "Gender must be no more than 1 character long")]
-        [RegularExpression("^[MFO]$", ErrorMessage = "Gender must be M(ale), F(emale), or O(ther)")]
+        [StringLength(32, ErrorMessage = "Gender must be no more than 32 characters long")]
         public string Gender { get; set; }
+
+        [Required(ErrorMessage = "IsDeleted is a required field")]
+        public bool IsDeleted { get; set; } = false;
         
         public ICollection<Order> Orders { get; set; }
         
