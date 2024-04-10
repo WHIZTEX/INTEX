@@ -8,7 +8,7 @@
 /* Global Styles */
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(to left, #e0f3ff, #ffffff); /* Light blue gradient background */
+    background: linear-gradient(to right, #82abd5, #bad8f4)
 }
 
 .container {
@@ -20,13 +20,16 @@ body {
 header {
     background-color: #EDD146; /* Yellow header */
     padding: 10px 0;
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-bottom: 15px;
+    padding-left: 0px;
 }
 
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 40px 0;
 }
 
 .navbar-brand {
@@ -61,7 +64,7 @@ header {
 }
 
 /* Button Styles */
-.shop-button {
+.button {
     background-color: #EDD146;
     color: black;
     padding: 10px 20px;
@@ -72,7 +75,7 @@ header {
     transition: background-color 0.3s ease;
 }
 
-    .shop-button:hover {
+    .button:hover {
         background-color: #f4dc7a; /* Lighter shade of yellow on hover */
     }
 
