@@ -7,8 +7,8 @@
 
 /* Global Styles */
 body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #82abd5, #bad8f4)
+    font-family: 'DM Serif Display', sans-serif; /* Updated to use Sarabun font */
+    background: linear-gradient(to right, #82abd5, #bad8f4);
 }
 
 .container {
@@ -18,7 +18,7 @@ body {
 
 /* Header Styles */
 header {
-    background-color: #EDD146; /* Yellow header */
+    background-color: #f4dc7a; /* Yellow header */
     padding: 10px 0;
     padding-top: 0px;
     padding-right: 0px;
@@ -59,13 +59,13 @@ header {
 
 /* Yellow Header Stripe */
 .header-stripe {
-    background-color: #EDD146; /* Yellow header stripe */
+    background-color: #f4dc7a; /* Yellow header stripe */
     height: 3px; /* Shortened stripe height */
 }
 
 /* Button Styles */
 .button {
-    background-color: #EDD146;
+    background-color: #f4dc7a;
     color: black;
     padding: 10px 20px;
     border: none;
@@ -76,7 +76,7 @@ header {
 }
 
     .button:hover {
-        background-color: #f4dc7a; /* Lighter shade of yellow on hover */
+        background-color: #ffd400; /* Lighter shade of yellow on hover */
     }
 
 /* Content Styles */
@@ -90,4 +90,72 @@ footer {
     color: #333333; /* Dark text */
     text-align: center;
     padding: 20px 0;
+}
+
+.admin-button {
+    background-color: #f4dc7a;
+    color: black;
+    padding: 10px 60px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-content: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    width: 400px;
+}
+
+    .admin-button:hover {
+        background-color: #ffd400; /* Lighter shade of yellow on hover */
+    }
+
+.admin-home-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Stacks the buttons vertically */
+    justify-content: center;
+    align-items: center;
+}
+.dm-serif display-regular {
+    font-family: "DM Serif Display", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.dm-serif display-regular-italic {
+    font-family: "DM Serif Display", serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+/* Style for demonstration purposes only. Please use external CSS for production. */
+
+.shop-button {
+    background-color: #f4dc7a;
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .shop-button:hover {
+        background-color: #ffd400; /* Lighter shade of yellow on hover */
+    }
+
+.light-blue-box {
+    position: absolute;
+    top: 50%; /* Adjust positioning */
+    left: 50%; /* Adjust positioning */
+    transform: translate(-50%, -50%);
+    background-color: #bad8f4; /* Light blue color */
+    padding: 50px;
+    border-radius: 15px;
 }
