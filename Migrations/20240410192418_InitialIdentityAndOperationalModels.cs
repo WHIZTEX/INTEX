@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace INTEX.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialIdentityAndOperational : Migration
+    public partial class InitialIdentityAndOperationalModels : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,7 +22,8 @@ namespace INTEX.Migrations
                     City = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     State = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Code = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
+                    Country = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -58,7 +59,8 @@ namespace INTEX.Migrations
                     PrimaryColor = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
                     SecondaryColor = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", maxLength: 4096, nullable: false),
-                    Category = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
+                    Category = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -74,7 +76,8 @@ namespace INTEX.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     BirthDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(1)", maxLength: 1, nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -112,7 +115,8 @@ namespace INTEX.Migrations
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CardType = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     EntryMode = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
-                    Bank = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
+                    Bank = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -240,7 +244,8 @@ namespace INTEX.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProductId = table.Column<string>(type: "nvarchar(256)", nullable: false),
-                    Score = table.Column<int>(type: "int", nullable: false)
+                    Score = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -272,7 +277,8 @@ namespace INTEX.Migrations
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
                     FraudPrediction = table.Column<bool>(type: "bit", nullable: false),
-                    IsFraud = table.Column<bool>(type: "bit", nullable: false)
+                    IsFraud = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -306,7 +312,8 @@ namespace INTEX.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderId = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<string>(type: "nvarchar(256)", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false)
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
