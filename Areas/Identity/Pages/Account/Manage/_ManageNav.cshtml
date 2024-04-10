@@ -1,3 +1,4 @@
+@using INTEX.Models.DatabaseModels
 @inject SignInManager<Customer> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();

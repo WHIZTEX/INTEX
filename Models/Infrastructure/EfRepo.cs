@@ -23,7 +23,39 @@ public class EfRepo : IRepo
 
     public ProductsListViewModel GetProductsListViewModel(ProductsFilter filter)
     {
-        throw new NotImplementedException();
+        var products = _context.Products
+            .Where(p => p.IsDeleted == false)
+            .AsQueryable();
+        if (filter.Category.Length > 0)
+        {
+            products = products
+                .Where(p => filter.Category.Contains(p.Category))
+                .AsQueryable();
+        }
+        if (filter.PrimaryColor.Length > 0)
+        {
+            products = products
+                .Where(p => filter.PrimaryColor.Contains(p.PrimaryColor))
+                .AsQueryable();
+        }
+        if (filter.SecondaryColor.Length > 0)
+        {
+            products = products
+                .Where(p => filter.SecondaryColor.Contains(p.SecondaryColor))
+                .AsQueryable();
+        }
+
+        var model = new ProductsListViewModel
+        {
+            Products = products,
+            PaginationInfo = new PaginationInfo
+            {
+                CurrentPage = 0,
+                ItemsPerPage = filter.ProductsPerPage,
+                TotalItems = products.Count()
+            }
+        };
+        return model;
     }
 
     public Customer GetCustomerById(int? customerId)

@@ -1,5 +1,5 @@
 @{
-    Layout = "_YourLayoutPage"; // Specify your shared layout page
+    Layout = "_Layout"; // Specify your shared layout page
 }
 
 <div class="admin-home-container">
@@ -13,7 +13,7 @@
         <br />
         <button asp-controller="Admin" asp-action="Orders">Orders</button>
         <br />
-        <button asp-controller="Admin" asp-action="CustomerForm">Manage my Account</button>
+        <button asp-controller="Customer" asp-action="CustomerInfo">Manage my Account</button>
         <br />
     </div>
 </div>
