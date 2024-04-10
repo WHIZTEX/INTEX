@@ -32,7 +32,6 @@ header {
     justify-content: space-between;
     align-items: center;
     background-color: #EDD146; /* Yellow background for navbar */
-    padding: 10px 0;
 }
 
 .navbar-brand {
@@ -45,11 +44,11 @@ header {
 .navbar-nav {
     display: flex;
     list-style: none;
-    margin-right: 20px; /* Add margin to navbar nav */
+    margin-right: 10px; /* Add margin to navbar nav */
 }
 
 .nav-item {
-    margin-left: 20px;
+    margin-left: 10px;
 }
 
 .nav-link {
