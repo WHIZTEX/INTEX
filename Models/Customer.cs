@@ -1,18 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
 namespace INTEX.Models
 {
-    public class Customer
+    public class Customer : IdentityUser
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-        
-        [ForeignKey("AspNetUser")]
-        public int AspNetUserId { get; set; }
-        public virtual AspNetUser AspNetUser { get; set; }
-        
         [ForeignKey("Address")]
         public int AddressId { get; set; }
         public virtual Address HomeAddress { get; set; }

@@ -12,7 +12,7 @@ namespace INTEX.Models
         
         [Required]
         [ForeignKey("Customers")]
-        public int CustomerId { get; set;}
+        public string CustomerId { get; set;}
         public virtual Customer Customer { get; set; }
         
         [Required]

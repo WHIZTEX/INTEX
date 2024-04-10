@@ -11,7 +11,7 @@ public class Rating
     
     [Required]
     [ForeignKey("Customer")]
-    public int CustomerId { get; set; }
+    public string CustomerId { get; set; }
     public virtual Customer Customer { get; set; }
     
     [Required]

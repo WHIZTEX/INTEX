@@ -28,7 +28,7 @@ services.AddScoped<IRepo, EfRepo>();
 services.AddDatabaseDeveloperPageExceptionFilter();
 
 // Adding identity services
-services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+services.AddDefaultIdentity<Customer>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 // Configuring Cookie Notification Policy

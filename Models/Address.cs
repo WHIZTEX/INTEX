@@ -9,9 +9,8 @@ public class Address
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     
-    [Required(ErrorMessage = "Address Line 1 is a required field")]
     [StringLength(64, ErrorMessage = "Address Line 1 must be no more than 64 characters")]
-    public string AddressLine1 { get; set; }
+    public string? AddressLine1 { get; set; }
     
     [StringLength(64, ErrorMessage = "Address Line 2 must be no more than 64 characters")]
     public string? AddressLine2 { get; set; }
