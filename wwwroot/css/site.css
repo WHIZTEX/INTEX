@@ -9,6 +9,7 @@
 body {
     font-family: 'DM Serif Display', sans-serif; /* Updated to use Sarabun font */
     background: linear-gradient(to right, #82abd5, #bad8f4);
+    padding-bottom: 60px;
 }
 
 .container {
@@ -85,12 +86,17 @@ header {
 }
 
 /* Footer Styles */
-footer {
-    background-color: #ffffff; /* White footer */
-    color: #333333; /* Dark text */
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa; /* Change the background color as needed */
+    padding: 20px 0; /* Adjust padding as needed */
     text-align: center;
-    padding: 20px 0;
+    z-index: 1000; /* Ensure footer is above other elements */
 }
+
+    /* Optional: Add more styles to enhance appearance */
 
 .admin-button {
     background-color: #f4dc7a;

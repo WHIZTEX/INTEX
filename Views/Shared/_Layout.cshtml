@@ -61,9 +61,17 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - BrickCraft Labs - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy Policy</a>
+            <div class="row">
+                <div class="col-md-6">
+                    &copy; 2024 - BrickCraft Labs - <a href="#">Terms of Service</a> | <a href="#">Privacy Policy</a>
+                </div>
+                <div class="col-md-6 text-md-right">
+                    <a href="#">Login</a> | <a href="#">Register</a>
+                </div>
+            </div>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
