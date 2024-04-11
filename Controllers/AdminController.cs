@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using INTEX.Models;
 using INTEX.Models.DatabaseModels;
 using INTEX.Models.Infrastructure;
 using INTEX.Models.ViewModels;
