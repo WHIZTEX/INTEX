@@ -1,7 +1,7 @@
 using INTEX.Models.DatabaseModels;
 using INTEX.Models.ViewModels;
 using INTEX.Models.MachineLearning;
-using longEX.Models.MachineLearning;
+using INTEX.Models.MachineLearning;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.ML.OnnxRuntime;
 

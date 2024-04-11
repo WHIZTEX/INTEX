@@ -1,14 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using INTEX.Models.MachineLearning;
 using INTEX.Models.DatabaseModels;
 using INTEX.Models.Infrastructure;
 using INTEX.Models.ViewModels;
-using longEX.Models.MachineLearning;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.ML.OnnxRuntime;
-using Microsoft.AspNetCore.Http;
-using Microsoft.ML.OnnxRuntime.Tensors;
-using SQLitePCL;
 
 namespace INTEX.Controllers;
 

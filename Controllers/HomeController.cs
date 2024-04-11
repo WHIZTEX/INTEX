@@ -1,11 +1,7 @@
-using INTEX.Models;
 using INTEX.Models.DatabaseModels;
 using INTEX.Models.Infrastructure;
 using INTEX.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.ML;
-using Microsoft.ML.OnnxRuntime;
-using Microsoft.ML.OnnxRuntime.Tensors;
 
 namespace INTEX.Controllers;
 

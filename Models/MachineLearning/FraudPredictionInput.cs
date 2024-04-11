@@ -1,6 +1,6 @@
 using INTEX.Models.DatabaseModels;
 
-namespace longEX.Models.MachineLearning;
+namespace INTEX.Models.MachineLearning;
 using Microsoft.ML.OnnxRuntime.Tensors;
 using INTEX.Models.ViewModels;
 
