@@ -22,3 +22,4 @@ public interface IRepo
 
     //product recommendation setup
     public IQueryable<ProductRecommendation> ProductRecommendations(int product_ID);
+}
