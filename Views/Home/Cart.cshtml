@@ -1,8 +1,45 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model INTEX.Models.ViewModels.ConfirmOrderViewModel
+
+@{
+    ViewData["Title"] = "Cart";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1 class="Cart">Cart</h1>
+
+@if (Model != null && Model.LineItems != null && Model.LineItems.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var lineItem in Model.LineItems)
+            {
+                <tr>
+                    <td>@lineItem.Product.Name</td>
+                    <td>@lineItem.Quantity</td>
+                    <td>@lineItem.Product.Price.ToString("C")</td>
+                    <td>@(lineItem.Quantity * lineItem.Product.Price).ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div>
+        <h3>Total: @Model.Transaction.Amount.ToString("C")</h3>
+    </div>
+
+    <h2>Proceed to Checkout</h2>
+    <form method="post" action="@Url.Action("ConfirmOrder", "Customer")">
+        <button type="submit">Checkout</button>
+    </form>
+}
+else
+{
+    <p class="Cart">Your cart is empty.</p>
+}

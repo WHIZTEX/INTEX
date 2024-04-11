@@ -6,7 +6,7 @@ using INTEX.Models.DatabaseModels;
 using INTEX.Models.Infrastructure;
 using Microsoft.ML.OnnxRuntime;
 using static Microsoft.AspNetCore.Http.StatusCodes;
-
+using newfeature;
 var builder = WebApplication.CreateBuilder(args);
 
 var services = builder.Services;
@@ -20,6 +20,7 @@ var microsoftSecret = (await vault.GetSecretAsync("MicrosoftClientSecret")).Valu
 var googleId = (await vault.GetSecretAsync("GoogleClientId")).Value.Value;
 var googleSecret = (await vault.GetSecretAsync("GoogleClientSecret")).Value.Value;
 
+builder.Services.AddSignalR();
 // Add context files
 services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -123,6 +124,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+app.MapHub<ChatHub>("/chatHub");
 
 // Running app
 app.Run();

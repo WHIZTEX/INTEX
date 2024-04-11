@@ -1,17 +1,24 @@
-@model Order
+@model INTEX.Models.DatabaseModels.Order
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-4">
-            <h3>Enter Shipping Address</h3>
-            <h3>Enter Billing Address</h3>
-        </div>
-        <div class="col-md-4">
-            <h3>Full Name</h3>
-            <h3>Card Information</h3>
-        </div>
-        <div class="col-md-4">
-            <h3>Order Summary</h3>
-        </div>
+@{
+    ViewData["Title"] = "Order Confirmation";
+}
+<div class="container rounded p-5 bg-light text-dark">
+    <div class="text-center">
+        @if (Model.FraudPrediction == true)
+        {
+            <h1>Your order is under review</h1>
+            <p>We are currently reviewing your order. If everything checks out, you will receive a confirmation email shortly. Thank you for your patience.</p>
+        }
+        else
+        {
+            <h1>Thank you for your order!</h1>
+            <p>Your order has been successfully placed. Your order ID is @Model.Id.</p>
+            <p>You will receive an email confirmation shortly with further details.</p>
+        }
+    </div>
+
+    <div class="text-center">
+        <img style="height: 400px; border-radius: 20px;" src="/img/confirmation_image.png" class="mx-auto d-block mb-4" />
     </div>
 </div>
