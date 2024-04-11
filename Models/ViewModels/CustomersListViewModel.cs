@@ -5,7 +5,7 @@ namespace INTEX.Models.ViewModels
 {
     public class CustomersListViewModel
     {
-        public IQueryable<Customer> Customers { get; set;}
+        public IQueryable<CustomersRolesListViewModel> CustomersRoles{ get; set;}
         public PaginationInfo PaginationInfo { get; set;}
     }
 }

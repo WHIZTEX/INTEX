@@ -29,22 +29,17 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var c in Model.Customers)
+        @foreach (var c in Model.CustomersRoles)
         {
             <tr>
-                <td>@c.Id</td>
-                <td>@c.FirstName</td>
-                <td>@c.LastName</td>
-                <td>@c.BirthDate</td>
-                <td>@c.HomeAddress.Country</td>
-                <td>@c.Gender</td>
-                <td>
-                    @foreach (var role in await UserManager.GetRolesAsync(c))
-                    {
-                        <span>@role</span>
-                    }
-                </td>
-                <td><a asp-controller="Admin" asp-action="CustomerForm" asp-route-customerId="@c.Id" formmethod="get">Edit</a></td>
+                <td>@c.Customer.Id</td>
+                <td>@c.Customer.FirstName</td>
+                <td>@c.Customer.LastName</td>
+                <td>@c.Customer.BirthDate</td>
+                <td>@c.Customer.HomeAddress.Country</td>
+                <td>@c.Customer.Gender</td>
+                <td>@c.Roles[0]</td>
+                <td><a asp-controller="Admin" asp-action="CustomerForm" asp-route-customerId="@c.Customer.Id" asp-route-role="@c.Roles[0]" formmethod="get">Edit</a></td>
                 <td><a asp-controller="Admin" asp-action="DeleteConfirmation" formmethod="get">Remove</a></td>
             </tr>
         }

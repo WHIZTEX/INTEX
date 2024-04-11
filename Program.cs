@@ -2,11 +2,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
+using INTEX.Models;
 using INTEX.Models.DatabaseModels;
 using INTEX.Models.Infrastructure;
 using Microsoft.ML.OnnxRuntime;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 using newfeature;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var services = builder.Services;
