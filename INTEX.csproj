@@ -35,6 +35,7 @@
 
     <ItemGroup>
       <Folder Include="Areas\" />
+      <Folder Include="wwwroot\img\NewFolder\" />
     </ItemGroup>
 
     <ItemGroup>
