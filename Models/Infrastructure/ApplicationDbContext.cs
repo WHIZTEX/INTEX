@@ -24,6 +24,7 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
     public virtual DbSet<Product> Products { get; set; }
     public virtual DbSet<LineItem> LineItems { get; set; }
     public virtual DbSet<Rating> Ratings { get; set; }
+    public virtual DbSet<ProductRecommendation> ProductRecommendations { get; set; }
 
     /// <summary>
     /// This method is called after instantiation for determining server types
