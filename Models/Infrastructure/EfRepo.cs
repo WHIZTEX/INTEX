@@ -4,9 +4,10 @@ using Microsoft.Build.Evaluation;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using INTEX.Models.MachineLearning;
-using INTEX.Models.MachineLearning;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.ML.OnnxRuntime;
+using Microsoft.Extensions.Azure;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
 
 namespace INTEX.Models.Infrastructure;
@@ -15,29 +16,65 @@ public class EfRepo : IRepo
 {
     private readonly ApplicationDbContext _context;
     private readonly InferenceSession _session;
-    public EfRepo(ApplicationDbContext context, InferenceSession session)
+
+    // ==== CONSTRUCTION ZONE BEGINS ====
+    private readonly UserManager<Customer> _userManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
+
+    public EfRepo(ApplicationDbContext context, InferenceSession session, UserManager<Customer> userManager, RoleManager<IdentityRole> roleManager)
     {
         _context = context;
         _session = session;
+        _userManager = userManager;
+        _roleManager = roleManager;
     }
 
-    public CustomersListViewModel GetCustomersListViewModel()
+    /*
+    public async Task<List<string>> GetRolesForCustomerAsync(string customerId)
+    {
+        var user = await _userManager.FindByIdAsync(customerId);
+        if (user == null)
+        {
+            // Handle the case where user is not found
+            return new List<string>();
+        }
+
+        var roles = await _userManager.GetRolesAsync(user);
+        return roles.ToList();
+    }
+    */
+
+    // ==== CONSTRUCTION ZONE ENDS ====
+
+    public async Task<CustomersListViewModel> GetCustomersListViewModel()
     {
         var customers = _context.Customers
-            .Where(p => p.IsDeleted == false)
-            .Include(p => p.HomeAddress)
-            .AsQueryable();
+        .Where(p => p.IsDeleted == false)
+        .Include(p => p.HomeAddress)
+        .AsQueryable();
+
+        var customerRolesList = new List<CustomersRolesListViewModel>();
+
+        foreach (var customer in customers)
+        {
+            var roles = await _userManager.GetRolesAsync(customer);
+
+            var customerRole = new CustomersRolesListViewModel(customer, roles.ToList());
+
+            customerRolesList.Add(customerRole);
+        }
 
         var model = new CustomersListViewModel
         {
-            Customers = customers,
+            CustomersRoles = customerRolesList.AsQueryable(),
             PaginationInfo = new PaginationInfo
             {
                 CurrentPage = 0,
                 ItemsPerPage = 20,
-                TotalItems = customers.Count()
+                TotalItems = customerRolesList.Count()
             }
         };
+
         return model;
     }
 
@@ -139,6 +176,24 @@ public class EfRepo : IRepo
         return order;
     }
 
+    public async Task UpdateCustomerRole(CustomersRolesListViewModel model)
+    {
+        var customer = model.Customer;
+        var newRole = model.Roles[0];
+
+        // Get the user associated with the customer
+        var user = await _userManager.FindByIdAsync(customer.Id);
+
+        // Get the current roles of the user
+        var currentRoles = await _userManager.GetRolesAsync(user);
+
+        // Remove all existing roles
+        await _userManager.RemoveFromRolesAsync(user, currentRoles);
+
+        // Add the new role
+        await _userManager.AddToRoleAsync(user, newRole);
+    }
+
     public void UpdateCustomer(Customer customer)
     {
         if (customer == null)
@@ -228,6 +283,12 @@ public class EfRepo : IRepo
 
     public void DeleteProduct(Product product)
     {
+        product.IsDeleted = true;
+        _context.SaveChanges();
+    }
+
+    public void PermDeleteProduct(Product product)
+    {
         if (product == null)
         {
             throw new ArgumentNullException(nameof(product));
@@ -256,6 +317,7 @@ public class EfRepo : IRepo
 
         
     }
+
     // addtion for the recommedation
     public IQueryable<ProductRecommendation> ProductRecommendations(int productId) => _context.ProductRecommendations
                                                                            .Where(x => x.ProductId == productId)

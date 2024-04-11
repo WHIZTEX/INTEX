@@ -1,4 +1,4 @@
-@model Customer
+@model CustomersRolesListViewModel
 
 @{
     string action = "";
@@ -14,79 +14,87 @@
 
 <h2>@action Customer</h2>
 
-<form asp-action="CustomerForm" method="post">
+<form asp-action="CustomerFormPost" method="post">
     <!-- Hidden fields that will not be edited -->
-    <input type="hidden" asp-for="Id" />
-    <input type="hidden" asp-for="UserName" />
-    <input type="hidden" asp-for="NormalizedUserName" />
-    <input type="hidden" asp-for="Email" />
-    <input type="hidden" asp-for="NormalizedEmail" />
-    <input type="hidden" asp-for="EmailConfirmed" />
-    <input type="hidden" asp-for="PasswordHash" />
-    <input type="hidden" asp-for="SecurityStamp" />
-    <input type="hidden" asp-for="ConcurrencyStamp" />
-    <input type="hidden" asp-for="PhoneNumber" />
-    <input type="hidden" asp-for="PhoneNumberConfirmed" />
-    <input type="hidden" asp-for="TwoFactorEnabled" />
-    <input type="hidden" asp-for="LockoutEnd" />
-    <input type="hidden" asp-for="LockoutEnabled" />
-    <input type="hidden" asp-for="AccessFailedCount" />
-    <input type="hidden" asp-for="AddressId" />
+    <input type="hidden" asp-for="Customer.Id" />
+    <input type="hidden" asp-for="Customer.UserName" />
+    <input type="hidden" asp-for="Customer.NormalizedUserName" />
+    <input type="hidden" asp-for="Customer.Email" />
+    <input type="hidden" asp-for="Customer.NormalizedEmail" />
+    <input type="hidden" asp-for="Customer.EmailConfirmed" />
+    <input type="hidden" asp-for="Customer.PasswordHash" />
+    <input type="hidden" asp-for="Customer.SecurityStamp" />
+    <input type="hidden" asp-for="Customer.ConcurrencyStamp" />
+    <input type="hidden" asp-for="Customer.PhoneNumber" />
+    <input type="hidden" asp-for="Customer.PhoneNumberConfirmed" />
+    <input type="hidden" asp-for="Customer.TwoFactorEnabled" />
+    <input type="hidden" asp-for="Customer.LockoutEnd" />
+    <input type="hidden" asp-for="Customer.LockoutEnabled" />
+    <input type="hidden" asp-for="Customer.AccessFailedCount" />
+    <input type="hidden" asp-for="Customer.AddressId" />
 
     <!-- Editable fields -->
     <div class="form-group">
-        <label for="FirstName">First Name:</label>
-        <input asp-for="FirstName" class="form-control" />
-        <span asp-validation-for="FirstName" class="text-danger"></span>
+        <label for="Customer.FirstName">First Name:</label>
+        <input asp-for="Customer.FirstName" class="form-control" />
+        <span asp-validation-for="Customer.FirstName" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label for="LastName">Last Name:</label>
-        <input asp-for="LastName" class="form-control" />
-        <span asp-validation-for="LastName" class="text-danger"></span>
+        <label for="Customer.LastName">Last Name:</label>
+        <input asp-for="Customer.LastName" class="form-control" />
+        <span asp-validation-for="Customer.LastName" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label for="BirthDate">Birth Date:</label>
-        <input asp-for="BirthDate" type="date" class="form-control" />
-        <span asp-validation-for="BirthDate" class="text-danger"></span>
+        <label for="Roles[0]">User Role:</label>
+        <select asp-for="Roles[0]" class="form-control">
+            <option value="Administrator">Administrator</option>
+            <option value="Customer">Customer</option>
+        </select>
+        <span asp-validation-for="Roles[0]" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label for="Gender">Gender:</label>
-        <select asp-for="Gender" class="form-control">
+        <label for="Customer.BirthDate">Birth Date:</label>
+        <input asp-for="Customer.BirthDate" type="date" class="form-control" />
+        <span asp-validation-for="Customer.BirthDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Customer.Gender">Gender:</label>
+        <select asp-for="Customer.Gender" class="form-control">
             <option value="Male">Male</option>
             <option value="Female">Female</option>
             <option value="Other">Other</option>
         </select>
-        <span asp-validation-for="Gender" class="text-danger"></span>
+        <span asp-validation-for="Customer.Gender" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label for="HomeAddress.AddressLine1">Address Line 1:</label>
-        <input asp-for="HomeAddress.AddressLine1" class="form-control" />
-        <span asp-validation-for="HomeAddress.AddressLine1" class="text-danger"></span>
+        <label for="Customer.HomeAddress.AddressLine1">Address Line 1:</label>
+        <input asp-for="Customer.HomeAddress.AddressLine1" class="form-control" />
+        <span asp-validation-for="Customer.HomeAddress.AddressLine1" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label for="HomeAddress.AddressLine2">Address Line 2:</label>
-        <input asp-for="HomeAddress.AddressLine2" class="form-control" />
-        <span asp-validation-for="HomeAddress.AddressLine2" class="text-danger"></span>
+        <label for="Customer.HomeAddress.AddressLine2">Address Line 2:</label>
+        <input asp-for="Customer.HomeAddress.AddressLine2" class="form-control" />
+        <span asp-validation-for="Customer.HomeAddress.AddressLine2" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label for="HomeAddress.City">City:</label>
-        <input asp-for="HomeAddress.City" class="form-control" />
-        <span asp-validation-for="HomeAddress.City" class="text-danger"></span>
+        <label for="Customer.HomeAddress.City">City:</label>
+        <input asp-for="Customer.HomeAddress.City" class="form-control" />
+        <span asp-validation-for="Customer.HomeAddress.City" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label for="HomeAddress.State">State:</label>
-        <input asp-for="HomeAddress.State" class="form-control" />
-        <span asp-validation-for="HomeAddress.State" class="text-danger"></span>
+        <label for="Customer.HomeAddress.State">State:</label>
+        <input asp-for="Customer.HomeAddress.State" class="form-control" />
+        <span asp-validation-for="Customer.HomeAddress.State" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label for="HomeAddress.Code">Code:</label>
-        <input asp-for="HomeAddress.Code" class="form-control" />
-        <span asp-validation-for="HomeAddress.Code" class="text-danger"></span>
+        <label for="Customer.HomeAddress.Code">Code:</label>
+        <input asp-for="Customer.HomeAddress.Code" class="form-control" />
+        <span asp-validation-for="Customer.HomeAddress.Code" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label for="HomeAddress.Country">Country:</label>
-        <input asp-for="HomeAddress.Country" class="form-control" />
-        <span asp-validation-for="HomeAddress.Country" class="text-danger"></span>
+        <label for="Customer.HomeAddress.Country">Country:</label>
+        <input asp-for="Customer.HomeAddress.Country" class="form-control" />
+        <span asp-validation-for="Customer.HomeAddress.Country" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">@action Customer</button>
     <button onclick="goBack()" class="btn btn-secondary">Cancel</button>
