@@ -7,6 +7,8 @@ using INTEX.Models.DatabaseModels;
 using INTEX.Models.Infrastructure;
 using Microsoft.ML.OnnxRuntime;
 using static Microsoft.AspNetCore.Http.StatusCodes;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Builder;
 using newfeature;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -92,6 +94,13 @@ services.AddHttpsRedirection(options =>
 
 // Adding Inference Session singleton of InferenceSession from fraud model
 services.AddSingleton(new InferenceSession("Models/MachineLearning/fraudModel.onnx"));
+services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); // Add HttpContextAccessor
 
 var app = builder.Build();
 
@@ -116,6 +125,9 @@ app.UseCookiePolicy();
 // Activating static and routing
 app.UseStaticFiles();
 app.UseRouting();
+
+// Activating session
+app.UseSession();
 
 // Activating identity services
 app.UseAuthentication();
