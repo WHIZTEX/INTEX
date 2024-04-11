@@ -4,6 +4,7 @@ using INTEX.Models.DatabaseModels;
 using INTEX.Models.Infrastructure;
 using INTEX.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using System.Diagnostics;
 
 namespace INTEX.Controllers;
 
@@ -65,7 +66,7 @@ public class AdminController : Controller
 
     [HttpGet]
     [Authorize(Roles = "Administrator")]
-    public IActionResult CustomerForm(int? customerId)
+    public IActionResult CustomerForm(string? customerId)
     {
         Customer model = _repo.GetCustomerById(customerId);
         return View(model);
@@ -75,8 +76,24 @@ public class AdminController : Controller
     [Authorize(Roles = "Administrator")]
     public IActionResult CustomerForm(Customer customer)
     {
-        _repo.UpdateCustomer(customer);
-        return RedirectToAction("Customers");
+        if (ModelState.IsValid)
+        {
+            _repo.UpdateCustomer(customer);
+            return RedirectToAction("Customers");
+        }
+        foreach (var entry in ModelState)
+        {
+            if (entry.Value.Errors.Any())
+            {
+                string propName = entry.Key;
+                var errMsgs = entry.Value.Errors.Select(error => error.ErrorMessage);
+                foreach (var msg in errMsgs)
+                {
+                    Debug.WriteLine($"Validation error for property '{propName}': {msg}");
+                }
+            }
+        }
+        return Redirect(Request.Headers["Referer"].ToString());
     }
 
     [HttpGet]
@@ -97,22 +114,27 @@ public class AdminController : Controller
 
     [HttpGet]
     [Authorize(Roles = "Administrator")]
-    public IActionResult DeleteConfirmation(object item)
+    public IActionResult DeleteConfirmation(Customer? customer, Product? product, Order? order)
     {
         DeleteConfirmationViewModel model;
-        switch (item)
+        if (customer != null)
         {
-            case Customer customer:
-                model = new DeleteConfirmationViewModel(customer, null, null);
-                return View(model);
-            case Order order:
-                model = new DeleteConfirmationViewModel(null, order, null);
-                return View(model);
-            case Product product:
-                model = new DeleteConfirmationViewModel(null, null, product);
-                return View(model);
-            default:
-                return View("Error", item);
+            model = new DeleteConfirmationViewModel(customer, null, null);
+            return View(model);
+        }
+        else if (order != null)
+        {
+            model = new DeleteConfirmationViewModel(null, order, null);
+            return View(model);
+        }
+        else if (product != null)
+        {
+            model = new DeleteConfirmationViewModel(null, null, product);
+            return View(model);
+        }
+        else
+        {
+            return View("Error");
         }
     }
 

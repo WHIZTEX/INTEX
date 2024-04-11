@@ -1,5 +1,7 @@
 using INTEX.Models.DatabaseModels;
 using INTEX.Models.ViewModels;
+using Microsoft.Build.Evaluation;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
 namespace INTEX.Models.Infrastructure;
@@ -14,7 +16,22 @@ public class EfRepo : IRepo
 
     public CustomersListViewModel GetCustomersListViewModel()
     {
-        throw new NotImplementedException();
+        var customers = _context.Customers
+            .Where(p => p.IsDeleted == false)
+            .Include(p => p.HomeAddress)
+            .AsQueryable();
+
+        var model = new CustomersListViewModel
+        {
+            Customers = customers,
+            PaginationInfo = new PaginationInfo
+            {
+                CurrentPage = 0,
+                ItemsPerPage = 20,
+                TotalItems = customers.Count()
+            }
+        };
+        return model;
     }
 
     public OrdersListViewModel GetOrdersListViewModel()
@@ -59,9 +76,20 @@ public class EfRepo : IRepo
         return model;
     }
 
-    public Customer GetCustomerById(int? customerId)
+    public Customer GetCustomerById(string? customerId)
     {
-        throw new NotImplementedException();
+        if (customerId == null)
+        {
+            // Return a new instance of Customer
+            return new Customer();
+        }
+        else
+        {
+            // Implement logic to retrieve product by ID
+            return _context.Customers
+                .Include(c => c.HomeAddress)
+                .FirstOrDefault(c => c.Id == customerId);
+        }
     }
 
     public Customer GetCustomerByAspNetUserId(int aspNetUserId)
@@ -96,7 +124,8 @@ public class EfRepo : IRepo
 
     public void UpdateCustomer(Customer customer)
     {
-        throw new NotImplementedException();
+        _context.Customers.Update(customer);
+        _context.SaveChanges();
     }
 
     public void UpdateOrder(Order order)
@@ -115,6 +144,9 @@ public class EfRepo : IRepo
 
         if (existingProduct != null)
         {
+            // Detach the existing product from the DbContext
+            _context.Entry(existingProduct).State = EntityState.Detached;
+
             // Update the existing product
             _context.Products.Update(product);
         }
@@ -139,6 +171,29 @@ public class EfRepo : IRepo
 
     public void DeleteProduct(Product product)
     {
-        throw new NotImplementedException();
+        if (product == null)
+        {
+            throw new ArgumentNullException(nameof(product));
+        }
+
+        var existingProduct = _context.Products.Find(product.Id);
+
+        if (existingProduct != null)
+        {
+            // Detach the existing product from the DbContext
+            _context.Entry(existingProduct).State = EntityState.Detached;
+
+            // Mark the existing product as deleted
+            existingProduct.IsDeleted = true;
+
+            // Update the existing product
+            _context.Products.Update(product);
+        }
+        else
+        {
+            throw new ArgumentNullException(nameof(product));
+        }
+
+        _context.SaveChanges();
     }
 }

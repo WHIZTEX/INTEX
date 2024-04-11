@@ -30,8 +30,8 @@
                 <td>@c.BirthDate</td>
                 <td>@c.HomeAddress.Country</td>
                 <td>@c.Gender</td>
-                <td><button asp-controller="Admin" asp-action="CustomerForm" formmethod="get">Edit</button></td>
-                <td><button asp-controller="Admin" asp-action="DeleteConfirmation" formmethod="get">Remove</button></td>
+                <td><a asp-controller="Admin" asp-action="CustomerForm" asp-route-customerId="@c.Id" formmethod="get">Edit</a></td>
+                <td><a asp-controller="Admin" asp-action="DeleteConfirmation" formmethod="get">Remove</a></td>
             </tr>
         }
     </tbody>
