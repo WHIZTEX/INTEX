@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 using INTEX.Models;
+using INTEX.Models.DatabaseModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -85,6 +86,53 @@ namespace INTEX.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             public string Email { get; set; }
+            
+            [Required]
+            [StringLength(64, ErrorMessage = "First Name must be no more than 64 characters long.")]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [StringLength(64, ErrorMessage = "Last Name must be no more than 64 characters long.")]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [Required]
+            [DataType(DataType.Date)]
+            [Display(Name = "Birth Date")]
+            public DateTime BirthDate { get; set; }
+
+            [Required]
+            [StringLength(32, ErrorMessage = "Gender must be no more than 32 characters long.")]
+            [Display(Name = "Gender")]
+            public string Gender { get; set; }
+
+            #nullable enable
+            [StringLength(64, ErrorMessage = "Address Line 1 must be no more than 64 characters")]
+            [Display(Name = "Address Line 1")]
+            public string? AddressLine1 { get; set; }
+    
+            [StringLength(64, ErrorMessage = "Address Line 2 must be no more than 64 characters")]
+            [Display(Name = "Address Line 2")]
+            public string? AddressLine2 { get; set; }
+    
+            [StringLength(64, ErrorMessage = "City must be no more than 64 characters")]
+            [Display(Name = "City")]
+            public string? City { get; set; }
+    
+            [StringLength(64, ErrorMessage = "State must be no more than 64 characters")]
+            [Display(Name = "State")]
+            public string? State { get; set; }
+    
+            [StringLength(64, ErrorMessage = "Code must be no more than 64 characters")]
+            [Display(Name = "Postal Code")]
+            public string? Code { get; set; }
+    
+            #nullable disable
+            [Required(ErrorMessage = "Country is a required field")]
+            [StringLength(64, ErrorMessage = "Country must be no more than 64 characters")]
+            [Display(Name = "Country")]
+            public string Country { get; set; }
         }
         
         public IActionResult OnGet() => RedirectToPage("./Login");
@@ -156,7 +204,19 @@ namespace INTEX.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
+                user.BirthDate = DateOnly.FromDateTime(Input.BirthDate);
+                user.Gender = Input.Gender;
+                user.HomeAddress = new Address
+                {
+                    AddressLine1 = Input.AddressLine1,
+                    AddressLine2 = Input.AddressLine2,
+                    City = Input.City,
+                    State = Input.State,
+                    Code = Input.Code,
+                    Country = Input.Country
+                };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

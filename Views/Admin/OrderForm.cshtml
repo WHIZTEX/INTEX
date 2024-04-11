@@ -1,0 +1,42 @@
+@model Order
+
+<form asp-controller="Admin" asp-action="OrderForm" method="post">
+    <div class="form-group">
+        <label for="CustomerId">Customer ID:</label>
+        <input type="number" class="form-control" id="CustomerId" name="CustomerId" value="@Model.CustomerId" required />
+        <span asp-validation-for="CustomerId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="TransactionId">Transaction ID:</label>
+        <input type="number" class="form-control" id="TransactionId" name="TransactionId" value="@Model.TransactionId" required />
+        <span asp-validation-for="TransactionId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="AddressId">Address ID:</label>
+        <input type="number" class="form-control" id="AddressId" name="AddressId" value="@Model.AddressId" required />
+        <span asp-validation-for="AddressId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="DateTime">Date Time:</label>
+        <input type="datetime-local" class="form-control" id="DateTime" name="DateTime" value="@Model.DateTime.ToString("yyyy-MM-ddTHH:mm")" required />
+        <span asp-validation-for="DateTime" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Type">Type:</label>
+        <input type="text" class="form-control" id="Type" name="Type" value="@Model.Type" required />
+        <span asp-validation-for="Type" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="FraudPrediction">Fraud Prediction:</label>
+        <input type="checkbox" id="FraudPrediction" name="FraudPrediction" @(Model.FraudPrediction == true ? "checked" : "") />
+    </div>
+    <div class="form-group">
+        <label for="IsFraud">Is Fraud:</label>
+        <input type="checkbox" id="IsFraud" name="IsFraud" @(Model.IsFraud == true ? "checked" : "") />
+    </div>
+    <div class="form-group">
+        <label for="IsDeleted">IsDeleted:</label>
+        <input type="checkbox" id="IsDeleted" name="IsDeleted" @(Model.IsDeleted == true ? "checked" : "") />
+    </div>
+    <button type="submit" class="btn btn-primary">Save Order</button>
+</form>

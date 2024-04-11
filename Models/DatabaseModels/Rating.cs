@@ -16,7 +16,7 @@ public class Rating
     
     [Required]
     [ForeignKey("Product")]
-    public string ProductId { get; set; }
+    public int ProductId { get; set; }
     public virtual Product Product { get; set; }
     
     [Required(ErrorMessage = "Score is a required field")]

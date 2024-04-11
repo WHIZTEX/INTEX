@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
+using INTEX.Models.DatabaseModels;
 using INTEX.Models.Infrastructure;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 
@@ -36,6 +37,7 @@ services.AddDatabaseDeveloperPageExceptionFilter();
 
 // Adding identity services
 services.AddDefaultIdentity<Customer>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 // Configuring Cookie Notification Policy

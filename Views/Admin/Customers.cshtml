@@ -1,6 +1,38 @@
 ﻿@{
     ViewData["Title"] = "Privacy Policy";
 }
+
+@model CustomersListViewModel
+
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Customer ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Birth Date</th>
+            <th>Country of Residence</th>
+            <th>Gender</th>
+            <th>Age</th>
+            <th>Edit</th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model.Customers)
+        {
+            <tr>
+                <td>@c.Id</td>
+                <td>@c.FirstName</td>
+                <td>@c.LastName</td>
+                <td>@c.BirthDate</td>
+                <td>@c.HomeAddress.Country</td>
+                <td>@c.Gender</td>
+                <td><button asp-controller="Admin" asp-action="CustomerForm" formmethod="get">Edit</button></td>
+                <td><button asp-controller="Admin" asp-action="DeleteConfirmation" formmethod="get">Remove</button></td>
+            </tr>
+        }
+    </tbody>
+</table>

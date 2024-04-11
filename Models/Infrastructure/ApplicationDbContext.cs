@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using INTEX.Models.DatabaseModels;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace INTEX.Models;
+namespace INTEX.Models.Infrastructure;
 
 public class ApplicationDbContext : IdentityDbContext<Customer>
 {
@@ -48,6 +50,7 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
         ConfigureIndexes(modelBuilder);
         ConfigureProperties(modelBuilder);
         ConfigureRelationships(modelBuilder);
+        SeedData(modelBuilder);
     }
 
     /// <summary>
@@ -59,7 +62,7 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
         // Address has a composite key on all fields
         modelBuilder.Entity<Address>(entity =>
         {
-            entity.HasAlternateKey(e => new { e.AddressLine1, e.AddressLine2, e.City, e.State, e.Code, e.Country });
+            entity.HasKey(e => e.Id);
         });
 
         // Transaction has a composite key on all fields except Amount
@@ -77,7 +80,7 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
         // Product has a primary key on name
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.Name);
+            entity.HasKey(e => e.Id);
         });
 
         // LineItem has a composite key on OrderId and ProductId
@@ -103,7 +106,8 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
     {
         modelBuilder.Entity<Address>(entity =>
         {
-            entity.HasIndex(e => e.AddressLine1);
+            entity.HasIndex(e => new { e.AddressLine1, e.AddressLine2, e.City, e.State, e.Code, e.Country})
+                .IsUnique();
         });
 
         modelBuilder.Entity<Customer>(entity =>
@@ -127,7 +131,7 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.Name);
+            entity.HasIndex(e => e.Name);
         });
 
         modelBuilder.Entity<LineItem>(entity =>
@@ -156,7 +160,7 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
         // All string fields have a max length that is a power of 2
         // - Proper names (Streets, Cities, Names, Banks, etc.) => 64 characters
         // - Qualifiers (EntryMode, Type, Colors, etc.) => 16 characters
-        // - Gender => 1 character
+        // - Gender => 32 characters
         // - Product Qualifiers (Name, ImgLink) => 256 characters
         // - Blob text (Descriptions) => 4096 characters
         
@@ -176,7 +180,7 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
         {
             entity.Property(e => e.FirstName).HasMaxLength(64).IsRequired();
             entity.Property(e => e.LastName).HasMaxLength(64).IsRequired();
-            entity.Property(e => e.Gender).HasMaxLength(1).IsRequired();
+            entity.Property(e => e.Gender).HasMaxLength(32).IsRequired();
             entity.Property(e => e.BirthDate).IsRequired();
         });
 
@@ -231,9 +235,10 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
     }
 
     /// <summary>
-    /// This method is called to add all of the 
+    /// This method is called to add all of the relationship constraints for the entities.
+    /// Relationship descriptions are described in comments.
     /// </summary>
-    /// <param name="modelBuilder"></param>
+    /// <param name="modelBuilder">The forwarded modelBuilder from OnModelCreating</param>
     private void ConfigureRelationships(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Customer>(entity =>
@@ -265,7 +270,6 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
             entity.HasOne<Customer>(e => e.Customer)
                 .WithMany(e => e.Orders)
                 .HasForeignKey(e => e.CustomerId)
-                .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
             // Orders have a one to one required relationship with Transactions
             // Transactions have a one to one required reverse relationship with Orders
@@ -290,14 +294,12 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
             entity.HasOne<Order>(e => e.Order)
                 .WithMany(e => e.LineItems)
                 .HasForeignKey(e => e.OrderId)
-                .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
             // LineItems have a one to one required relationship with Products
             // Products have a one to many required reverse relationship with LineItems
             entity.HasOne<Product>(e => e.Product)
                 .WithMany(e => e.LineItems)
                 .HasForeignKey(e => e.ProductId)
-                .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
         });
 
@@ -308,16 +310,28 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
             entity.HasOne<Customer>(e => e.Customer)
                 .WithMany(e => e.Ratings)
                 .HasForeignKey(e => e.CustomerId)
-                .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
             // Ratings have a one to one required relationship with Products
             // Products have a one to many optional revers relationship with Ratings
             entity.HasOne<Product>(e => e.Product)
                 .WithMany(e => e.Ratings)
                 .HasForeignKey(e => e.ProductId)
-                .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
         });
         
+    }
+
+    /// <summary>
+    /// This method is called to add all of seed data for the entities.
+    /// </summary>
+    /// <param name="modelBuilder">The forwarded modelBuilder from OnModelCreating</param>
+    private void SeedData(ModelBuilder modelBuilder)
+    {
+        const string administratorGuid = "f355dee5-b11b-40c4-89ea-6edd21ad7072";
+        const string customerGuid = "5ddff5a9-8794-4785-9598-a3c8d04d9b57";
+        modelBuilder.Entity<IdentityRole>().HasData(
+            new IdentityRole { Id = administratorGuid, Name = "Administrator", NormalizedName = "ADMINISTRATOR" },
+            new IdentityRole { Id = customerGuid, Name = "Customer", NormalizedName = "CUSTOMER" }
+        );
     }
 }
