@@ -333,12 +333,12 @@ public class EfRepo : IRepo
     {
         var query = _context.ProductRecommendations
             .Where(x => x.ProductId == product.Id)
-            .Include(x => x.Product1)
-            .Include(x => x.Product2)
-            .Include(x => x.Product3)
-            .Include(x => x.Product4)
-            .Include(x => x.Product5)
-            .Include(x => x.ProductRec);
+            .Include(x => x.Recommendation1)
+            .Include(x => x.Recommendation2)
+            .Include(x => x.Recommendation3)
+            .Include(x => x.Recommendation4)
+            .Include(x => x.Recommendation5)
+            .Include(x => x.Product);
 
         var productAndRecs = query.FirstOrDefault();
 
@@ -348,10 +348,10 @@ public class EfRepo : IRepo
     // addtion for the recommedation
     public IQueryable<ProductRecommendation> ProductRecommendations(int productId) => _context.ProductRecommendations
                                                                            .Where(x => x.ProductId == productId)
-                                                                           .Include(x => x.Product1)
-                                                                           .Include(x => x.Product2)
-                                                                           .Include(x => x.Product3)
-                                                                           .Include(x => x.Product4)
-                                                                           .Include(x => x.Product5)
-                                                                           .Include(x => x.ProductRec);
+                                                                           .Include(x => x.Recommendation1)
+                                                                           .Include(x => x.Recommendation2)
+                                                                           .Include(x => x.Recommendation3)
+                                                                           .Include(x => x.Recommendation4)
+                                                                           .Include(x => x.Recommendation5)
+                                                                           .Include(x => x.Product);
 }
