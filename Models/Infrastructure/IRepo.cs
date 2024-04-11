@@ -21,5 +21,5 @@ public interface IRepo
     public void DeleteProduct(Product product);
 
     //product recommendation setup
-    public IQueryable<ProductRecommendation> ProductRecommedantions(int product_ID);
+    public IQueryable<ProductRecommendation> ProductRecommendations(int product_ID);
 }
