@@ -29,23 +29,6 @@ public class EfRepo : IRepo
         _roleManager = roleManager;
     }
 
-    /*
-    public async Task<List<string>> GetRolesForCustomerAsync(string customerId)
-    {
-        var user = await _userManager.FindByIdAsync(customerId);
-        if (user == null)
-        {
-            // Handle the case where user is not found
-            return new List<string>();
-        }
-
-        var roles = await _userManager.GetRolesAsync(user);
-        return roles.ToList();
-    }
-    */
-
-    // ==== CONSTRUCTION ZONE ENDS ====
-
     public async Task<CustomersListViewModel> GetCustomersListViewModel()
     {
         var customers = _context.Customers
@@ -80,7 +63,21 @@ public class EfRepo : IRepo
 
     public OrdersListViewModel GetOrdersListViewModel()
     {
-        throw new NotImplementedException();
+        var orders = _context.Orders
+            .Where(o => o.IsDeleted == false)
+            .AsQueryable();
+
+        var model = new OrdersListViewModel
+        {
+            Orders = orders,
+            PaginationInfo = new PaginationInfo
+            {
+                CurrentPage = 0,
+                ItemsPerPage = 20, // Hard coded to 20
+                TotalItems = orders.Count()
+            }
+        };
+        return model;
     }
 
     public ProductsListViewModel GetProductsListViewModel(ProductsFilter filter)
@@ -143,7 +140,17 @@ public class EfRepo : IRepo
 
     public Order GetOrderById(int? orderId)
     {
-        throw new NotImplementedException();
+        if (orderId == null)
+        {
+            // Return a new instance of Product
+            return new Order();
+        }
+        else
+        {
+            // Implement logic to retrieve product by ID
+            // For example:
+            return _context.Orders.FirstOrDefault(o => o.Id == orderId);
+        }
     }
 
     public Product GetProductById(int? productId)
@@ -273,17 +280,20 @@ public class EfRepo : IRepo
 
     public void DeleteCustomer(Customer customer)
     {
-        throw new NotImplementedException();
+        _context.Customers.Remove(customer);
+        _context.SaveChanges();
     }
 
     public void DeleteOrder(Order order)
     {
-        throw new NotImplementedException();
+        _context.Orders.Remove(order);
+        _context.SaveChanges();
     }
 
     public void DeleteProduct(Product product)
     {
         product.IsDeleted = true;
+        _context.Products.Update(product);
         _context.SaveChanges();
     }
 

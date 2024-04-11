@@ -1,0 +1,10 @@
+@model Customer
+
+<h1>Are you sure you want to delete this Customer?</h1>
+
+<form asp-action="DeleteCustomer" asp-controller="Admin" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <button type="submit">Delete</button>
+    <a class="btn btn-info" asp-controller="Admin" asp-action="Customers">Cancel</a>
+</form>

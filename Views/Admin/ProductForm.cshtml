@@ -61,10 +61,6 @@
         <input type="text" class="form-control" id="Category" name="Category" value="@Model.Category" required />
         <span asp-validation-for="Category" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label for="IsDeleted">IsDeleted:</label>
-        <input type="checkbox" id="IsDeleted" name="IsDeleted" value="true" @(Model.IsDeleted ? "checked" : "") />
-    </div>
     <button type="submit" class="btn btn-primary">@action Product</button>
     <button onclick="goBack()" class="btn btn-secondary">Cancel</button>
     
