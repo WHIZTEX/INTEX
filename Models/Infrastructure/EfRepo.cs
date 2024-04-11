@@ -256,6 +256,7 @@ public class EfRepo : IRepo
 
         
     }
+
     // addtion for the recommedation
     public IQueryable<ProductRecommendation> ProductRecommendations(int productId) => _context.ProductRecommendations
                                                                            .Where(x => x.ProductId == productId)
