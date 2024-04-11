@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using INTEX.Models;
 using INTEX.Models.DatabaseModels;
 using INTEX.Models.Infrastructure;
 using INTEX.Models.ViewModels;
@@ -11,7 +10,7 @@ public class CustomerController : Controller
 {
     private readonly IRepo _repo;
 
-    public CustomerController(IRepo repo, ApplicationDbContext context)
+    public CustomerController(IRepo repo)
     {
         _repo = repo;
     }
@@ -34,8 +33,12 @@ public class CustomerController : Controller
     [Authorize(Roles = "Customer,Administrator")]
     public IActionResult ConfirmOrder(ConfirmOrderViewModel model)
     {
-        Order order = _repo.ConfirmOrder(model);
-        return RedirectToAction("OrderConfirmation", new { orderId = order.Id });
+        if (ModelState.IsValid)
+        {
+            Order order = _repo.ConfirmOrder(model);
+            return RedirectToAction("OrderConfirmation", new { orderId = order.Id });
+        }
+        return Redirect(Request.Headers.Referer.ToString());
     }
 
     [HttpGet]

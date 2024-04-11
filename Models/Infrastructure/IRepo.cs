@@ -8,7 +8,7 @@ public interface IRepo
     public CustomersListViewModel GetCustomersListViewModel();
     public OrdersListViewModel GetOrdersListViewModel();
     public ProductsListViewModel GetProductsListViewModel(ProductsFilter filter);
-    public Customer GetCustomerById(int? customerId);
+    public Customer GetCustomerById(string? customerId);
     public Customer GetCustomerByAspNetUserId(int aspNetUserId);
     public Order GetOrderById(int? orderId);
     public Product GetProductById(int? productId);
@@ -22,4 +22,3 @@ public interface IRepo
 
     //product recommendation setup
     public IQueryable<ProductRecommendation> ProductRecommendations(int product_ID);
-}

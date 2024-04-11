@@ -48,8 +48,8 @@ namespace INTEX.Models.DatabaseModels
         [Required(ErrorMessage = "IsDeleted is a required field")]
         public bool IsDeleted { get; set; } = false;
         
-        public ICollection<LineItem> LineItems { get; set; }
+        public ICollection<LineItem>? LineItems { get; set; }
         
-        public ICollection<Rating> Ratings { get; set; }
+        public ICollection<Rating>? Ratings { get; set; }
     }
 }

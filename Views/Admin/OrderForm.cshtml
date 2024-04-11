@@ -1,6 +1,7 @@
 @model Order
 
 <form asp-controller="Admin" asp-action="OrderForm" method="post">
+    <input type="hidden" asp-for="Id" />
     <div class="form-group">
         <label for="CustomerId">Customer ID:</label>
         <input type="number" class="form-control" id="CustomerId" name="CustomerId" value="@Model.CustomerId" required />
@@ -40,3 +41,10 @@
     </div>
     <button type="submit" class="btn btn-primary">Save Order</button>
 </form>
+
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>

@@ -36,8 +36,11 @@
                     <td>@p.Price</td>
                     <td>@p.ImgLink</td>
                     <td>@p.PrimaryColor</td>
-                    <td><a asp-controller="Admin" asp-action="ProductForm" formmethod="get">Edit</a></td>
-                    <td><a asp-controller="Admin" asp-action="DeleteConfirmation" formmethod="get">Remove</a></td>
+                    <td><a asp-controller="Admin" asp-action="ProductForm" asp-route-productId="@p.Id" formmethod="get">Edit</a></td>
+                    <td>
+                        <a asp-controller="Admin" asp-action="DeleteConfirmation" asp-route-product="@p" formmethod="get">Remove</a>
+                        <!-- <a asp-controller="Admin" asp-action="DeleteConfirmation" asp-route-item="@{/*new DeleteConfirmationViewModel(null, null, p);*/}" formmethod="get">Remove</a> -->
+                    </td>
                 </tr>
             }
         </tbody>

@@ -31,7 +31,7 @@ public class Address
     [Required(ErrorMessage = "IsDeleted is a required field")]
     public bool IsDeleted { get; set; } = false;
     
-    public ICollection<Order> Orders { get; set; }
+    public ICollection<Order>? Orders { get; set; }
     
-    public ICollection<Transaction> Transactions { get; set; }
+    public ICollection<Transaction>? Transactions { get; set; }
 }

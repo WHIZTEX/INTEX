@@ -5,7 +5,6 @@ namespace INTEX.Models.DatabaseModels
 {
     public class ProductRecommendation
     {
-
         [Key]
         [ForeignKey("ProductRec")]
         public int ProductId { get; set; }

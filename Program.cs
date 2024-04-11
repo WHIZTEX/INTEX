@@ -1,10 +1,10 @@
-using INTEX.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using INTEX.Models.DatabaseModels;
 using INTEX.Models.Infrastructure;
+using Microsoft.ML.OnnxRuntime;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 using newfeature;
 var builder = WebApplication.CreateBuilder(args);
@@ -87,6 +87,9 @@ services.AddHttpsRedirection(options =>
 {
     options.RedirectStatusCode = Status307TemporaryRedirect;
 });
+
+// Adding Inference Session singleton of InferenceSession from fraud model
+services.AddSingleton(new InferenceSession("Models/MachineLearning/fraudModel.onnx"));
 
 var app = builder.Build();
 
