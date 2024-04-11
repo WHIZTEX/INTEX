@@ -5,6 +5,97 @@
 @* @model Product *@
 @model ProductRecommendation
 
+<style>
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -15px;
+    }
+
+    .col-md-6 {
+        width: 50%;
+        padding: 15px;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .product-image {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-details {
+        background: linear-gradient(to right, #f4f4f4, #e0e0e0);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    button {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .description {
+        font-size: 16px;
+        color: #333;
+    }
+
+    .similar-products {
+        padding: 20px 0;
+        border-top: 1px solid #ccc;
+        margin-top: 20px;
+    }
+
+    .similar-product {
+        display: inline-block;
+        width: 19%; /* Adjust based on how many items per row you want */
+        padding: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 10px;
+        background-color: white;
+        text-align: center;
+        vertical-align: top;
+        border-radius: 10px;
+    }
+
+        .similar-product img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .similar-product h3 {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .similar-product p {
+            font-size: 16px;
+            color: #666;
+        }
+</style>
+
+
 <div class="container">
     <div class="row">
         <!-- First Column -->
