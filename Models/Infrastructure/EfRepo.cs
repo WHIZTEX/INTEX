@@ -125,7 +125,18 @@ public class EfRepo : IRepo
         {
             throw new ArgumentNullException(nameof(product));
         }
-        _context.Products.Add(product);
+        var existingProduct = _context.Products.Find(product.Id);
+
+        if (existingProduct != null)
+        {
+            // Update the existing product
+            _context.Products.Update(product);
+        }
+        else
+        {
+            // Add the new product
+            _context.Products.Add(product);
+        }
         _context.SaveChanges();
     }
 
