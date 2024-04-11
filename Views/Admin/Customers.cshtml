@@ -40,7 +40,7 @@
                 <td>@c.Customer.Gender</td>
                 <td>@c.Roles[0]</td>
                 <td><a asp-controller="Admin" asp-action="CustomerForm" asp-route-customerId="@c.Customer.Id" asp-route-role="@c.Roles[0]" formmethod="get">Edit</a></td>
-                <td><a asp-controller="Admin" asp-action="DeleteConfirmation" formmethod="get">Remove</a></td>
+                <td><a asp-controller="Admin" asp-action="ConfirmDeleteCustomer" asp-route-customerId="@c.Customer.Id" formmethod="get">Remove</a></td>
             </tr>
         }
     </tbody>

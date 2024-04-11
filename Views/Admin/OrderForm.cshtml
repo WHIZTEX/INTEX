@@ -35,10 +35,6 @@
         <label for="IsFraud">Is Fraud:</label>
         <input type="checkbox" id="IsFraud" name="IsFraud" @(Model.IsFraud == true ? "checked" : "") />
     </div>
-    <div class="form-group">
-        <label for="IsDeleted">IsDeleted:</label>
-        <input type="checkbox" id="IsDeleted" name="IsDeleted" @(Model.IsDeleted == true ? "checked" : "") />
-    </div>
     <button type="submit" class="btn btn-primary">Save Order</button>
 </form>
 

@@ -37,7 +37,7 @@
                     <td>@p.ImgLink</td>
                     <td>@p.PrimaryColor</td>
                     <td><a asp-controller="Admin" asp-action="ProductForm" asp-route-productId="@p.Id" formmethod="get">Edit</a></td>
-                    <td><a href="#" onclick="confirmDelete('@Url.Action("DeleteProduct", "Admin", new { productId = p.Id }))">Remove</a></td>
+                    <td><a asp-controller="Admin" asp-action="ConfirmDeleteProduct" asp-route-productId="@p.Id" formmethod="get">Remove</a></td>
                 </tr>
             }
         </tbody>
