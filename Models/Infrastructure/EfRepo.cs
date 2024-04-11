@@ -323,9 +323,17 @@ public class EfRepo : IRepo
         }
 
         _context.SaveChanges();
-
-
         
+    }
+
+    public ProductRecommendation GenerateRecommendations(int productId)
+    {
+        var productAndRecs = new ProductRecommendation
+        {
+            ProductId = productId,
+            ProductRec = 
+        };
+        return productAndRecs;
     }
 
     // addtion for the recommedation

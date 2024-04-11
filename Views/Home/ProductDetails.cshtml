@@ -1,8 +1,7 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Product Details";
 }
 
-@* @model Product *@
 @model ProductRecommendation
 
 <style>
@@ -101,60 +100,99 @@
         <!-- First Column -->
         <div class="col-md-6 text-center" style="padding-top: 8%;">
             <!-- Content for the first column goes here -->
-            <!-- This image is just a placeholder for the model image -->
-            <img width="80%" src="@Model.ProductRec.ImgLink" />
+            @if (Model.ProductRec != null)
+            {
+                <img width="80%" src="@Model.ProductRec.ImgLink" />
+            }
+            else
+            {
+                <p>No product image available</p>
+            }
         </div>
+
         <!-- Second Column -->
         <div class="col-md-6" style="padding-top: 8%;">
             <!-- Content for the second column goes here -->
-            <h2>@Model.ProductRec.Name</h2>
-            <p>Star rating should go here</p>
-            <br>
-            <button>Add to Cart</button>
-            <h3>@Model.ProductRec.Price</h3>
-            <br />
-            <hr>
-            <br />
-            <div class="container">
-                <div class="col-md-6">
-                    <p>FREE SHIPPING</p>
+            @if (Model.ProductRec != null)
+            {
+                <h2>@Model.ProductRec.Name</h2>
+                <p>Star rating should go here</p>
+                <br />
+                <button>Add to Cart</button>
+                <h3>@Model.ProductRec.Price</h3>
+                <br />
+                <hr />
+                <br />
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>FREE SHIPPING</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>FREE RETURNS</p>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <p>FREE RETURNS</p>
-                </div>
-            </div>
-            <br />
-            <h3>DESCRIPTION</h3>
-            <p>@Model.ProductRec.Description</p>
+                <br />
+                <h3>DESCRIPTION</h3>
+                <p>@Model.ProductRec.Description</p>
+            }
+            else
+            {
+                <p>No product details available</p>
+            }
         </div>
     </div>
 </div>
 
-<div>
-    <h2>Similar Products We Recommend</h2>
+@if (Model.Product1 != null || Model.Product2 != null || Model.Product3 != null || Model.Product4 != null || Model.Product5 != null)
+{
     <div>
-        <img width="40%" src="@Model.Product1.ImgLink" />
-        <h3>@Model.Product1.Name</h3>
-        <p>@Model.Product1.Price</p>
+        <h2>Similar Products</h2>
+        <div class="row">
+            @if (Model.Product1 != null)
+            {
+                <div class="col-md-4">
+                    <h3>@Model.Product1.Name</h3>
+                    <p>@Model.Product1.Category</p>
+                    <img src="@Model.Product1.ImgLink" alt="@Model.Product1.Name" class="img-fluid">
+                </div>
+            }
+
+            @if (Model.Product2 != null)
+            {
+                <div class="col-md-4">
+                    <h3>@Model.Product2.Name</h3>
+                    <p>@Model.Product2.Category</p>
+                    <img src="@Model.Product2.ImgLink" alt="@Model.Product2.Name" class="img-fluid">
+                </div>
+            }
+
+            @if (Model.Product3 != null)
+            {
+                <div class="col-md-4">
+                    <h3>@Model.Product3.Name</h3>
+                    <p>@Model.Product3.Category</p>
+                    <img src="@Model.Product3.ImgLink" alt="@Model.Product3.Name" class="img-fluid">
+                </div>
+            }
+
+            @if (Model.Product4 != null)
+            {
+                <div class="col-md-4">
+                    <h3>@Model.Product4.Name</h3>
+                    <p>@Model.Product4.Category</p>
+                    <img src="@Model.Product4.ImgLink" alt="@Model.Product4.Name" class="img-fluid">
+                </div>
+            }
+
+            @if (Model.Product5 != null)
+            {
+                <div class="col-md-4">
+                    <h3>@Model.Product5.Name</h3>
+                    <p>@Model.Product5.Category</p>
+                    <img src="@Model.Product5.ImgLink" alt="@Model.Product5.Name" class="img-fluid">
+                </div>
+            }
+        </div>
+
     </div>
-    <div>
-        <img width="40%" src="@Model.Product2.ImgLink" />
-        <h3>@Model.Product2.Name</h3>
-        <p>@Model.Product2.Price</p>
-    </div>
-    <div>
-        <img width="40%" src="@Model.Product3.ImgLink" />
-        <h3>@Model.Product3.Name</h3>
-        <p>@Model.Product3.Price</p>
-    </div>
-    <div>
-        <img width="40%" src="@Model.Product4.ImgLink" />
-        <h3>@Model.Product4.Name</h3>
-        <p>@Model.Product4.Price</p>
-    </div>
-    <div>
-        <img width="40%" src="@Model.Product5.ImgLink" />
-        <h3>@Model.Product5.Name</h3>
-        <p>@Model.Product5.Price</p>
-    </div>
-</div>
+}
