@@ -19,4 +19,7 @@ public interface IRepo
     public void DeleteCustomer(Customer customer);
     public void DeleteOrder(Order order);
     public void DeleteProduct(Product product);
+
+    //product recommendation setup
+    public IQueryable<ProductRecommendation> ProductRecommendations(int product_ID);
 }
