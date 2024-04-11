@@ -17,11 +17,12 @@
     }
 
     .bestseller-section {
-        background-color: white;
+        background: linear-gradient(to right, #82abd5, #bad8f4);
         border-radius: 20px;
         padding: 10px;
         margin-bottom: 40px;
-        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.25), /* Bottom shadow */
+        0 -12px 20px rgba(0, 0, 0, 0.25); /* Top shadow */
     }
 
     .bestseller-item {
@@ -35,9 +36,11 @@
     .bestseller-box {
         width: calc(33.33% - 20px);
         margin-bottom: 20px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.25), /* Bottom shadow */
+        0 -12px 20px rgba(0, 0, 0, 0.25); /* Top shadow */
         border-radius: 20px;
         overflow: hidden;
+        background-color: white;
     }
 
     .bestseller-image {

@@ -259,7 +259,7 @@ public class EfRepo : IRepo
 
     // addtion for the recommedation
     public IQueryable<ProductRecommendation> ProductRecommendations(int productId) => _context.ProductRecommendations
-                                                                           .Where(x => x.product_ID == productId)
+                                                                           .Where(x => x.ProductId == productId)
                                                                            .Include(x => x.Product1)
                                                                            .Include(x => x.Product2)
                                                                            .Include(x => x.Product3)
