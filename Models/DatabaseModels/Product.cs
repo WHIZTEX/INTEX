@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace INTEX.Models
+namespace INTEX.Models.DatabaseModels
 {
     public class Product
     {
@@ -44,6 +44,9 @@ namespace INTEX.Models
         [Required(ErrorMessage = "Category is a required field")]
         [StringLength(64, ErrorMessage = "Name must be no larger than 64 characters")]
         public string Category { get; set; }
+
+        [Required(ErrorMessage = "IsDeleted is a required field")]
+        public bool IsDeleted { get; set; } = false;
         
         public ICollection<LineItem> LineItems { get; set; }
         

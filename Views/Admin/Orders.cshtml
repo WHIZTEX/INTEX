@@ -1,6 +1,75 @@
 ﻿@{
     ViewData["Title"] = "Privacy Policy";
 }
+
+@model OrdersListViewModel
+
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Customer ID</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Entry Mode</th>
+            <th>Amount</th>
+            <th>Type of Transaction</th>
+            <th>Country of Transaction</th>
+            <th>Fraudulent? (Prediction)</th>
+            <th>Fraudulent? (Actual)</th>
+            <th>Edit</th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model.Orders)
+        {
+            <tr>
+                <td>@p.Id</td>
+                <td>@p.CustomerId</td>
+                <td>@p.DateTime</td>
+                <td>@p.Transaction.EntryMode</td>
+                <td>@p.Transaction.Amount</td>
+                <td>@p.Type</td>
+                <td>@p.Transaction.BillingAddress.Country</td>
+                <td>@p.FraudPrediction</td>
+                <td>@p.IsFraud</td>
+                <td><button asp-controller="Admin" asp-action="OrderForm" formmethod="get">Edit</button></td>
+                <td><button asp-controller="Admin" asp-action="DeleteConfirmation" formmethod="get">Remove</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- This JavaScript code is so that the data gets automatically updated when the checkbox is clicked. It hasn't been tested yet.' -->
+@section scripts {
+    <script>
+        document.querySelectorAll('.checkbox-auto-update').forEach(function (checkbox) {
+            checkbox.addEventListener('change', function () {
+                var orderId = this.value;
+                var isFraud = this.checked;
+
+                // Send AJAX request to update IsFraud property
+                fetch(`/Admin/UpdateOrderIsFraud?orderId=${orderId}&isFraud=${isFraud}`, {
+                    method: 'POST'
+                });
+            });
+        });
+
+        document.querySelectorAll('.edit-button').forEach(function (button) {
+            button.addEventListener('click', function () {
+                var orderId = this.dataset.orderId;
+                // Redirect or perform any edit action you need
+            });
+        });
+
+        document.querySelectorAll('.remove-button').forEach(function (button) {
+            button.addEventListener('click', function () {
+                var orderId = this.dataset.orderId;
+                // Perform remove action
+            });
+        });
+    </script>
+}

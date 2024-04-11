@@ -1,22 +1,167 @@
-html {
-  font-size: 14px;
+/* Reset default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
+/* Global Styles */
 body {
-  margin-bottom: 60px;
+    font-family: 'DM Serif Display', sans-serif; /* Updated to use Sarabun font */
+    background: linear-gradient(to right, #82abd5, #bad8f4);
+    padding-bottom: 60px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header Styles */
+header {
+    background-color: #f4dc7a; /* Yellow header */
+    padding: 10px 0;
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-bottom: 15px;
+    padding-left: 0px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333333; /* Dark text */
+}
+
+.navbar-nav {
+    display: flex;
+    list-style: none;
+}
+
+.nav-item {
+    margin-left: 20px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #333333; /* Dark text */
+    transition: color 0.3s ease;
+}
+
+    .nav-link:hover {
+        color: #000000; /* Black text on hover */
+    }
+
+/* Yellow Header Stripe */
+.header-stripe {
+    background-color: #f4dc7a; /* Yellow header stripe */
+    height: 3px; /* Shortened stripe height */
+}
+
+/* Button Styles */
+.button {
+    background-color: #f4dc7a;
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .button:hover {
+        background-color: #ffd400; /* Lighter shade of yellow on hover */
+    }
+
+/* Content Styles */
+.content {
+    padding: 20px;
+}
+
+/* Footer Styles */
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa; /* Change the background color as needed */
+    padding: 20px 0; /* Adjust padding as needed */
+    text-align: center;
+    z-index: 1000; /* Ensure footer is above other elements */
+}
+
+    /* Optional: Add more styles to enhance appearance */
+
+.admin-button {
+    background-color: #f4dc7a;
+    color: black;
+    padding: 10px 60px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-content: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    width: 400px;
+}
+
+    .admin-button:hover {
+        background-color: #ffd400; /* Lighter shade of yellow on hover */
+    }
+
+.admin-home-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Stacks the buttons vertically */
+    justify-content: center;
+    align-items: center;
+}
+.dm-serif display-regular {
+    font-family: "DM Serif Display", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.dm-serif display-regular-italic {
+    font-family: "DM Serif Display", serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+/* Style for demonstration purposes only. Please use external CSS for production. */
+
+.shop-button {
+    background-color: #f4dc7a;
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .shop-button:hover {
+        background-color: #ffd400; /* Lighter shade of yellow on hover */
+    }
+
+.light-blue-box {
+    position: absolute;
+    top: 50%; /* Adjust positioning */
+    left: 50%; /* Adjust positioning */
+    transform: translate(-50%, -50%);
+    background-color: #bad8f4; /* Light blue color */
+    padding: 50px;
+    border-radius: 15px;
 }

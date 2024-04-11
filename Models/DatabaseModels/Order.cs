@@ -1,8 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace INTEX.Models
+namespace INTEX.Models.DatabaseModels
 {
     public class Order
     {
@@ -12,7 +11,7 @@ namespace INTEX.Models
         
         [Required]
         [ForeignKey("Customers")]
-        public int CustomerId { get; set;}
+        public string CustomerId { get; set;}
         public virtual Customer Customer { get; set; }
         
         [Required]
@@ -37,6 +36,9 @@ namespace INTEX.Models
         
         [Required(ErrorMessage = "Is Fraud is a required field")]
         public bool? IsFraud { get; set; }
+
+        [Required(ErrorMessage = "IsDeleted is a required field")]
+        public bool IsDeleted { get; set; } = false;
         
         public ICollection<LineItem> LineItems { get; set; }
     }

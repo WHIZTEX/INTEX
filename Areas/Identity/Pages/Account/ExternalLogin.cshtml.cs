@@ -11,6 +11,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
+using INTEX.Models;
+using INTEX.Models.DatabaseModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -23,17 +25,17 @@ namespace INTEX.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ExternalLoginModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly IUserStore<IdentityUser> _userStore;
-        private readonly IUserEmailStore<IdentityUser> _emailStore;
+        private readonly SignInManager<Customer> _signInManager;
+        private readonly UserManager<Customer> _userManager;
+        private readonly IUserStore<Customer> _userStore;
+        private readonly IUserEmailStore<Customer> _emailStore;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
 
         public ExternalLoginModel(
-            SignInManager<IdentityUser> signInManager,
-            UserManager<IdentityUser> userManager,
-            IUserStore<IdentityUser> userStore,
+            SignInManager<Customer> signInManager,
+            UserManager<Customer> userManager,
+            IUserStore<Customer> userStore,
             ILogger<ExternalLoginModel> logger,
             IEmailSender emailSender)
         {
@@ -84,6 +86,53 @@ namespace INTEX.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             public string Email { get; set; }
+            
+            [Required]
+            [StringLength(64, ErrorMessage = "First Name must be no more than 64 characters long.")]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [StringLength(64, ErrorMessage = "Last Name must be no more than 64 characters long.")]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [Required]
+            [DataType(DataType.Date)]
+            [Display(Name = "Birth Date")]
+            public DateTime BirthDate { get; set; }
+
+            [Required]
+            [StringLength(32, ErrorMessage = "Gender must be no more than 32 characters long.")]
+            [Display(Name = "Gender")]
+            public string Gender { get; set; }
+
+            #nullable enable
+            [StringLength(64, ErrorMessage = "Address Line 1 must be no more than 64 characters")]
+            [Display(Name = "Address Line 1")]
+            public string? AddressLine1 { get; set; }
+    
+            [StringLength(64, ErrorMessage = "Address Line 2 must be no more than 64 characters")]
+            [Display(Name = "Address Line 2")]
+            public string? AddressLine2 { get; set; }
+    
+            [StringLength(64, ErrorMessage = "City must be no more than 64 characters")]
+            [Display(Name = "City")]
+            public string? City { get; set; }
+    
+            [StringLength(64, ErrorMessage = "State must be no more than 64 characters")]
+            [Display(Name = "State")]
+            public string? State { get; set; }
+    
+            [StringLength(64, ErrorMessage = "Code must be no more than 64 characters")]
+            [Display(Name = "Postal Code")]
+            public string? Code { get; set; }
+    
+            #nullable disable
+            [Required(ErrorMessage = "Country is a required field")]
+            [StringLength(64, ErrorMessage = "Country must be no more than 64 characters")]
+            [Display(Name = "Country")]
+            public string Country { get; set; }
         }
         
         public IActionResult OnGet() => RedirectToPage("./Login");
@@ -155,7 +204,19 @@ namespace INTEX.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
+                user.BirthDate = DateOnly.FromDateTime(Input.BirthDate);
+                user.Gender = Input.Gender;
+                user.HomeAddress = new Address
+                {
+                    AddressLine1 = Input.AddressLine1,
+                    AddressLine2 = Input.AddressLine2,
+                    City = Input.City,
+                    State = Input.State,
+                    Code = Input.Code,
+                    Country = Input.Country
+                };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -197,27 +258,27 @@ namespace INTEX.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private IdentityUser CreateUser()
+        private Customer CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<IdentityUser>();
+                return Activator.CreateInstance<Customer>();
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
-                    $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(Customer)}'. " +
+                    $"Ensure that '{nameof(Customer)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the external login page in /Areas/Identity/Pages/Account/ExternalLogin.cshtml");
             }
         }
 
-        private IUserEmailStore<IdentityUser> GetEmailStore()
+        private IUserEmailStore<Customer> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<IdentityUser>)_userStore;
+            return (IUserEmailStore<Customer>)_userStore;
         }
     }
 }

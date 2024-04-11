@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using INTEX.Models;
+using INTEX.Models.DatabaseModels;
+using INTEX.Models.Infrastructure;
+using INTEX.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.ML.OnnxRuntime;
 using Microsoft.AspNetCore.Http;
@@ -37,9 +40,23 @@ public class CustomerController : Controller
 
     [HttpPost]
     [Authorize(Roles = "Customer,Administrator")]
-    public IActionResult Cart(LineItem[] lineItems)
+    public IActionResult Cart(IQueryable<LineItem> lineItems)
     {
-        Order order = new Order();
+        return RedirectToAction("ConfirmOrder", new { lineItems = lineItems });
+    }
+
+    [HttpGet]
+    [Authorize(Roles = "Customer,Administrator")]
+    public IActionResult ConfirmOrder(IQueryable<LineItem> lineItems)
+    {
+        return View(lineItems);
+    }
+
+    [HttpPost]
+    [Authorize(Roles = "Customer,Administrator")]
+    public IActionResult ConfirmOrder(ConfirmOrderViewModel model)
+    {
+        Order order = _repo.ConfirmOrder(model);
         return RedirectToAction("OrderConfirmation", new { orderId = order.Id });
     }
 
@@ -172,21 +189,24 @@ public class CustomerController : Controller
     [Authorize(Roles = "Customer,Administrator")]
     public IActionResult OrderConfirmation(int orderId)
     {
-        return View();
+        Order model = _repo.GetOrderById(orderId);
+        return View(model);
     }
     
 
     [HttpGet]
     [Authorize(Roles = "Customer,Administrator")]
-    public IActionResult CustomerInfo()
+    public IActionResult CustomerInfo(int aspNetUserId)
     {
-        return View();
+        Customer model = _repo.GetCustomerByAspNetUserId(aspNetUserId);
+        return View(model);
     }
 
     [HttpPost]
     [Authorize(Roles = "Customer,Administrator")]
     public IActionResult CustomerInfo(Customer customer)
     {
+        _repo.UpdateCustomer(customer);
         return RedirectToAction("Index", "Home");
     }
 }
