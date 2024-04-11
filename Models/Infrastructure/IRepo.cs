@@ -5,6 +5,7 @@ namespace INTEX.Models.Infrastructure;
 
 public interface IRepo
 {
+    // public async Task<List<string>> GetRolesForCustomerAsync(string customerId);
     public CustomersListViewModel GetCustomersListViewModel();
     public OrdersListViewModel GetOrdersListViewModel();
     public ProductsListViewModel GetProductsListViewModel(ProductsFilter filter);

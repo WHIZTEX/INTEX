@@ -4,7 +4,6 @@ using Microsoft.Build.Evaluation;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using INTEX.Models.MachineLearning;
-using INTEX.Models.MachineLearning;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.ML.OnnxRuntime;
 
@@ -14,11 +13,35 @@ public class EfRepo : IRepo
 {
     private readonly ApplicationDbContext _context;
     private readonly InferenceSession _session;
-    public EfRepo(ApplicationDbContext context, InferenceSession session)
+
+    // ==== CONSTRUCTION ZONE BEGINS ====
+    private readonly UserManager<Customer> _userManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
+
+    public EfRepo(ApplicationDbContext context, InferenceSession session, UserManager<Customer> userManager, RoleManager<IdentityRole> roleManager)
     {
         _context = context;
         _session = session;
+        _userManager = userManager;
+        _roleManager = roleManager;
     }
+
+    /*
+    public async Task<List<string>> GetRolesForCustomerAsync(string customerId)
+    {
+        var user = await _userManager.FindByIdAsync(customerId);
+        if (user == null)
+        {
+            // Handle the case where user is not found
+            return new List<string>();
+        }
+
+        var roles = await _userManager.GetRolesAsync(user);
+        return roles.ToList();
+    }
+    */
+
+    // ==== CONSTRUCTION ZONE ENDS ====
 
     public CustomersListViewModel GetCustomersListViewModel()
     {

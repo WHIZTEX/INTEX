@@ -7,5 +7,7 @@ namespace INTEX.Models.ViewModels
     {
         public IQueryable<Customer> Customers { get; set;}
         public PaginationInfo PaginationInfo { get; set;}
+        public Dictionary<string, List<string>>? Roles { get; set; } // Dictionary to store roles for each customer
+
     }
 }
