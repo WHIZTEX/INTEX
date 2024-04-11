@@ -2,60 +2,125 @@
     ViewData["Title"] = "Home Page";
 }
 <style>
-.background-div-1 {
-    background-image: url("img\\LightBlueLegos.png"); /* Adjust the path to your image */
-    background-size: cover; /* This will make sure the image covers the entire div */
-    background-position: left center; /* This will left-center the image */
-    width: 100%; /* Adjust width as needed */
-    height: 1000px; /* Adjust height as needed */
-    /* Other styles for the div */
-    color: black; /* Example text color */
-    text-align: center; /* Example text alignment */
-    display: flex; /* Use flexbox */
-    flex-direction: column; /* Stack children vertically */
-    justify-content: center; /* Vertically center children */
-    align-items: center; /* Horizontally center children */
-}
+    .background-div-1 {
+        background-image: url("img\\LightBlueLegos.png");
+        background-size: cover;
+        background-position: left center;
+        width: 100%;
+        height: 1000px;
+        color: black;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .bestseller-section {
+        background-color: white;
+        border-radius: 20px;
+        padding: 10px;
+        margin-bottom: 40px;
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .bestseller-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+    }
+
+    .bestseller-box {
+        width: calc(33.33% - 20px);
+        margin-bottom: 20px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .bestseller-image {
+        width: 100%;
+        height: 700px; /* Adjust as needed */
+        object-fit: cover;
+    }
+
+    .yellow-box {
+        background-color: #f4dc7a;
+        border-radius: 0 0 10px 10px;
+        padding: 10px 20px;
+    }
 </style>
+
 
 <div class="background-div-1">
     <div class="light-blue-box">
         <h4 class="display-6" style="font-weight: 900;"> Endless Worlds to Explore</h4><br />
         <h1 class="display-3" style="font-weight: 900;">Find Your Set Now</h1><br />
-    <button class="shop-button">Shop Legos</button>
+        <button class="shop-button">Shop Legos</button>
     </div>
 </div>
-<div class="text-center">
-    <br /><br /><br />
-    <h4 class="display-6" style="font-weight:bolder;">Recommended For You</h4>
-    <br />
-    <br />
-    <br />
-    <br />
-    <h4><i>Space for pipeline recommendations</i></h4>
-    <br />
-    <br />
-    <br />
-    <br />
-    <!-- <button class="shop-button">View All</button> -->
-    <br />
-    <br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<div class="bestseller-section">
+    <h2>Bestselling Characters</h2>
+    <div class="bestseller-item">
+        <div class="bestseller-box">
+            <img class="bestseller-image" src="https://images.brickset.com/sets/large/71017-7.jpg?201611220640" alt="King Tut">
+            <div class="yellow-box">King Tut</div>
+        </div>
+        <div class="bestseller-box">
+            <img class="bestseller-image" src="https://www.lego.com/cdn/cs/set/assets/blt2a6bae345f3aa198/40674.png?format=webply&fit=bounds&quality=75&width=640&height=640&dpr=1" alt="Stitch">
+            <div class="yellow-box">Stitch</div>
+        </div>
+        <div class="bestseller-box">
+            <img class="bestseller-image" src="https://www.lego.com/cdn/cs/set/assets/blt2ab62c2c368f72f6/31152.png?format=webply&fit=bounds&quality=75&width=800&height=800&dpr=1" alt="Space Astronaut">
+            <div class="yellow-box">Space Astronaut</div>
+        </div>
+    </div>
+</div>
+
+<div class="bestseller-section">
+    <h2>Bestselling Vehicles</h2>
+    <div class="bestseller-item">
+        <div class="bestseller-box">
+            <img class="bestseller-image" src="https://www.lego.com/cdn/cs/set/assets/bltd5d0924daab53e4a/60411_alt1.png?format=webply&fit=bounds&quality=75&width=800&height=800&dpr=1" alt="Fire Rescue Helicopter">
+            <div class="yellow-box">Fire Rescue Helicopter</div>
+        </div>
+        <div class="bestseller-box">
+            <img class="bestseller-image" src="https://images.brickset.com/sets/large/1259-1.jpg?199905261030" alt="Motorbike">
+            <div class="yellow-box">Motorbike</div>
+        </div>
+        <div class="bestseller-box">
+            <img class="bestseller-image" src="https://images.brickset.com/sets/images/6461-1.jpg" alt="Surveillance Chopper">
+            <div class="yellow-box">Surveillance Chopper</div>
+        </div>
+    </div>
+</div>
+
+<div class="bestseller-section">
+    <h2>Bestselling Parts</h2>
+    <div class="bestseller-item">
+        <div class="bestseller-box">
+            <img class="bestseller-image" src="https://images.brickset.com/sets/images/5070-1.jpg" alt="Wheel Sets, Black">
+            <div class="yellow-box">Wheel Sets, Black</div>
+        </div>
+        <div class="bestseller-box">
+            <img class="bestseller-image" src="https://www.lego.com/cdn/product-assets/element.img.lod5photo.192x192/300326.jpg" alt="Brick 2x2">
+            <div class="yellow-box">Brick 2x2</div>
+        </div>
+        <div class="bestseller-box">
+            <img class="bestseller-image" src="https://images.brickset.com/sets/large/108-1.jpg?201004210200" alt="Battery Box">
+            <div class="yellow-box">Battery Box</div>
+        </div>
+    </div>
 </div>
 
 <div class="text-center">
     <br /><br /><button class="shop-button" style="padding:20px; font-size: 20px"><b>Shop Featured Sets Now!</b></button>
-    <br /><br /><br /><br />
-    <h4 class="display-6" style="font-weight:bolder;">What Others Are Buying</h4>
-    <br />
-    <br />
-    <br />
-    <br />
-    <h4><i>Space for pipeline recommendations</i></h4>
-    <br />
-    <br />
-    <br />
-    <br />
-    <button class="shop-button">View All</button>
-    <br />
     <br />
 </div>
