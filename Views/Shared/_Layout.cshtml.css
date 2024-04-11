@@ -89,9 +89,13 @@ header {
 }
 
 /* Footer Styles */
-footer {
-    background-color: white; /* White footer */
-    color: #333333; /* Dark text */
+.footer {
+    background-color: white; /* Adjust as needed */
+    color: white;
     text-align: center;
-    padding: 20px 0;
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px; /* Set a fixed height */
 }
