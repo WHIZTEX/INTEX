@@ -7,6 +7,7 @@ using INTEX.Models.MachineLearning;
 using INTEX.Models.MachineLearning;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.ML.OnnxRuntime;
+using Microsoft.Identity.Client;
 
 namespace INTEX.Models.Infrastructure;
 
@@ -251,5 +252,17 @@ public class EfRepo : IRepo
         }
 
         _context.SaveChanges();
+
+
+        
     }
+    // addtion for the recommedation
+    public IQueryable<ProductRecommendation> ProductRecommendations(int productId) => _context.ProductRecommendations
+                                                                           .Where(x => x.product_ID == productId)
+                                                                           .Include(x => x.Product1)
+                                                                           .Include(x => x.Product2)
+                                                                           .Include(x => x.Product3)
+                                                                           .Include(x => x.Product4)
+                                                                           .Include(x => x.Product5)
+                                                                           .Include(x => x.ProductRec);
 }
