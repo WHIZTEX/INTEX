@@ -97,13 +97,13 @@ public class EfRepo : IRepo
     public Order ConfirmOrder(ConfirmOrderViewModel model)
     {
         var input = new FraudPredictionInput(model);
-        var isFraud = Convert.ToBoolean(
+        var fraudPrediction = Convert.ToBoolean(
             _session.Run(new List<NamedOnnxValue>
             {
                 NamedOnnxValue.CreateFromTensor("PredictionInput", input.AsTensor())
             })[0].AsTensor<long>().First());
         var order = model.LineItems.First().Order!;
-        order.IsFraud = isFraud;
+        order.FraudPrediction = fraudPrediction;
         _context.Orders.Update(order);
         _context.SaveChanges();
         return order;
@@ -125,7 +125,6 @@ public class EfRepo : IRepo
         {
             throw new ArgumentNullException(nameof(product));
         }
-
         _context.Products.Add(product);
         _context.SaveChanges();
     }
