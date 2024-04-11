@@ -28,6 +28,8 @@ namespace INTEX.Models.DatabaseModels
 
         [Required(ErrorMessage = "IsDeleted is a required field")]
         public bool IsDeleted { get; set; } = false;
+
+        public int? RecommendationId { get; set; }
         
         public ICollection<Order>? Orders { get; set; }
         

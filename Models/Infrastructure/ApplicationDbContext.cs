@@ -95,7 +95,11 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
         {
             entity.HasAlternateKey(e => new { e.CustomerId, e.ProductId });
         });
-        
+
+        modelBuilder.Entity<ProductRecommendation>(entity =>
+        {
+            entity.HasKey(e => e.ProductId);
+        });
     }
 
     /// <summary>
@@ -319,7 +323,10 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
                 .HasForeignKey(e => e.ProductId)
                 .IsRequired();
         });
-        
+
+        modelBuilder.Entity<ProductRecommendation>(entity =>
+        {
+        });
     }
 
     /// <summary>

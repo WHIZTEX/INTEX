@@ -22,8 +22,7 @@ public interface IRepo
     public void DeleteOrder(Order order);
     public void DeleteProduct(Product product);
     public void PermDeleteProduct(Product product);
-  
-    public ProductRecommendation GenerateRecommendations(int productId);
+    public ProductRecommendation GenerateRecommendations(Product product);
   
     //product recommendation setup
     public IQueryable<ProductRecommendation> ProductRecommendations(int product_ID);

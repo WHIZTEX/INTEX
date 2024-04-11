@@ -6,8 +6,9 @@ namespace INTEX.Models.DatabaseModels
     public class ProductRecommendation
     {
         [Key]
+        [Required]
         [ForeignKey("ProductRec")]
-        public int? ProductId { get; set; }
+        public int ProductId { get; set; }
         public Product ProductRec { get; set; }
 
         [ForeignKey("Product1")]
