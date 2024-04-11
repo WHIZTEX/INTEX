@@ -1,4 +1,12 @@
-﻿@{
+﻿@using INTEX.Models
+@using INTEX.Models.DatabaseModels
+@using INTEX.Models.Infrastructure
+@using INTEX.Models.ViewModels
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<Customer> UserManager
+@inject RoleManager<IdentityRole> RoleManager
+
+@{
     ViewData["Title"] = "Privacy Policy";
 }
 
@@ -15,7 +23,7 @@
             <th>Birth Date</th>
             <th>Country of Residence</th>
             <th>Gender</th>
-            <th>Age</th>
+            <th>Role</th>
             <th>Edit</th>
             <th>Remove</th>
         </tr>
@@ -30,6 +38,12 @@
                 <td>@c.BirthDate</td>
                 <td>@c.HomeAddress.Country</td>
                 <td>@c.Gender</td>
+                <td>
+                    @foreach (var role in await UserManager.GetRolesAsync(c))
+                    {
+                        <span>@role</span>
+                    }
+                </td>
                 <td><a asp-controller="Admin" asp-action="CustomerForm" asp-route-customerId="@c.Id" formmethod="get">Edit</a></td>
                 <td><a asp-controller="Admin" asp-action="DeleteConfirmation" formmethod="get">Remove</a></td>
             </tr>

@@ -15,7 +15,25 @@
 <h2>@action Customer</h2>
 
 <form asp-action="CustomerForm" method="post">
+    <!-- Hidden fields that will not be edited -->
     <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="UserName" />
+    <input type="hidden" asp-for="NormalizedUserName" />
+    <input type="hidden" asp-for="Email" />
+    <input type="hidden" asp-for="NormalizedEmail" />
+    <input type="hidden" asp-for="EmailConfirmed" />
+    <input type="hidden" asp-for="PasswordHash" />
+    <input type="hidden" asp-for="SecurityStamp" />
+    <input type="hidden" asp-for="ConcurrencyStamp" />
+    <input type="hidden" asp-for="PhoneNumber" />
+    <input type="hidden" asp-for="PhoneNumberConfirmed" />
+    <input type="hidden" asp-for="TwoFactorEnabled" />
+    <input type="hidden" asp-for="LockoutEnd" />
+    <input type="hidden" asp-for="LockoutEnabled" />
+    <input type="hidden" asp-for="AccessFailedCount" />
+    <input type="hidden" asp-for="AddressId" />
+
+    <!-- Editable fields -->
     <div class="form-group">
         <label for="FirstName">First Name:</label>
         <input asp-for="FirstName" class="form-control" />

@@ -124,8 +124,50 @@ public class EfRepo : IRepo
 
     public void UpdateCustomer(Customer customer)
     {
-        _context.Customers.Update(customer);
-        _context.SaveChanges();
+        if (customer == null)
+        {
+            throw new ArgumentNullException(nameof(customer));
+        }
+
+        // Check if the customer exists in the database
+        var existingCustomer = _context.Customers.Find(customer.Id);
+
+        if (existingCustomer != null)
+        {
+            // Check if the customer's address is being updated
+            if (customer.HomeAddress != null)
+            {
+                // Check if the address already exists in the database
+                var existingAddress = _context.Addresses.FirstOrDefault(a =>
+                    a.AddressLine1 == customer.HomeAddress.AddressLine1 &&
+                    a.AddressLine2 == customer.HomeAddress.AddressLine2 &&
+                    a.City == customer.HomeAddress.City &&
+                    a.State == customer.HomeAddress.State &&
+                    a.Country == customer.HomeAddress.Country);
+
+                if (existingAddress != null)
+                {
+                    // Associate the customer with the existing address
+                    customer.HomeAddress = existingAddress;
+                }
+                else
+                {
+                    // Add the new address to the database
+                    _context.Addresses.Add(customer.HomeAddress);
+                }
+            }
+
+            // Update the existing customer
+            _context.Entry(existingCustomer).CurrentValues.SetValues(customer);
+            _context.SaveChanges();
+        }
+        else
+        {
+            throw new Exception("Customer not found.");
+        }
+
+        //_context.Customers.Update(customer);
+        //_context.SaveChanges();
     }
 
     public void UpdateOrder(Order order)
