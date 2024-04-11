@@ -2,7 +2,8 @@
     ViewData["Title"] = "Home Page";
 }
 
-@model Product
+@* @model Product *@
+@model ProductRecommendation
 
 <div class="container">
     <div class="row">
@@ -10,16 +11,16 @@
         <div class="col-md-6 text-center" style="padding-top: 8%;">
             <!-- Content for the first column goes here -->
             <!-- This image is just a placeholder for the model image -->
-            <img width="80%" src="@Model.ImgLink" />
+            <img width="80%" src="@Model.ProductRec.ImgLink" />
         </div>
         <!-- Second Column -->
         <div class="col-md-6" style="padding-top: 8%;">
             <!-- Content for the second column goes here -->
-            <h2>@Model.Name</h2>
+            <h2>@Model.ProductRec.Name</h2>
             <p>Star rating should go here</p>
             <br>
             <button>Add to Cart</button>
-            <h3>@Model.Price</h3>
+            <h3>@Model.ProductRec.Price</h3>
             <br />
             <hr>
             <br />
@@ -33,7 +34,36 @@
             </div>
             <br />
             <h3>DESCRIPTION</h3>
-            <p>@Model.Description</p>
+            <p>@Model.ProductRec.Description</p>
         </div>
+    </div>
+</div>
+
+<div>
+    <h2>Similar Products</h2>
+    <div>
+        <h1>@Model.Product1.Name</h1>
+        <p>@Model.Product1.Category</p>
+        <img width="40%" src="@Model.Product1.ImgLink" />
+    </div>
+    <div>
+        <h1>@Model.Product2.Name</h1>
+        <p>@Model.Product2.Category</p>
+        <img width="40%" src="@Model.Product2.ImgLink" />
+    </div>
+    <div>
+        <h1>@Model.Product3.Name</h1>
+        <p>@Model.Product3.Category</p>
+        <img width="40%" src="@Model.Product3.ImgLink" />
+    </div>
+    <div>
+        <h1>@Model.Product4.Name</h1>
+        <p>@Model.Product4.Category</p>
+        <img width="40%" src="@Model.Product4.ImgLink" />
+    </div>
+    <div>
+        <h1>@Model.Product5.Name</h1>
+        <p>@Model.Product5.Category</p>
+        <img width="40%" src="@Model.Product5.ImgLink" />
     </div>
 </div>
