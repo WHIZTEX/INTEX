@@ -53,7 +53,7 @@ public class HomeController: Controller
     }
 
     [HttpGet]
-    public IActionResult Test()
+    public IActionResult LiveChat()
     {
         return View();
     }
