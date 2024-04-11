@@ -3,50 +3,162 @@
 @{
     ViewData["Title"] = "Products";
 }
+<style>
+        .product-box img {
+            width: 400px;
+            height: 600px;
+            object-fit: contain;
+            border-radius: 20px 20px 0 0;
+        }
 
-<h1>Products</h1>
+    .yellow-box {
+        background-color: #f4dc7a;
+        padding: 20px 30px;
+        border-radius: 20px 20px 0 0;
+        text-align: center;
+        height: 30px; /* Set fixed height */
+        overflow: hidden;
+        white-space: nowrap; /* Ensure title is only one line */
+        text-overflow: ellipsis; /* Add ellipsis if text overflows */
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
+        font-size: 1.2em; /* Increase font size for title */
+    }
 
-<form method="get" action="@Url.Action("Products", "Home")">
-    <label for="productsPerPage">Results Per Page:</label>
-    <select id="productsPerPage" name="productsPerPage">
-        <option value="5" selected="@((Model.PaginationInfo.ItemsPerPage == 5).ToString().ToLower())">5</option>
-        <option value="10" selected="@((Model.PaginationInfo.ItemsPerPage == 10).ToString().ToLower())">10</option>
-        <option value="20" selected="@((Model.PaginationInfo.ItemsPerPage == 20).ToString().ToLower())">20</option>
-    </select>
 
-    <label for="category">Filter by Category:</label>
-    <select name="category" id="category">
-        <option value="">All</option>
-        <option value="Electronics">Electronics</option>
-        <option value="Clothing">Clothing</option>
-        <!-- Add other categories as needed -->
-    </select>
+    .bottom-buttons {
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between; /* Distribute buttons horizontally */
+        align-items: center; /* Center align buttons vertically */
+    }
 
-    <label for="color">Filter by Color:</label>
-    <select name="color" id="color">
-        <option value="">All</option>
-        <option value="Red">Red</option>
-        <option value="Blue">Blue</option>
-        <!-- Add other colors as needed -->
-    </select>
+        .bottom-buttons p {
+            margin: 0;
+        }
 
-    <button type="submit">Apply Filters</button>
-</form>
+        .bottom-buttons button,
+        .bottom-buttons a {
+            padding: 5px 10px;
+            background-color: white;
+            border: 1px solid black;
+            border-radius: 5px;
+            text-decoration: none;
+            color: black;
+        }
+    /* New CSS for the title and filter */
+    .title-container {
+        text-align: center; /* Center align the title */
+    }
 
-@foreach (var product in Model.Products)
-{
-    <div class="product">
-        <h2>@product.Name</h2>
-        <img src="@product.ImgLink" alt="@product.Name" />
-        <p>@product.Description</p>
-        <p>Price: $@product.Price</p>
-        <form method="post" action="@Url.Action("AddToCart", "Cart")">
-            <input type="hidden" name="productId" value="@product.Id" />
-            <button type="submit">Add to Cart</button>
-        </form>
-        <a asp-controller="Home" asp-action="ProductDetails" asp-route-productId="@product.Id">View Details</a>
-    </div>
-}
+        .filter-container select {
+            padding: 8px;
+            border: 1px solid #ccc; /* Light grey border */
+            border-radius: 5px;
+            margin: 0 10px;
+        }
+
+        .filter-container button {
+            padding: 8px 20px;
+            background-color: #f4dc7a; /* Green button color */
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+            .filter-container button:hover {
+                background-color: #f4dc7a; /* Darker green on hover */
+            }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-gap: 30px; /* Adjust gap between items */
+            grid-column-gap: 30px; /* Increase spacing between columns */
+            margin-top: 40px;
+            width: 100%;
+        }
+
+        .product-box {
+            height: 600px;
+            width: 100%; /* Adjust the width to take up the full grid column width */
+            display: flex;
+            flex-direction: column;
+            border-radius: 20px;
+            overflow: hidden;
+            background-color: white;
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.25), 0 -12px 20px rgba(0, 0, 0, 0.25);
+        }
+
+
+        /* New CSS for the filters container */
+        .filter-container {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 10px;
+            background: linear-gradient(to right, #82abd5, #bad8f4);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.25), 0 -12px 20px rgba(0, 0, 0, 0.25); /* Shadows on top and bottom */
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            width: calc(100% - 40px); /* Take up full width minus padding */
+            margin-left: auto;
+            margin-right: auto;
+        }
+</style>
+
+<div class="title-container">
+    <h1 class="display-4" style="font-weight:900; color:#EDD146; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);">Products </h1>
+</div>
+
+<div class="filter-container">
+    <form method="get" action="@Url.Action("Products", "Home")">
+        <label for="productsPerPage">Results Per Page:</label>
+        <select id="productsPerPage" name="productsPerPage">
+            <option value="5" selected="@((Model.PaginationInfo.ItemsPerPage == 5).ToString().ToLower())">5</option>
+            <option value="10" selected="@((Model.PaginationInfo.ItemsPerPage == 10).ToString().ToLower())">10</option>
+            <option value="20" selected="@((Model.PaginationInfo.ItemsPerPage == 20).ToString().ToLower())">20</option>
+        </select>
+
+        <label for="category">Filter by Category:</label>
+        <select name="category" id="category">
+            <option value="">All</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Clothing">Clothing</option>
+            <!-- Add other categories as needed -->
+        </select>
+
+        <label for="color">Filter by Color:</label>
+        <select name="color" id="color">
+            <option value="">All</option>
+            <option value="Red">Red</option>
+            <option value="Blue">Blue</option>
+            <!-- Add other colors as needed -->
+        </select>
+
+        <button type="submit">Apply Filters</button>
+    </form>
+</div>
+
+<div class="container">
+    @foreach (var product in Model.Products)
+    {
+        <div class="product-box">
+            <div class="yellow-box">@product.Name</div>
+            <img src="@product.ImgLink" alt="@product.Name" />
+            <div class="bottom-buttons">
+                <p>Price: $@product.Price</p>
+                <form method="post" action="@Url.Action("AddToCart", "Cart")">
+                    <input type="hidden" name="productId" value="@product.Id" />
+                    <button type="submit">Add to Cart</button>
+                </form>
+                <a href="@Url.Action("ProductDetails", "Home", new { productId = product.Id })">View Details</a>
+            </div>
+        </div>
+    }
+</div>
 
 @{
     var totalPages = Model.PaginationInfo.TotalNumPages;

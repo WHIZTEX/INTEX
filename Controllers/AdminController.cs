@@ -4,6 +4,7 @@ using INTEX.Models.Infrastructure;
 using INTEX.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Identity;
 
 namespace INTEX.Controllers;
 
@@ -33,9 +34,9 @@ public class AdminController : Controller
 
     [HttpGet]
     [Authorize(Roles = "Administrator")]
-    public IActionResult Customers()
+    public async Task<IActionResult> Customers()
     {
-        CustomersListViewModel model = _repo.GetCustomersListViewModel();
+        CustomersListViewModel model = await _repo.GetCustomersListViewModel();
         return View(model);
     }
 
@@ -65,34 +66,29 @@ public class AdminController : Controller
 
     [HttpGet]
     [Authorize(Roles = "Administrator")]
-    public IActionResult CustomerForm(string? customerId)
+    public IActionResult CustomerForm(string? customerId, string? role)
     {
-        Customer model = _repo.GetCustomerById(customerId);
+        Customer customer = _repo.GetCustomerById(customerId);
+        List<string> roles = new List<string>();
+        roles.Add(role);
+
+        CustomersRolesListViewModel model = new CustomersRolesListViewModel(customer, roles);
         return View(model);
     }
 
     [HttpPost]
     [Authorize(Roles = "Administrator")]
-    public IActionResult CustomerForm(Customer customer)
+    public async Task<IActionResult> CustomerFormPost(CustomersRolesListViewModel model)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            _repo.UpdateCustomer(customer);
-            return RedirectToAction("Customers");
+            // If the model state is not valid, return to the form view with the model
+            return View("CustomerForm", model);
         }
-        foreach (var entry in ModelState)
-        {
-            if (entry.Value.Errors.Any())
-            {
-                string propName = entry.Key;
-                var errMsgs = entry.Value.Errors.Select(error => error.ErrorMessage);
-                foreach (var msg in errMsgs)
-                {
-                    Debug.WriteLine($"Validation error for property '{propName}': {msg}");
-                }
-            }
-        }
-        return Redirect(Request.Headers["Referer"].ToString());
+
+        await _repo.UpdateCustomerRole(model);
+        _repo.UpdateCustomer(model.Customer);
+        return RedirectToAction("Customers");
     }
 
     [HttpGet]
@@ -109,6 +105,16 @@ public class AdminController : Controller
     {
         _repo.UpdateOrder(order);
         return RedirectToAction("Orders");
+    }
+
+    [HttpPost]
+    [Authorize(Roles = "Administrator")]
+    public IActionResult DeleteProduct(Product product)
+    {
+        _repo.DeleteProduct(product);
+
+        return RedirectToAction("Products");
+
     }
 
     [HttpGet]
