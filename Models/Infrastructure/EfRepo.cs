@@ -1,15 +1,20 @@
 using INTEX.Models.DatabaseModels;
 using INTEX.Models.ViewModels;
-using Microsoft.EntityFrameworkCore;
+using INTEX.Models.MachineLearning;
+using INTEX.Models.MachineLearning;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.ML.OnnxRuntime;
 
 namespace INTEX.Models.Infrastructure;
 
 public class EfRepo : IRepo
 {
     private readonly ApplicationDbContext _context;
-    public EfRepo(ApplicationDbContext context)
+    private readonly InferenceSession _session;
+    public EfRepo(ApplicationDbContext context, InferenceSession session)
     {
         _context = context;
+        _session = session;
     }
 
     public CustomersListViewModel GetCustomersListViewModel()
@@ -91,7 +96,17 @@ public class EfRepo : IRepo
 
     public Order ConfirmOrder(ConfirmOrderViewModel model)
     {
-        throw new NotImplementedException();
+        var input = new FraudPredictionInput(model);
+        var fraudPrediction = Convert.ToBoolean(
+            _session.Run(new List<NamedOnnxValue>
+            {
+                NamedOnnxValue.CreateFromTensor("PredictionInput", input.AsTensor())
+            })[0].AsTensor<long>().First());
+        var order = model.LineItems.First().Order!;
+        order.FraudPrediction = fraudPrediction;
+        _context.Orders.Update(order);
+        _context.SaveChanges();
+        return order;
     }
 
     public void UpdateCustomer(Customer customer)
@@ -110,7 +125,6 @@ public class EfRepo : IRepo
         {
             throw new ArgumentNullException(nameof(product));
         }
-
         var existingProduct = _context.Products.Find(product.Id);
 
         if (existingProduct != null)
@@ -123,7 +137,6 @@ public class EfRepo : IRepo
             // Add the new product
             _context.Products.Add(product);
         }
-
         _context.SaveChanges();
     }
 
