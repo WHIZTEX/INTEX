@@ -52,4 +52,10 @@ public class HomeController: Controller
     {
         return View();
     }
+
+    [HttpGet]
+    public IActionResult Test()
+    {
+        return View();
+    }
 }
