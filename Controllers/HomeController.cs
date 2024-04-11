@@ -30,7 +30,8 @@ public class HomeController: Controller
     [HttpGet]
     public IActionResult ProductDetails(int productId)
     {
-        Product model = _repo.GetProductById(productId);
+        Product product = _repo.GetProductById(productId);
+        ProductRecommendation model = _repo.GenerateRecommendations(product);
         return View(model);
     }
     

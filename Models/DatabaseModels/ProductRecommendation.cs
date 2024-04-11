@@ -29,7 +29,5 @@ namespace INTEX.Models.DatabaseModels
         [ForeignKey("Product5")]
         public int Recommendation5Id { get; set; }
         public Product Product5 { get; set; }
-
-
     }
 }
