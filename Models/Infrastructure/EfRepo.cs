@@ -329,13 +329,19 @@ public class EfRepo : IRepo
         
     }
 
-    public ProductRecommendation GenerateRecommendations(int productId)
+    public ProductRecommendation GenerateRecommendations(Product product)
     {
-        var productAndRecs = new ProductRecommendation
-        {
-            ProductId = productId,
-            ProductRec = 
-        };
+        var query = _context.ProductRecommendations
+            .Where(x => x.ProductId == product.Id)
+            .Include(x => x.Product1)
+            .Include(x => x.Product2)
+            .Include(x => x.Product3)
+            .Include(x => x.Product4)
+            .Include(x => x.Product5)
+            .Include(x => x.ProductRec);
+
+        var productAndRecs = query.FirstOrDefault();
+
         return productAndRecs;
     }
 
