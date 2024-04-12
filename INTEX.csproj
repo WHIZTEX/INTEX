@@ -12,6 +12,10 @@
       <Content Remove="wwwroot\js\signalr\NewFolder\**" />
       <EmbeddedResource Remove="wwwroot\js\signalr\NewFolder\**" />
       <None Remove="wwwroot\js\signalr\NewFolder\**" />
+      <None Remove="Models\MachineLearning\fraudModel.onnx" />
+      <Content Include="Models\MachineLearning\fraudModel.onnx">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>
