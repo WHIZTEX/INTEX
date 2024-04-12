@@ -1,14 +1,9 @@
 using INTEX.Models.DatabaseModels;
 using INTEX.Models.ViewModels;
-using Microsoft.Build.Evaluation;
-using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using INTEX.Models.MachineLearning;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.ML.OnnxRuntime;
-using Microsoft.Extensions.Azure;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
 
 namespace INTEX.Models.Infrastructure;
 
@@ -28,23 +23,6 @@ public class EfRepo : IRepo
         _userManager = userManager;
         _roleManager = roleManager;
     }
-
-    /*
-    public async Task<List<string>> GetRolesForCustomerAsync(string customerId)
-    {
-        var user = await _userManager.FindByIdAsync(customerId);
-        if (user == null)
-        {
-            // Handle the case where user is not found
-            return new List<string>();
-        }
-
-        var roles = await _userManager.GetRolesAsync(user);
-        return roles.ToList();
-    }
-    */
-
-    // ==== CONSTRUCTION ZONE ENDS ====
 
     public async Task<CustomersListViewModel> GetCustomersListViewModel()
     {
@@ -95,7 +73,6 @@ public class EfRepo : IRepo
                 TotalItems = orders.Count // Set to the total number of orders
             }
         };
-
         return model;
     }
 
@@ -135,7 +112,6 @@ public class EfRepo : IRepo
                 TotalItems = filteredProducts.Count()
             }
         };
-
         return model;
     }
 
@@ -146,13 +122,10 @@ public class EfRepo : IRepo
             // Return a new instance of Customer
             return new Customer();
         }
-        else
-        {
-            // Implement logic to retrieve product by ID
-            return _context.Customers
-                .Include(c => c.HomeAddress)
-                .FirstOrDefault(c => c.Id == customerId);
-        }
+        // Implement logic to retrieve customer by ID
+        return  _context.Customers
+            .Include(c => c.HomeAddress)
+            .First(c => c.Id == customerId);
     }
 
     public Customer GetCustomerByAspNetUserId(int aspNetUserId)
@@ -237,12 +210,8 @@ public class EfRepo : IRepo
             if (customer.HomeAddress != null)
             {
                 // Check if the address already exists in the database
-                var existingAddress = _context.Addresses.FirstOrDefault(a =>
-                    a.AddressLine1 == customer.HomeAddress.AddressLine1 &&
-                    a.AddressLine2 == customer.HomeAddress.AddressLine2 &&
-                    a.City == customer.HomeAddress.City &&
-                    a.State == customer.HomeAddress.State &&
-                    a.Country == customer.HomeAddress.Country);
+                var existingAddress = _context.Addresses
+                    .FirstOrDefault(a => a.Id == customer.AddressId);
 
                 if (existingAddress != null)
                 {
@@ -300,17 +269,20 @@ public class EfRepo : IRepo
 
     public void DeleteCustomer(Customer customer)
     {
-        throw new NotImplementedException();
+        _context.Customers.Remove(customer);
+        _context.SaveChanges();
     }
 
     public void DeleteOrder(Order order)
     {
-        throw new NotImplementedException();
+        _context.Orders.Remove(order);
+        _context.SaveChanges();
     }
 
     public void DeleteProduct(Product product)
     {
         product.IsDeleted = true;
+        _context.Products.Update(product);
         _context.SaveChanges();
     }
 
@@ -340,18 +312,55 @@ public class EfRepo : IRepo
         }
 
         _context.SaveChanges();
-
-
         
     }
 
-    // addtion for the recommedation
-    public IQueryable<ProductRecommendation> ProductRecommendations(int productId) => _context.ProductRecommendations
-                                                                           .Where(x => x.ProductId == productId)
-                                                                           .Include(x => x.Product1)
-                                                                           .Include(x => x.Product2)
-                                                                           .Include(x => x.Product3)
-                                                                           .Include(x => x.Product4)
-                                                                           .Include(x => x.Product5)
-                                                                           .Include(x => x.ProductRec);
+    public ProductRecommendationViewModel GenerateProductRecommendations(Product product)
+    {
+        ProductRecommendation recommendation = _context.ProductRecommendations
+            .First(x => x.ProductId == product.Id);
+        Product prod1 = _context.Products
+            .First(x => x.Id == recommendation.Recommendation1Id);
+        Product prod2 = _context.Products
+            .First(x => x.Id == recommendation.Recommendation2Id);
+        Product prod3 = _context.Products
+            .First(x => x.Id == recommendation.Recommendation3Id);
+        Product prod4 = _context.Products
+            .First(x => x.Id == recommendation.Recommendation4Id);
+        Product prod5 = _context.Products
+            .First(x => x.Id == recommendation.Recommendation5Id);
+        var model = new ProductRecommendationViewModel
+        {
+            Product = product,
+            Recommendation1 = prod1,
+            Recommendation2 = prod2,
+            Recommendation3 = prod3,
+            Recommendation4 = prod4,
+            Recommendation5 = prod5
+        };
+        return model;
+    }
+
+    public CustomerRecommendationViewModel GenerateCustomerRecommendations(Customer customer)
+    {
+        UserRecommendation? recommendation = _context.UserRecommendations
+            .FirstOrDefault(x => x.CustomerId == customer.Id);
+        if (recommendation is null)
+        {
+            return new CustomerRecommendationViewModel();
+        }
+        Product prod1 = _context.Products
+            .First(x => x.Id == recommendation.Recommendation1Id);
+        Product prod2 = _context.Products
+            .First(x => x.Id == recommendation.Recommendation2Id);
+        Product prod3 = _context.Products
+            .First(x => x.Id == recommendation.Recommendation3Id);
+        var model = new CustomerRecommendationViewModel
+        {
+            Recommendation1 = prod1,
+            Recommendation2 = prod2,
+            Recommendation3 = prod3
+        };
+        return model;
+    }
 }

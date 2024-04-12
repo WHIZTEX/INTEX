@@ -25,6 +25,7 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
     public virtual DbSet<LineItem> LineItems { get; set; }
     public virtual DbSet<Rating> Ratings { get; set; }
     public virtual DbSet<ProductRecommendation> ProductRecommendations { get; set; }
+    public virtual DbSet<UserRecommendation> UserRecommendations { get; set; }
 
     /// <summary>
     /// This method is called after instantiation for determining server types
@@ -95,7 +96,16 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
         {
             entity.HasAlternateKey(e => new { e.CustomerId, e.ProductId });
         });
-        
+
+        modelBuilder.Entity<ProductRecommendation>(entity =>
+        {
+            entity.HasKey(e => e.ProductId);
+        });
+
+        modelBuilder.Entity<UserRecommendation>(entity =>
+        {
+            entity.HasKey(e => e.CustomerId);
+        });
     }
 
     /// <summary>
@@ -319,7 +329,22 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
                 .HasForeignKey(e => e.ProductId)
                 .IsRequired();
         });
-        
+
+        modelBuilder.Entity<ProductRecommendation>(entity =>
+        {
+            entity.HasOne<Product>(e => e.Product)
+                .WithOne()
+                .HasForeignKey<ProductRecommendation>(e => e.ProductId)
+                .OnDelete(DeleteBehavior.NoAction);
+        });
+
+        modelBuilder.Entity<UserRecommendation>(entity =>
+        {
+            entity.HasOne<Customer>(e => e.Customer)
+                .WithOne()
+                .HasForeignKey<UserRecommendation>(e => e.CustomerId)
+                .OnDelete(DeleteBehavior.NoAction);
+        });
     }
 
     /// <summary>

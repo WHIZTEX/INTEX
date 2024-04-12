@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model CustomerRecommendationViewModel
 <style>
     .background-div-1 {
         background-image: url("img\\LightBlueLegos.png");
@@ -69,6 +70,31 @@
 <br />
 <br />
 <br />
+@if (User.Identity?.IsAuthenticated ?? false)
+{
+    <div class="bestseller-section">
+        <h2>Recommended for You</h2>
+        <div class="bestseller-item">
+            <div class="bestseller-box">
+                <img class="bestseller-image" src="@Model.Recommendation1.ImgLink" alt="@Model.Recommendation1.Name">
+                <div class="yellow-box">@Model.Recommendation1.Name</div>
+            </div>
+        </div>
+        <div class="bestseller-item">
+            <div class="bestseller-box">
+                <img class="bestseller-image" src="@Model.Recommendation2.ImgLink" alt="@Model.Recommendation2.Name">
+                <div class="yellow-box">@Model.Recommendation2.Name</div>
+            </div>
+        </div>
+        <div class="bestseller-item">
+            <div class="bestseller-box">
+                <img class="bestseller-image" src="@Model.Recommendation3.ImgLink" alt="@Model.Recommendation3.Name">
+                <div class="yellow-box">@Model.Recommendation3.Name</div>
+            </div>
+        </div>
+    </div>
+}
+
 <div class="bestseller-section">
     <h2>Bestselling Characters</h2><br />
     <div class="bestseller-item">
@@ -122,8 +148,5 @@
         </div>
     </div>
 </div>
-
-<div class="text-center">
-    <br /><br /><button class="shop-button" style="padding:20px; font-size: 20px"><b>Shop Featured Sets Now!</b></button>
-    <br />
-</div><br /><br />
+<br />
+<br />

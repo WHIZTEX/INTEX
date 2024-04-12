@@ -1,0 +1,18 @@
+@model Order
+
+<h1>Are you sure you want to delete this Order?</h1>
+
+<form asp-action="DeleteOrder" asp-controller="Admin" method="post">
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="CustomerId" />
+    <input type="hidden" asp-for="TransactionId" />
+    <input type="hidden" asp-for="AddressId" />
+    <input type="hidden" asp-for="DateTime" />
+    <input type="hidden" asp-for="Type" />
+    <input type="hidden" asp-for="FraudPrediction" />
+    <input type="hidden" asp-for="IsFraud" />
+    <input type="hidden" asp-for="IsDeleted" />
+
+    <button type="submit">Delete</button>
+    <a class="btn btn-info" asp-controller="Admin" asp-action="Orders">Cancel</a>
+</form>

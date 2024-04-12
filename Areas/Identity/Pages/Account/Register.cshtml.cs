@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using INTEX.Models;
 using INTEX.Models.DatabaseModels;
+using INTEX.Models.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -31,13 +32,15 @@ namespace INTEX.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<Customer> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IRepo _repo;
 
         public RegisterModel(
             UserManager<Customer> userManager,
             IUserStore<Customer> userStore,
             SignInManager<Customer> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IRepo repo)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -45,6 +48,7 @@ namespace INTEX.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _repo = repo;
         }
 
         /// <summary>
@@ -178,6 +182,7 @@ namespace INTEX.Areas.Identity.Pages.Account
                     Country = Input.Country
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                _repo.UpdateCustomer(user);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
