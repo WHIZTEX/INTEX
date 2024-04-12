@@ -127,25 +127,28 @@
 <br />
 @if (User.Identity?.IsAuthenticated ?? false)
 {
-    <div class="bestseller-section">
-        <h2>Recommended for You</h2>
-        <div class="bestseller-item">
-            <div class="bestseller-box">
-                <img class="bestseller-image" src="@Model.Recommendation1.ImgLink" alt="@Model.Recommendation1.Name">
-                <div class="yellow-box">@Model.Recommendation1.Name</div>
+    if (Model.Recommendation1 is not null)
+    {
+        <div class="bestseller-section">
+            <h2>Recommended for You</h2>
+            <div class="bestseller-item">
+                <div class="bestseller-box">
+                    <img class="bestseller-image" src="@Model.Recommendation1.ImgLink" alt="@Model.Recommendation1.Name">
+                    <div class="yellow-box">@Model.Recommendation1.Name</div>
+                </div>
+            </div>
+            <div class="bestseller-item">
+                <div class="bestseller-box">
+                    <img class="bestseller-image" src="@Model.Recommendation2.ImgLink" alt="@Model.Recommendation2.Name">
+                    <div class="yellow-box">@Model.Recommendation2.Name</div>
+                </div>
+            </div>
+            <div class="bestseller-item">
+                <div class="bestseller-box">
+                    <img class="bestseller-image" src="@Model.Recommendation3.ImgLink" alt="@Model.Recommendation3.Name">
+                    <div class="yellow-box">@Model.Recommendation3.Name</div>
+                </div>
             </div>
         </div>
-        <div class="bestseller-item">
-            <div class="bestseller-box">
-                <img class="bestseller-image" src="@Model.Recommendation2.ImgLink" alt="@Model.Recommendation2.Name">
-                <div class="yellow-box">@Model.Recommendation2.Name</div>
-            </div>
-        </div>
-        <div class="bestseller-item">
-            <div class="bestseller-box">
-                <img class="bestseller-image" src="@Model.Recommendation3.ImgLink" alt="@Model.Recommendation3.Name">
-                <div class="yellow-box">@Model.Recommendation3.Name</div>
-            </div>
-        </div>
-    </div>
+    }
 }
