@@ -25,6 +25,12 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <br /><br />
                     <ul class="navbar-nav flex-grow-1">
+                        @if ((User.Identity?.IsAuthenticated ?? false) && User.IsInRole("Administrator"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Administrative Actions</a>
+                            </li>
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Products">Products</a>
                         </li>
