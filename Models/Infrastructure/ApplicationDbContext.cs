@@ -100,6 +100,11 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
         {
             entity.HasKey(e => e.ProductId);
         });
+
+        modelBuilder.Entity<UserRecommendation>(entity =>
+        {
+            entity.HasKey(e => e.CustomerRecommendationId);
+        });
     }
 
     /// <summary>
@@ -344,6 +349,22 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
             entity.HasOne<Product>(e => e.Recommendation5)
                 .WithOne()
                 .HasForeignKey<ProductRecommendation>(e => e.Recommendation5Id);
+        });
+
+        modelBuilder.Entity<UserRecommendation>(entity =>
+        {
+            entity.HasOne<Customer>(e => e.Customer)
+                .WithOne()
+                .HasForeignKey<UserRecommendation>(e => e.CustomerRecommendationId);
+            entity.HasOne<Product>(e => e.Recommendation1)
+                .WithOne()
+                .HasForeignKey<UserRecommendation>(e => e.Recommendation1Id);
+            entity.HasOne<Product>(e => e.Recommendation2)
+                .WithOne()
+                .HasForeignKey<UserRecommendation>(e => e.Recommendation2Id);
+            entity.HasOne<Product>(e => e.Recommendation3)
+                .WithOne()
+                .HasForeignKey<UserRecommendation>(e => e.Recommendation3Id);
         });
     }
 
