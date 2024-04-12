@@ -276,15 +276,16 @@ header {
 .centered-container {
     width: 80%;
     max-width: 1500px; /* Adjust max-width as needed */
-    max-height: 1000px;
+    max-height: 550px;
     margin: auto; /* Center horizontally */
     background-color: white;
     border-radius: 20px;
     padding: 80px;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
     /* Center horizontally and vertically */
-    position: fixed;
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    overflow-y: auto;
 }
