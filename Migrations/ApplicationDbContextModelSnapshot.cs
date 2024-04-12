@@ -133,9 +133,6 @@ namespace INTEX.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("RecommendationId")
-                        .HasColumnType("int");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -332,21 +329,6 @@ namespace INTEX.Migrations
 
                     b.HasKey("ProductId");
 
-                    b.HasIndex("Recommendation1Id")
-                        .IsUnique();
-
-                    b.HasIndex("Recommendation2Id")
-                        .IsUnique();
-
-                    b.HasIndex("Recommendation3Id")
-                        .IsUnique();
-
-                    b.HasIndex("Recommendation4Id")
-                        .IsUnique();
-
-                    b.HasIndex("Recommendation5Id")
-                        .IsUnique();
-
                     b.ToTable("ProductRecommendations");
                 });
 
@@ -443,15 +425,6 @@ namespace INTEX.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("CustomerId");
-
-                    b.HasIndex("Recommendation1Id")
-                        .IsUnique();
-
-                    b.HasIndex("Recommendation2Id")
-                        .IsUnique();
-
-                    b.HasIndex("Recommendation3Id")
-                        .IsUnique();
 
                     b.ToTable("UserRecommendation");
                 });
@@ -669,50 +642,10 @@ namespace INTEX.Migrations
                     b.HasOne("INTEX.Models.DatabaseModels.Product", "Product")
                         .WithOne()
                         .HasForeignKey("INTEX.Models.DatabaseModels.ProductRecommendation", "ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("INTEX.Models.DatabaseModels.Product", "Recommendation1")
-                        .WithOne()
-                        .HasForeignKey("INTEX.Models.DatabaseModels.ProductRecommendation", "Recommendation1Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("INTEX.Models.DatabaseModels.Product", "Recommendation2")
-                        .WithOne()
-                        .HasForeignKey("INTEX.Models.DatabaseModels.ProductRecommendation", "Recommendation2Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("INTEX.Models.DatabaseModels.Product", "Recommendation3")
-                        .WithOne()
-                        .HasForeignKey("INTEX.Models.DatabaseModels.ProductRecommendation", "Recommendation3Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("INTEX.Models.DatabaseModels.Product", "Recommendation4")
-                        .WithOne()
-                        .HasForeignKey("INTEX.Models.DatabaseModels.ProductRecommendation", "Recommendation4Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("INTEX.Models.DatabaseModels.Product", "Recommendation5")
-                        .WithOne()
-                        .HasForeignKey("INTEX.Models.DatabaseModels.ProductRecommendation", "Recommendation5Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Product");
-
-                    b.Navigation("Recommendation1");
-
-                    b.Navigation("Recommendation2");
-
-                    b.Navigation("Recommendation3");
-
-                    b.Navigation("Recommendation4");
-
-                    b.Navigation("Recommendation5");
                 });
 
             modelBuilder.Entity("INTEX.Models.DatabaseModels.Rating", b =>
@@ -750,34 +683,10 @@ namespace INTEX.Migrations
                     b.HasOne("INTEX.Models.DatabaseModels.Customer", "Customer")
                         .WithOne()
                         .HasForeignKey("INTEX.Models.DatabaseModels.UserRecommendation", "CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("INTEX.Models.DatabaseModels.Product", "Recommendation1")
-                        .WithOne()
-                        .HasForeignKey("INTEX.Models.DatabaseModels.UserRecommendation", "Recommendation1Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("INTEX.Models.DatabaseModels.Product", "Recommendation2")
-                        .WithOne()
-                        .HasForeignKey("INTEX.Models.DatabaseModels.UserRecommendation", "Recommendation2Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("INTEX.Models.DatabaseModels.Product", "Recommendation3")
-                        .WithOne()
-                        .HasForeignKey("INTEX.Models.DatabaseModels.UserRecommendation", "Recommendation3Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Customer");
-
-                    b.Navigation("Recommendation1");
-
-                    b.Navigation("Recommendation2");
-
-                    b.Navigation("Recommendation3");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
