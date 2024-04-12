@@ -1,22 +1,35 @@
-﻿@{
-    ViewData["Title"] = "Privacy Policy";
+﻿@model OrdersListViewModel
+
+@{
+    ViewData["Title"] = "Orders";
 }
 
-@model OrdersListViewModel
-
 <h1>@ViewData["Title"]</h1>
+
+<!-- Filter for fraudulent orders -->
+<form method="get">
+    <div class="form-group">
+        <label for="fraudFilter">Filter by Fraudulence:</label>
+        <select class="form-control" id="fraudFilter" name="FraudPrediction">
+            <option value="">All Orders</option>
+            <option value="true">Fraudulent Orders</option>
+            <option value="false">Non-Fraudulent Orders</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary">Apply Filter</button>
+    </div>
+</form>
 
 <table class="table">
     <thead>
         <tr>
             <th>Order ID</th>
             <th>Customer ID</th>
-            <th>Date</th>
-            <th>Time</th>
+            <th>Date Time</th>
             <th>Entry Mode</th>
             <th>Amount</th>
-            <th>Type of Transaction</th>
-            <th>Country of Transaction</th>
+            <th>Type</th>
+            <th>Country</th>
             <th>Fraudulent? (Prediction)</th>
             <th>Fraudulent? (Actual)</th>
             <th>Edit</th>
@@ -24,52 +37,46 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var p in Model.Orders)
+        @foreach (var order in Model.Orders)
         {
             <tr>
-                <td>@p.Id</td>
-                <td>@p.CustomerId</td>
-                <td>@p.DateTime</td>
-                <td>@p.Transaction.EntryMode</td>
-                <td>@p.Transaction.Amount</td>
-                <td>@p.Type</td>
-                <td>@p.Transaction.BillingAddress.Country</td>
-                <td>@p.FraudPrediction</td>
-                <td>@p.IsFraud</td>
-                <td><button asp-controller="Admin" asp-action="OrderForm" formmethod="get">Edit</button></td>
-                <td><button asp-controller="Admin" asp-action="ConfirmDeleteOrder" formmethod="get">Remove</button></td>
+                <td>@order.Id</td>
+                <td>@order.CustomerId</td>
+                <td>@order.DateTime</td>
+                <td>@(order.Transaction != null ? order.Transaction.EntryMode : "N/A")</td>
+                <td>@(order.Transaction != null ? order.Transaction.Amount.ToString("C") : "N/A")</td>
+                <td>@order.Type</td>
+                <td>@(order.ShippingAddress?.Country)</td>
+                <td>@order.FraudPrediction</td>
+                <td>@order.IsFraud</td>
+                <td><a asp-controller="Admin" asp-action="OrderForm" asp-route-orderId="@order.Id">Edit</a></td>
+                <td><a asp-controller="Admin" asp-action="DeleteConfirmation" asp-route-orderId="@order.Id">Remove</a></td>
             </tr>
         }
     </tbody>
 </table>
 
-<!-- This JavaScript code is so that the data gets automatically updated when the checkbox is clicked. It hasn't been tested yet.' -->
+@if (!Model.Orders.Any())
+{
+    <p>No orders found.</p>
+}
+
+<div class="pagination">
+    <ul class="pagination">
+        @for (int i = 1; i <= Model.PaginationInfo.TotalNumPages; i++)
+        {
+            <li class="page-item @(i == Model.PaginationInfo.CurrentPage ? "active" : "")">
+                <a class="page-link" href="?page=@i&amp;FraudPrediction=@Model.FraudPrediction">Page @i</a>
+            </li>
+        }
+    </ul>
+</div>
+
 @section scripts {
     <script>
-        document.querySelectorAll('.checkbox-auto-update').forEach(function (checkbox) {
-            checkbox.addEventListener('change', function () {
-                var orderId = this.value;
-                var isFraud = this.checked;
-
-                // Send AJAX request to update IsFraud property
-                fetch(`/Admin/UpdateOrderIsFraud?orderId=${orderId}&isFraud=${isFraud}`, {
-                    method: 'POST'
-                });
-            });
-        });
-
-        document.querySelectorAll('.edit-button').forEach(function (button) {
-            button.addEventListener('click', function () {
-                var orderId = this.dataset.orderId;
-                // Redirect or perform any edit action you need
-            });
-        });
-
-        document.querySelectorAll('.remove-button').forEach(function (button) {
-            button.addEventListener('click', function () {
-                var orderId = this.dataset.orderId;
-                // Perform remove action
-            });
+        document.getElementById('fraudFilter').addEventListener('change', function () {
+            var selectedOption = this.value;
+            window.location.href = '@Url.Action("Orders")' + '?FraudPrediction=' + selectedOption;
         });
     </script>
 }
