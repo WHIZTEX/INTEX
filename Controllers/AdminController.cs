@@ -40,6 +40,8 @@ namespace INTEX.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Administrator")]
         public IActionResult Orders(int page = 1, bool? FraudPrediction = null)
         {
             var ordersViewModel = _repo.GetOrdersListViewModel();
@@ -136,68 +138,55 @@ namespace INTEX.Controllers
             return RedirectToAction("Orders");
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Administrator")]
+        public IActionResult ConfirmDeleteOrder(int? orderId)
+        {
+            Order order = _repo.GetOrderById(orderId);
+            return View("DeleteOrderConfirmation", order);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Administrator")]
+        public IActionResult DeleteOrder(Order order)
+        {
+            _repo.DeleteOrder(order);
+            return RedirectToAction("Orders");
+        }
+
+
+        [HttpGet]
+        [Authorize(Roles = "Administrator")]
+        public IActionResult ConfirmDeleteProduct(int? productId)
+        {
+            Product product = _repo.GetProductById(productId);
+            return View("DeleteProductConfirmation", product);
+        }
+
         [HttpPost]
         [Authorize(Roles = "Administrator")]
         public IActionResult DeleteProduct(Product product)
         {
             _repo.DeleteProduct(product);
-
             return RedirectToAction("Products");
-
         }
 
         [HttpGet]
         [Authorize(Roles = "Administrator")]
-        public IActionResult DeleteConfirmation(Customer? customer, Product? product, Order? order)
+        public IActionResult ConfirmDeleteCustomer(string? customerId)
         {
-            DeleteConfirmationViewModel model;
-            if (customer != null)
-            {
-                model = new DeleteConfirmationViewModel(customer, null, null);
-                return View(model);
-            }
-            else if (order != null)
-            {
-                model = new DeleteConfirmationViewModel(null, order, null);
-                return View(model);
-            }
-            else if (product != null)
-            {
-                model = new DeleteConfirmationViewModel(null, null, product);
-                return View(model);
-            }
-            else
-            {
-                return View("Error");
-            }
+            Customer customer = _repo.GetCustomerById(customerId);
+            return View("DeleteCustomerConfirmation", customer);
         }
 
         [HttpPost]
         [Authorize(Roles = "Administrator")]
-        public IActionResult Delete(object item)
+        public IActionResult DeleteCustomer(Customer customerIdOnly)
         {
-            switch (item)
-            {
-                case Customer customer:
-                    {
-                        _repo.DeleteCustomer(customer);
-                        return RedirectToAction("Customers");
-                    }
-                case Order order:
-                    {
-                        _repo.DeleteOrder(order);
-                        return RedirectToAction("Orders");
-                    }
-                case Product product:
-                    {
-                        _repo.DeleteProduct(product);
-                        return RedirectToAction("Products");
-                    }
-                default:
-                    {
-                        return View("Error", item);
-                    }
-            }
+            string customerId = customerIdOnly.Id;
+            Customer customer = _repo.GetCustomerById(customerId);
+            _repo.DeleteCustomer(customer);
+            return RedirectToAction("Customers");
         }
     }
 }
