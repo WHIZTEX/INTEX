@@ -80,8 +80,25 @@ public class EfRepo : IRepo
 
     public OrdersListViewModel GetOrdersListViewModel()
     {
-        throw new NotImplementedException();
+        var orders = _context.Orders
+            .Where(o => !o.IsDeleted)
+            .OrderByDescending(o => o.DateTime)
+            .ToList(); // Materialize the query to a list
+
+        var model = new OrdersListViewModel
+        {
+            Orders = orders.AsQueryable(),
+            PaginationInfo = new PaginationInfo
+            {
+                CurrentPage = 0, // Set to the current page number
+                ItemsPerPage = 20, // Set to the number of items per page
+                TotalItems = orders.Count // Set to the total number of orders
+            }
+        };
+
+        return model;
     }
+
 
     public ProductsListViewModel GetProductsListViewModel(ProductsFilter filter)
     {
@@ -122,7 +139,6 @@ public class EfRepo : IRepo
         return model;
     }
 
-
     public Customer GetCustomerById(string? customerId)
     {
         if (customerId == null)
@@ -146,7 +162,15 @@ public class EfRepo : IRepo
 
     public Order GetOrderById(int? orderId)
     {
-        throw new NotImplementedException();
+        if (orderId == null)
+        {
+            throw new ArgumentNullException(nameof(orderId));
+        }
+
+        return _context.Orders
+            .Include(o => o.Transaction)
+            .Include(o => o.Customer)
+            .FirstOrDefault(o => o.Id == orderId);
     }
 
     public Product GetProductById(int? productId)
