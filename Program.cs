@@ -138,8 +138,12 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "default",
+    name: "Home",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute(
+    name: "Admin",
+    pattern: "{controller=Admin}/{action=Index}/{id?}");
+    
 app.MapRazorPages();
 app.MapHub<ChatHub>("/chatHub");
 
