@@ -276,6 +276,7 @@ header {
 .centered-container {
     width: 80%;
     max-width: 1500px; /* Adjust max-width as needed */
+    max-height: 1000px;
     margin: auto; /* Center horizontally */
     background-color: white;
     border-radius: 20px;
