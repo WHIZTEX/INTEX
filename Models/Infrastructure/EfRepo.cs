@@ -231,14 +231,6 @@ public class EfRepo : IRepo
 
         };
 
-        ICollection<LineItem> lineItems = new List<LineItem>();
-
-        foreach (LineItem lineItem in  cart.ToList())
-        {
-            lineItems.Add(lineItem);
-        }
-
-
         // Create the new order item
         Order order = new Order
         {
@@ -250,9 +242,21 @@ public class EfRepo : IRepo
             ShippingAddress = shippingAddress,
             DateTime = new DateTime(),
             Type = "",
-            IsFraud = false,
-            LineItems = lineItems
+            IsFraud = false
         };
+
+        ICollection<LineItem> lineItems = new List<LineItem>();
+
+        foreach (LineItem lineItem in cart.ToList())
+        {
+            LineItem lineItemReady = new LineItem
+            {
+
+            }
+            lineItems.Add(lineItem);
+        }
+
+        order
 
         // Run the fraud prediction
         var input = new FraudPredictionInput(order);
