@@ -31,7 +31,7 @@ public class HomeController: Controller
     public IActionResult ProductDetails(int productId)
     {
         Product product = _repo.GetProductById(productId);
-        ProductRecommendation model = _repo.GenerateRecommendations(product);
+        ProductRecommendationViewModel model = _repo.GenerateProductRecommendations(product);
         return View(model);
     }
     
