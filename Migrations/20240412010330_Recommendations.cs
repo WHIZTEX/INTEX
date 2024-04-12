@@ -32,7 +32,7 @@ namespace INTEX.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserRecommendation",
+                name: "UserRecommendations",
                 columns: table => new
                 {
                     CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -42,9 +42,9 @@ namespace INTEX.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserRecommendation", x => x.CustomerId);
+                    table.PrimaryKey("PK_UserRecommendations", x => x.CustomerId);
                     table.ForeignKey(
-                        name: "FK_UserRecommendation_AspNetUsers_CustomerId",
+                        name: "FK_UserRecommendations_AspNetUsers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
@@ -58,7 +58,7 @@ namespace INTEX.Migrations
                 name: "ProductRecommendations");
 
             migrationBuilder.DropTable(
-                name: "UserRecommendation");
+                name: "UserRecommendations");
         }
     }
 }

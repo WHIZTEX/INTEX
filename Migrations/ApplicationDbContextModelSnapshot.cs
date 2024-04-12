@@ -426,7 +426,7 @@ namespace INTEX.Migrations
 
                     b.HasKey("CustomerId");
 
-                    b.ToTable("UserRecommendation");
+                    b.ToTable("UserRecommendations");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

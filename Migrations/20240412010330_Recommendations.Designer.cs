@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace INTEX.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240412003345_Recommendations")]
+    [Migration("20240412010330_Recommendations")]
     partial class Recommendations
     {
         /// <inheritdoc />
@@ -429,7 +429,7 @@ namespace INTEX.Migrations
 
                     b.HasKey("CustomerId");
 
-                    b.ToTable("UserRecommendation");
+                    b.ToTable("UserRecommendations");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
