@@ -92,8 +92,11 @@ services.AddHttpsRedirection(options =>
     options.RedirectStatusCode = Status307TemporaryRedirect;
 });
 
+var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+var onnxRelative = Path.Combine("Models", "MachineLearning", "fraudModel.onnx");
+var onnxAbsolute = Path.Combine(baseDirectory, onnxRelative);
 // Adding Inference Session singleton of InferenceSession from fraud model
-services.AddSingleton(new InferenceSession("Models/MachineLearning/fraudModel.onnx"));
+services.AddSingleton(new InferenceSession(onnxAbsolute));
 services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
