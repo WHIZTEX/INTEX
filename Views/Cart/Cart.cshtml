@@ -1,0 +1,72 @@
+﻿@model ConfirmOrderViewModel
+
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<h1 class="Cart">Cart</h1>
+@if (Model != null && Model.LineItems != null && Model.LineItems.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var lineItem in Model.LineItems)
+            {
+                <tr>
+                    <td>@(lineItem.Product != null ? lineItem.Product.Name : "")</td>
+                    <td>@lineItem.Quantity</td>
+                    <td>@(lineItem.Product != null ? lineItem.Product.Price.ToString("C") : "")</td>
+                    <td>@(lineItem.Product != null ? (lineItem.Quantity * lineItem.Product.Price).ToString("C") : "")</td>
+                    <td><button button class="remove-item" data-product-id="@lineItem.Product.Id">Remove Item</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div>
+        @{
+            decimal total = 0;
+            foreach (var lineItem in Model.LineItems)
+            {
+                if (lineItem.Product != null)
+                {
+                    total += lineItem.Quantity * lineItem.Product.Price;
+                }
+            }
+        }
+        <h3>Total: @total.ToString("C")</h3>
+    </div>
+    <a asp-controller="Cart" asp-action="Checkout" asp-route-model="@Model">Proceed to Checkout</a>
+    
+}
+else
+{
+    <p>Your cart is empty.</p>
+}
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(".remove-item").click(function () {
+                var productId = $(this).data("product-id");
+                $.post("/Cart/RemoveItem", { productId: productId }, function (data) {
+                    if (data.success) {
+                        $("#row-" + productId).remove();
+                        // Optionally, update the total displayed on the page
+                    } else {
+                        // Handle error
+                    }
+                });
+            });
+        });
+    </script>
+}
