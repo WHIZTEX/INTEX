@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 using INTEX.Models;
 using INTEX.Models.DatabaseModels;
+using INTEX.Models.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -31,13 +32,15 @@ namespace INTEX.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<Customer> _emailStore;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
+        private readonly IRepo _repo;
 
         public ExternalLoginModel(
             SignInManager<Customer> signInManager,
             UserManager<Customer> userManager,
             IUserStore<Customer> userStore,
             ILogger<ExternalLoginModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IRepo repo)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -45,6 +48,7 @@ namespace INTEX.Areas.Identity.Pages.Account
             _emailStore = GetEmailStore();
             _logger = logger;
             _emailSender = emailSender;
+            _repo = repo;
         }
 
         /// <summary>
@@ -218,6 +222,7 @@ namespace INTEX.Areas.Identity.Pages.Account
                     Country = Input.Country
                 };
                 var result = await _userManager.CreateAsync(user);
+                _repo.UpdateCustomer(user);
                 if (result.Succeeded)
                 {
                     result = await _userManager.AddLoginAsync(user, info);

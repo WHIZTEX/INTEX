@@ -307,6 +307,31 @@ namespace INTEX.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("INTEX.Models.DatabaseModels.ProductRecommendation", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Recommendation1Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Recommendation2Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Recommendation3Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Recommendation4Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Recommendation5Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId");
+
+                    b.ToTable("ProductRecommendations");
+                });
+
             modelBuilder.Entity("INTEX.Models.DatabaseModels.Rating", b =>
                 {
                     b.Property<int>("Id")
@@ -383,6 +408,25 @@ namespace INTEX.Migrations
                     b.HasIndex("DateTime");
 
                     b.ToTable("Transactions");
+                });
+
+            modelBuilder.Entity("INTEX.Models.DatabaseModels.UserRecommendation", b =>
+                {
+                    b.Property<string>("CustomerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Recommendation1Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Recommendation2Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Recommendation3Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("CustomerId");
+
+                    b.ToTable("UserRecommendations");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -593,6 +637,17 @@ namespace INTEX.Migrations
                     b.Navigation("Transaction");
                 });
 
+            modelBuilder.Entity("INTEX.Models.DatabaseModels.ProductRecommendation", b =>
+                {
+                    b.HasOne("INTEX.Models.DatabaseModels.Product", "Product")
+                        .WithOne()
+                        .HasForeignKey("INTEX.Models.DatabaseModels.ProductRecommendation", "ProductId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("INTEX.Models.DatabaseModels.Rating", b =>
                 {
                     b.HasOne("INTEX.Models.DatabaseModels.Customer", "Customer")
@@ -621,6 +676,17 @@ namespace INTEX.Migrations
                         .IsRequired();
 
                     b.Navigation("BillingAddress");
+                });
+
+            modelBuilder.Entity("INTEX.Models.DatabaseModels.UserRecommendation", b =>
+                {
+                    b.HasOne("INTEX.Models.DatabaseModels.Customer", "Customer")
+                        .WithOne()
+                        .HasForeignKey("INTEX.Models.DatabaseModels.UserRecommendation", "CustomerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
