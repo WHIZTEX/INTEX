@@ -33,12 +33,16 @@ public class CustomerController : Controller
     [Authorize(Roles = "Customer,Administrator")]
     public IActionResult ConfirmOrder(ConfirmOrderViewModel model)
     {
+        Order order = _repo.ConfirmOrder(model);
+        return RedirectToAction("OrderConfirmation", new { orderId = order.Id });
+        /*
         if (ModelState.IsValid)
         {
             Order order = _repo.ConfirmOrder(model);
             return RedirectToAction("OrderConfirmation", new { orderId = order.Id });
         }
         return Redirect(Request.Headers.Referer.ToString());
+        */
     }
 
     [HttpGet]

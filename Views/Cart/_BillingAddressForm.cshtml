@@ -1,0 +1,39 @@
+﻿@model Transaction
+
+<h2>Enter Billing Address</h2>
+<br />
+<div class="form-group">
+    <label asp-for="BillingAddress.AddressLine1"></label>
+    <input asp-for="BillingAddress.AddressLine1" class="form-control" />
+    <span asp-validation-for="BillingAddress.AddressLine1" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="BillingAddress.AddressLine2"></label>
+    <input asp-for="BillingAddress.AddressLine2" class="form-control" />
+    <span asp-validation-for="BillingAddress.AddressLine2" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="BillingAddress.City"></label>
+    <input asp-for="BillingAddress.City" class="form-control" />
+    <span asp-validation-for="BillingAddress.City" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="BillingAddress.State"></label>
+    <input asp-for="BillingAddress.State" class="form-control" />
+    <span asp-validation-for="BillingAddress.State" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="BillingAddress.Code"></label>
+    <input asp-for="BillingAddress.Code" class="form-control" />
+    <span asp-validation-for="BillingAddress.Code" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="BillingAddress.Country"></label>
+    <input asp-for="BillingAddress.Country" class="form-control" />
+    <span asp-validation-for="BillingAddress.Country" class="text-danger"></span>
+</div>

@@ -1,0 +1,22 @@
+﻿@model Transaction
+
+<h2>Card Information</h2>
+
+
+<div class="form-group">
+    <label asp-for="CardType">Card Type</label>
+    <input asp-for="CardType" class="form-control" />
+    <span asp-validation-for="CardType" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="EntryMode">Entry Mode</label>
+    <input asp-for="EntryMode" class="form-control" />
+    <span asp-validation-for="EntryMode" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="Bank">Bank</label>
+    <input asp-for="Bank" class="form-control" />
+    <span asp-validation-for="Bank" class="text-danger"></span>
+</div>

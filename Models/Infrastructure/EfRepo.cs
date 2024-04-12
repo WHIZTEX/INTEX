@@ -168,6 +168,7 @@ public class EfRepo : IRepo
 
     public Order ConfirmOrder(ConfirmOrderViewModel model)
     {
+        
         var input = new FraudPredictionInput(model);
         var fraudPrediction = Convert.ToBoolean(
             _session.Run(new List<NamedOnnxValue>
