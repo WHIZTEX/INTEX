@@ -8,7 +8,7 @@ public class UserRecommendation
     [Key]
     [Required]
     [ForeignKey("Customer")]
-    public int CustomerRecommendationId { get; set; }
+    public string CustomerId { get; set; }
     public Customer Customer { get; set; }
 
     [ForeignKey("Recommendation1")]

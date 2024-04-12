@@ -103,7 +103,7 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
 
         modelBuilder.Entity<UserRecommendation>(entity =>
         {
-            entity.HasKey(e => e.CustomerRecommendationId);
+            entity.HasKey(e => e.CustomerId);
         });
     }
 
@@ -355,7 +355,7 @@ public class ApplicationDbContext : IdentityDbContext<Customer>
         {
             entity.HasOne<Customer>(e => e.Customer)
                 .WithOne()
-                .HasForeignKey<UserRecommendation>(e => e.CustomerRecommendationId);
+                .HasForeignKey<UserRecommendation>(e => e.CustomerId);
             entity.HasOne<Product>(e => e.Recommendation1)
                 .WithOne()
                 .HasForeignKey<UserRecommendation>(e => e.Recommendation1Id);
