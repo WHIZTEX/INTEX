@@ -49,15 +49,6 @@ public class CustomerController : Controller
         return View(model);
     }
     
-
-    [HttpGet]
-    [Authorize(Roles = "Customer,Administrator")]
-    public IActionResult CustomerInfo(int aspNetUserId)
-    {
-        Customer model = _repo.GetCustomerByAspNetUserId(aspNetUserId);
-        return View(model);
-    }
-
     [HttpPost]
     [Authorize(Roles = "Customer,Administrator")]
     public IActionResult CustomerInfo(Customer customer)
