@@ -15,7 +15,7 @@ public class UserRecommendation
     public int Recommendation1Id { get; set; }
     public Product Recommendation1 { get; set; }
 
-    [ForeignKey("Recommendation3")]
+    [ForeignKey("Recommendation2")]
     public int Recommendation2Id { get; set; }
     public Product Recommendation2 { get; set; }
 
