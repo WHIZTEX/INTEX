@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using INTEX.Models.MachineLearning;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.ML.OnnxRuntime;
+using System.Security.Claims;
 
 namespace INTEX.Models.Infrastructure;
 
@@ -15,13 +16,15 @@ public class EfRepo : IRepo
     // ==== CONSTRUCTION ZONE BEGINS ====
     private readonly UserManager<Customer> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public EfRepo(ApplicationDbContext context, InferenceSession session, UserManager<Customer> userManager, RoleManager<IdentityRole> roleManager)
+    public EfRepo(ApplicationDbContext context, InferenceSession session, UserManager<Customer> userManager, RoleManager<IdentityRole> roleManager, IHttpContextAccessor httpContextAccessor)
     {
         _context = context;
         _session = session;
         _userManager = userManager;
         _roleManager = roleManager;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task<CustomersListViewModel> GetCustomersListViewModel()
@@ -163,16 +166,107 @@ public class EfRepo : IRepo
 
     public Order ConfirmOrder(ConfirmOrderViewModel model)
     {
-        
-        var input = new FraudPredictionInput(model);
+        // Retrieve line items from cart
+        var cart = _httpContextAccessor.HttpContext.Session.Get<List<LineItem>>("Cart") ?? new List<LineItem>();
+
+        // Define all the object variables that will need to go in the new order item
+
+        // Update the customer object
+        string customerId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        Customer customer = GetCustomerById(customerId);
+        customer.FirstName = model.Order.Customer.FirstName; // checked, it gets passed in the model
+        customer.LastName = model.Order.Customer.LastName; // checked, it gets passed in the model
+        customer.Email = model.Order.Customer.Email; // checked, it gets passed in the model
+        customer.PhoneNumber = model.Order.Customer.PhoneNumber; // checked, it gets passed in the model
+
+        // Create billing address
+        Address billingAddress = new Address
+        {
+            AddressLine1 = model.Transaction.BillingAddress.AddressLine1,
+            AddressLine2 = model.Transaction.BillingAddress.AddressLine2,
+            City = model.Transaction.BillingAddress.City,
+            State = model.Transaction.BillingAddress.State,
+            Code = model.Transaction.BillingAddress.Code,
+            Country = model.Transaction.BillingAddress.Country
+        };
+        // Calculate transaction amount
+            // subtotal
+            decimal subtotal = 0;
+            foreach (var lineItem in cart.ToList())
+            {
+                if (lineItem.Product != null)
+                {
+                    subtotal += lineItem.Quantity * lineItem.Product.Price;
+                }
+            }
+
+            // tax
+            decimal taxRate = 0.1637m; // Tax rate as 16.37%
+            decimal tax = subtotal * taxRate;
+
+            // total
+            decimal total = subtotal + tax;
+
+        // Create transaction
+        Transaction transaction = new Transaction
+        {
+            AddressId = billingAddress.Id,
+            BillingAddress = billingAddress,
+            DateTime = new DateTime(),
+            Amount = total,
+            CardType = model.Transaction.CardType,
+            EntryMode = model.Transaction.EntryMode,
+            Bank = model.Transaction.Bank
+        };
+
+        // Create shipping address
+        Address shippingAddress = new Address
+        {
+            AddressLine1 = model.Order.ShippingAddress.AddressLine1,
+            AddressLine2 = model.Order.ShippingAddress.AddressLine2,
+            City = model.Order.ShippingAddress.City,
+            State = model.Order.ShippingAddress.State,
+            Code = model.Order.ShippingAddress.Code,
+            Country = model.Order.ShippingAddress.Country
+
+        };
+
+        ICollection<LineItem> lineItems = new List<LineItem>();
+
+        foreach (LineItem lineItem in  cart.ToList())
+        {
+            lineItems.Add(lineItem);
+        }
+
+
+        // Create the new order item
+        Order order = new Order
+        {
+            CustomerId = customerId,
+            Customer = customer,
+            TransactionId = transaction.Id,
+            Transaction = transaction,
+            AddressId = shippingAddress.Id,
+            ShippingAddress = shippingAddress,
+            DateTime = new DateTime(),
+            Type = "",
+            IsFraud = false,
+            LineItems = lineItems
+        };
+
+        // Run the fraud prediction
+        var input = new FraudPredictionInput(order);
         var fraudPrediction = Convert.ToBoolean(
             _session.Run(new List<NamedOnnxValue>
             {
                 NamedOnnxValue.CreateFromTensor("PredictionInput", input.AsTensor())
             })[0].AsTensor<long>().First());
-        var order = model.LineItems.First().Order!;
+
         order.FraudPrediction = fraudPrediction;
-        _context.Orders.Update(order);
+
+        // var order = model.LineItems.First().Order!;
+        // order.FraudPrediction = fraudPrediction;
+        _context.Orders.Add(order);
         _context.SaveChanges();
         return order;
     }

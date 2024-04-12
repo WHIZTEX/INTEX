@@ -43,11 +43,11 @@ public class FraudPredictionInput
     private long BanksWithRbs { get; set; }
     private long CardTypeVisa { get; set; }
 
-    public FraudPredictionInput(ConfirmOrderViewModel model)
+    public FraudPredictionInput(Order newOrder)
     {
-        Order order = model.LineItems.First().Order!;
+        Order order = newOrder;
         Customer customer = order.Customer;
-        Transaction transaction = model.Transaction;
+        Transaction transaction = order.Transaction;
         CustomerAge = DateOnly.FromDateTime(DateTime.Today).Year - customer.BirthDate.Year;
         TransactionId = transaction.Id;
         OrderedTime24H = order.DateTime.Hour;
