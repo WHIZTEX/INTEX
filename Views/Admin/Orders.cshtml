@@ -50,7 +50,7 @@
                 <td>@order.FraudPrediction</td>
                 <td>@order.IsFraud</td>
                 <td><a asp-controller="Admin" asp-action="OrderForm" asp-route-orderId="@order.Id">Edit</a></td>
-                <td><a asp-controller="Admin" asp-action="DeleteConfirmation" asp-route-orderId="@order.Id">Remove</a></td>
+                <td><a asp-controller="Admin" asp-action="ConfirmDeleteOrder" asp-route-orderId="@order.Id">Remove</a></td>
             </tr>
         }
     </tbody>
