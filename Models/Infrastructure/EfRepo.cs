@@ -1,14 +1,9 @@
 using INTEX.Models.DatabaseModels;
 using INTEX.Models.ViewModels;
-using Microsoft.Build.Evaluation;
-using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using INTEX.Models.MachineLearning;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.ML.OnnxRuntime;
-using Microsoft.Extensions.Azure;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
 
 namespace INTEX.Models.Infrastructure;
 
@@ -329,29 +324,34 @@ public class EfRepo : IRepo
         
     }
 
-    public ProductRecommendation GenerateRecommendations(Product product)
+    public ProductRecommendationViewModel GenerateProductRecommendations(Product product)
     {
-        var query = _context.ProductRecommendations
-            .Where(x => x.ProductId == product.Id)
-            // .Include(x => x.Recommendation1)
-            // .Include(x => x.Recommendation2)
-            // .Include(x => x.Recommendation3)
-            // .Include(x => x.Recommendation4)
-            // .Include(x => x.Recommendation5)
-            .Include(x => x.Product);
-
-        var productAndRecs = query.FirstOrDefault();
-
-        return productAndRecs;
+        ProductRecommendation recommendation = _context.ProductRecommendations
+            .First(x => x.ProductId == product.Id);
+        Product prod1 = _context.Products
+            .First(x => x.Id == recommendation.Recommendation1Id);
+        Product prod2 = _context.Products
+            .First(x => x.Id == recommendation.Recommendation2Id);
+        Product prod3 = _context.Products
+            .First(x => x.Id == recommendation.Recommendation3Id);
+        Product prod4 = _context.Products
+            .First(x => x.Id == recommendation.Recommendation4Id);
+        Product prod5 = _context.Products
+            .First(x => x.Id == recommendation.Recommendation5Id);
+        var model = new ProductRecommendationViewModel
+        {
+            Product = product,
+            Recommendation1 = prod1,
+            Recommendation2 = prod2,
+            Recommendation3 = prod3,
+            Recommendation4 = prod4,
+            Recommendation5 = prod5
+        };
+        return model;
     }
 
-    // addtion for the recommedation
-    public IQueryable<ProductRecommendation> ProductRecommendations(int productId) => _context.ProductRecommendations
-                                                                           .Where(x => x.ProductId == productId)
-                                                                           // .Include(x => x.Recommendation1)
-                                                                           // .Include(x => x.Recommendation2)
-                                                                           // .Include(x => x.Recommendation3)
-                                                                           // .Include(x => x.Recommendation4)
-                                                                           // .Include(x => x.Recommendation5)
-                                                                           .Include(x => x.Product);
+    public CustomerRecommendationViewModel GenerateCustomerRecommendations(Customer customer)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -2,7 +2,7 @@
     ViewData["Title"] = "Product Details";
 }
 
-@model ProductRecommendation
+@model ProductRecommendationViewModel
 
 <style>
     .container {
@@ -143,56 +143,56 @@
     </div>
 </div>
 
-@* @if (Model.Recommendation1 != null || Model.Recommendation2 != null || Model.Recommendation3 != null || Model.Recommendation4 != null || Model.Recommendation5 != null) *@
-@* { *@
-@*     <div> *@
-@*         <h2>Similar Products</h2> *@
-@*         <div class="row"> *@
-@*             @if (Model.Recommendation1 != null) *@
-@*             { *@
-@*                 <div class="col-md-4"> *@
-@*                     <h3>@Model.Recommendation1.Name</h3> *@
-@*                     <p>@Model.Recommendation1.Category</p> *@
-@*                     <img src="@Model.Recommendation1.ImgLink" alt="@Model.Recommendation1.Name" class="img-fluid"> *@
-@*                 </div> *@
-@*             } *@
-@* *@
-@*             @if (Model.Recommendation2 != null) *@
-@*             { *@
-@*                 <div class="col-md-4"> *@
-@*                     <h3>@Model.Recommendation2.Name</h3> *@
-@*                     <p>@Model.Recommendation2.Category</p> *@
-@*                     <img src="@Model.Recommendation2.ImgLink" alt="@Model.Recommendation2.Name" class="img-fluid"> *@
-@*                 </div> *@
-@*             } *@
-@* *@
-@*             @if (Model.Recommendation3 != null) *@
-@*             { *@
-@*                 <div class="col-md-4"> *@
-@*                     <h3>@Model.Recommendation3.Name</h3> *@
-@*                     <p>@Model.Recommendation3.Category</p> *@
-@*                     <img src="@Model.Recommendation3.ImgLink" alt="@Model.Recommendation3.Name" class="img-fluid"> *@
-@*                 </div> *@
-@*             } *@
-@* *@
-@*             @if (Model.Recommendation4 != null) *@
-@*             { *@
-@*                 <div class="col-md-4"> *@
-@*                     <h3>@Model.Recommendation4.Name</h3> *@
-@*                     <p>@Model.Recommendation4.Category</p> *@
-@*                     <img src="@Model.Recommendation4.ImgLink" alt="@Model.Recommendation4.Name" class="img-fluid"> *@
-@*                 </div> *@
-@*             } *@
-@* *@
-@*             @if (Model.Recommendation5 != null) *@
-@*             { *@
-@*                 <div class="col-md-4"> *@
-@*                     <h3>@Model.Recommendation5.Name</h3> *@
-@*                     <p>@Model.Recommendation5.Category</p> *@
-@*                     <img src="@Model.Recommendation5.ImgLink" alt="@Model.Recommendation5.Name" class="img-fluid"> *@
-@*                 </div> *@
-@*             } *@
-@*         </div> *@
-@* *@
-@*     </div> *@
-@* } *@
+@if (Model.Recommendation1 != null || Model.Recommendation2 != null || Model.Recommendation3 != null || Model.Recommendation4 != null || Model.Recommendation5 != null)
+{
+    <div>
+        <h2>Similar Products</h2>
+        <div class="row">
+            @if (Model.Recommendation1 != null)
+            {
+                <div class="col-md-4">
+                    <h3>@Model.Recommendation1.Name</h3>
+                    <p>@Model.Recommendation1.Category</p>
+                    <img src="@Model.Recommendation1.ImgLink" alt="@Model.Recommendation1.Name" class="img-fluid">
+                </div>
+            }
+
+            @if (Model.Recommendation2 != null)
+            {
+                <div class="col-md-4">
+                    <h3>@Model.Recommendation2.Name</h3>
+                    <p>@Model.Recommendation2.Category</p>
+                    <img src="@Model.Recommendation2.ImgLink" alt="@Model.Recommendation2.Name" class="img-fluid">
+                </div>
+            }
+
+            @if (Model.Recommendation3 != null)
+            {
+                <div class="col-md-4">
+                    <h3>@Model.Recommendation3.Name</h3>
+                    <p>@Model.Recommendation3.Category</p>
+                    <img src="@Model.Recommendation3.ImgLink" alt="@Model.Recommendation3.Name" class="img-fluid">
+                </div>
+            }
+
+            @if (Model.Recommendation4 != null)
+            {
+                <div class="col-md-4">
+                    <h3>@Model.Recommendation4.Name</h3>
+                    <p>@Model.Recommendation4.Category</p>
+                    <img src="@Model.Recommendation4.ImgLink" alt="@Model.Recommendation4.Name" class="img-fluid">
+                </div>
+            }
+
+            @if (Model.Recommendation5 != null)
+            {
+                <div class="col-md-4">
+                    <h3>@Model.Recommendation5.Name</h3>
+                    <p>@Model.Recommendation5.Category</p>
+                    <img src="@Model.Recommendation5.ImgLink" alt="@Model.Recommendation5.Name" class="img-fluid">
+                </div>
+            }
+        </div>
+
+    </div>
+}
