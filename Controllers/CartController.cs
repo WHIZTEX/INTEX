@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
+using INTEX.Models.ViewModels;
 
 public static class SessionExtensions
 {
@@ -34,11 +35,11 @@ namespace INTEX.Controllers
             _httpContextAccessor = httpContextAccessor;
         }
 
-        // Action method for adding a product to the cart
-        [HttpPost]
+        [HttpGet]
         public IActionResult AddToCart(int productId)
         {
-            var product = _repo.GetProductById(productId);
+            //int productId = productIdOnly.Id;
+            Product product = _repo.GetProductById(productId);
 
             if (product == null)
             {
@@ -65,5 +66,52 @@ namespace INTEX.Controllers
 
             return RedirectToAction("Products", "Home");
         }
+
+        [HttpGet]
+        public IActionResult SeeCart()
+        {
+            var cart = _httpContextAccessor.HttpContext.Session.Get<List<LineItem>>("Cart") ?? new List<LineItem>();
+            ConfirmOrderViewModel model = new ConfirmOrderViewModel
+            {
+                LineItems = cart.AsQueryable(),
+                Transaction = new Transaction()
+            };
+            return View(model);
+        }
+
+        /*
+        // Action method for adding a product to the cart
+        [HttpPost]
+        public IActionResult AddToCart(int productId)
+        {
+            //int productId = productIdOnly.Id;
+            Product product = _repo.GetProductById(productId);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            var cart = _httpContextAccessor.HttpContext.Session.Get<List<LineItem>>("Cart") ?? new List<LineItem>();
+
+            // Check if the product is already in the cart
+            var existingLineItem = cart.FirstOrDefault(item => item.ProductId == productId);
+
+            if (existingLineItem != null)
+            {
+                // If the product is already in the cart, increase the quantity
+                existingLineItem.Quantity++;
+            }
+            else
+            {
+                // If the product is not in the cart, add it as a new line item
+                cart.Add(new LineItem { ProductId = productId, Quantity = 1 });
+            }
+
+            _httpContextAccessor.HttpContext.Session.Set("Cart", cart);
+
+            return RedirectToAction("Products", "Home");
+        }
+        */
     }
 }

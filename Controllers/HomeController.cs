@@ -36,12 +36,6 @@ public class HomeController: Controller
     }
     
     [HttpGet]
-    public IActionResult Cart()
-    {
-        return View();
-    }
-
-    [HttpGet]
     public IActionResult AboutUs()
     {
         return View();
