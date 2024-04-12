@@ -211,12 +211,8 @@ public class EfRepo : IRepo
             if (customer.HomeAddress != null)
             {
                 // Check if the address already exists in the database
-                var existingAddress = _context.Addresses.FirstOrDefault(a =>
-                    a.AddressLine1 == customer.HomeAddress.AddressLine1 &&
-                    a.AddressLine2 == customer.HomeAddress.AddressLine2 &&
-                    a.City == customer.HomeAddress.City &&
-                    a.State == customer.HomeAddress.State &&
-                    a.Country == customer.HomeAddress.Country);
+                var existingAddress = _context.Addresses
+                    .FirstOrDefault(a => a.Id == customer.AddressId);
 
                 if (existingAddress != null)
                 {
