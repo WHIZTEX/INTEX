@@ -42,10 +42,41 @@ public class AdminController : Controller
 
     [HttpGet]
     [Authorize(Roles = "Administrator")]
-    public IActionResult Orders()
+    public IActionResult Orders(int page = 1, bool? FraudPrediction = null)
     {
-        OrdersListViewModel model = _repo.GetOrdersListViewModel();
-        return View(model);
+        var ordersViewModel = _repo.GetOrdersListViewModel();
+
+        // Initialize ordersQuery with an empty collection to prevent null reference exceptions
+        var ordersQuery = ordersViewModel.Orders ?? Enumerable.Empty<Order>();
+
+        // Apply filter for fraudulent orders if specified
+        if (FraudPrediction.HasValue)
+        {
+            ordersQuery = ordersQuery.Where(o => o.IsFraud == FraudPrediction.Value);
+        }
+
+        // Paginate the orders
+        int pageSize = 10; // Adjust as needed
+        var paginatedOrders = ordersQuery
+            .OrderByDescending(o => o.IsFraud) // Order by fraud prediction first
+            .ThenByDescending(o => o.DateTime) // Then order by date time
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+        var viewModel = new OrdersListViewModel
+        {
+            Orders = paginatedOrders.AsQueryable(),
+            PaginationInfo = new PaginationInfo
+            {
+                CurrentPage = page,
+                ItemsPerPage = pageSize,
+                TotalItems = ordersQuery.Count()
+            },
+            FraudPrediction = FraudPrediction // Pass the filter value back to the view
+        };
+
+        return View(viewModel); // Return the view with the paginated orders
     }
 
     [HttpGet]
@@ -156,33 +187,5 @@ public class AdminController : Controller
         Customer customer = _repo.GetCustomerById(customerId);
         _repo.DeleteCustomer(customer);
         return RedirectToAction("Customers");
-    }
-
-    [HttpPost]
-    [Authorize(Roles = "Administrator")]
-    public IActionResult Delete(object item)
-    {
-        switch (item)
-        {
-            case Customer customer:
-            {
-                _repo.DeleteCustomer(customer);
-                return RedirectToAction("Customers");
-            }
-            case Order order:
-            {
-                _repo.DeleteOrder(order);
-                return RedirectToAction("Orders");
-            }
-            case Product product:
-            {
-                _repo.DeleteProduct(product);
-                return RedirectToAction("Products");
-            }
-            default:
-            {
-                return View("Error", item);
-            }
-        }
     }
 }
