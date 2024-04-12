@@ -241,7 +241,7 @@ public class EfRepo : IRepo
             AddressId = shippingAddress.Id,
             ShippingAddress = shippingAddress,
             DateTime = new DateTime(),
-            Type = "",
+            Type = "Online",
             IsFraud = false
         };
 
@@ -249,14 +249,21 @@ public class EfRepo : IRepo
 
         foreach (LineItem lineItem in cart.ToList())
         {
+            Product product = GetProductById(lineItem.ProductId);
+
             LineItem lineItemReady = new LineItem
             {
+                OrderId = order.Id,
+                Order = order,
+                ProductId = lineItem.ProductId,
+                Product = product,
+                Quantity = lineItem.Quantity
+            };
 
-            }
-            lineItems.Add(lineItem);
+            lineItems.Add(lineItemReady);
         }
 
-        order
+        order.LineItems = lineItems;
 
         // Run the fraud prediction
         var input = new FraudPredictionInput(order);
@@ -268,8 +275,6 @@ public class EfRepo : IRepo
 
         order.FraudPrediction = fraudPrediction;
 
-        // var order = model.LineItems.First().Order!;
-        // order.FraudPrediction = fraudPrediction;
         _context.Orders.Add(order);
         _context.SaveChanges();
         return order;
