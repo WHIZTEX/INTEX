@@ -1,12 +1,8 @@
 ﻿using INTEX.Models.DatabaseModels;
 using INTEX.Models.Infrastructure;
 
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using System.IO;
 using System.Text.Json;
-using System.Threading.Tasks;
 using INTEX.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 
@@ -97,10 +93,14 @@ namespace INTEX.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult PlaceOrder(ConfirmOrderViewModel model)
+        public IActionResult RemoveItem(int productId)
         {
-            Order newOrder = _repo.ConfirmOrder(model);
-            return View("");
+            var cart = _httpContextAccessor.HttpContext?.Session.Get<List<LineItem>>("Cart") ?? new List<LineItem>();
+            var indexToRemove = cart.FindIndex(o => o.ProductId == productId);
+            if (indexToRemove == -1) return Json(new { success = false });
+            cart.RemoveAt(indexToRemove);
+            _httpContextAccessor.HttpContext!.Session.Set("Cart", cart);
+            return Json(new { success = false });
         }
     }
 }

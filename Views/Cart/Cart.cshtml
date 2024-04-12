@@ -20,7 +20,7 @@
         <tbody>
             @foreach (var lineItem in Model.LineItems)
             {
-                <tr>
+                <tr id="row-@lineItem.ProductId">
                     <td>@(lineItem.Product != null ? lineItem.Product.Name : "")</td>
                     <td>@lineItem.Quantity</td>
                     <td>@(lineItem.Product != null ? lineItem.Product.Price.ToString("C") : "")</td>
@@ -42,9 +42,9 @@
                 }
             }
         }
-        <h3>Total: @total.ToString("C")</h3>
+        <h3 id="orderTotal">Total: @total.ToString("C")</h3>
     </div>
-    <a asp-controller="Cart" asp-action="Checkout" asp-route-model="@Model">Proceed to Checkout</a>
+    <a id="checkoutAction" asp-controller="Cart" asp-action="Checkout" asp-route-model="@Model">Proceed to Checkout</a>
     
 }
 else
@@ -59,14 +59,29 @@ else
             $(".remove-item").click(function () {
                 var productId = $(this).data("product-id");
                 $.post("/Cart/RemoveItem", { productId: productId }, function (data) {
-                    if (data.success) {
-                        $("#row-" + productId).remove();
-                        // Optionally, update the total displayed on the page
-                    } else {
-                        // Handle error
+                    $("#row-" + productId).remove();
+                    // Recalculate total
+                    let total = 0;
+                    $(".table tbody tr").each(function () {
+                        let price = parseFloat($(this).find("td:eq(2)").text().replace("$", ""));
+                        let quantity = parseInt($(this).find("td:eq(1)").text());
+                        total += price * quantity;
+                    });
+                    
+                    // Update total display
+                    $("#orderTotal").text("Total: $" + total.toFixed(2));
+                    
+                    // Check if cart is empty and hide "Proceed to Checkout" button
+                    if ($(".table tbody tr").length === 0) {
+                        $("#checkoutAction").remove();
                     }
                 });
             });
+            
+            // Check if cart is empty on page load and hide "Proceed to Checkout" button
+            if ($(".table tbody tr").length === 0) {
+                $("#checkoutAction").remove();
+            }
         });
     </script>
 }
