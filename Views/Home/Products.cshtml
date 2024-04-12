@@ -3,63 +3,65 @@
 @{
     ViewData["Title"] = "Products";
 }
-<style>
-        .product-box img {
+
+<div class="products-page-styles">
+    <style>
+        .products-page-styles .product-box img {
             width: 400px;
             height: 600px;
             object-fit: contain;
             border-radius: 20px 20px 0 0;
         }
 
-    .yellow-box {
-        background-color: #f4dc7a;
-        padding: 20px 30px;
-        border-radius: 20px 20px 0 0;
-        text-align: center;
-        height: 30px; /* Set fixed height */
-        overflow: hidden;
-        white-space: nowrap; /* Ensure title is only one line */
-        text-overflow: ellipsis; /* Add ellipsis if text overflows */
-        display: flex;
-        justify-content: center; /* Center horizontally */
-        align-items: center; /* Center vertically */
-        font-size: 1.2em; /* Increase font size for title */
-    }
-
-
-    .bottom-buttons {
-        padding: 10px 20px;
-        display: flex;
-        justify-content: space-between; /* Distribute buttons horizontally */
-        align-items: center; /* Center align buttons vertically */
-    }
-
-        .bottom-buttons p {
-            margin: 0;
+        .products-page-styles .yellow-box {
+            background-color: #f4dc7a;
+            padding: 20px 30px;
+            border-radius: 20px 20px 0 0;
+            text-align: center;
+            height: 30px; /* Set fixed height */
+            overflow: hidden;
+            white-space: nowrap; /* Ensure title is only one line */
+            text-overflow: ellipsis; /* Add ellipsis if text overflows */
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            font-size: 1.2em; /* Increase font size for title */
         }
 
-        .bottom-buttons button,
-        .bottom-buttons a {
-            padding: 5px 10px;
-            background-color: white;
-            border: 1px solid black;
-            border-radius: 5px;
-            text-decoration: none;
-            color: black;
+        .products-page-styles .bottom-buttons {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between; /* Distribute buttons horizontally */
+            align-items: center; /* Center align buttons vertically */
         }
-    /* New CSS for the title and filter */
-    .title-container {
-        text-align: center; /* Center align the title */
-    }
 
-        .filter-container select {
+            .products-page-styles .bottom-buttons p {
+                margin: 0;
+            }
+
+            .products-page-styles .bottom-buttons button,
+            .products-page-styles .bottom-buttons a {
+                padding: 5px 10px;
+                background-color: white;
+                border: 1px solid black;
+                border-radius: 5px;
+                text-decoration: none;
+                color: black;
+            }
+
+        /* New CSS for the title and filter */
+        .products-page-styles .title-container {
+            text-align: center; /* Center align the title */
+        }
+
+        .products-page-styles .filter-container select {
             padding: 8px;
             border: 1px solid #ccc; /* Light grey border */
             border-radius: 5px;
             margin: 0 10px;
         }
 
-        .filter-container button {
+        .products-page-styles .filter-container button {
             padding: 8px 20px;
             background-color: #f4dc7a; /* Green button color */
             border: none;
@@ -68,33 +70,32 @@
             cursor: pointer;
         }
 
-            .filter-container button:hover {
+            .products-page-styles .filter-container button:hover {
                 background-color: #f4dc7a; /* Darker green on hover */
             }
 
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            grid-gap: 30px; /* Adjust gap between items */
-            grid-column-gap: 30px; /* Increase spacing between columns */
+        /* Updated container styles */
+        .products-page-styles .container {
             margin-top: 40px;
+            margin-bottom:60px;
+            padding-bottom: 60px:
             width: 100%;
+            bottom:100px;
         }
 
-        .product-box {
-            height: 600px;
-            width: 100%; /* Adjust the width to take up the full grid column width */
-            display: flex;
-            flex-direction: column;
+        .products-page-styles .product-box {
+            width: calc(33% - 20px); /* Adjust the width to fit four items per row */
+            margin-right: 20px; /* Add right margin to create gap between items */
+            margin-bottom: 20px; /* Add bottom margin to create gap between rows */
             border-radius: 20px;
             overflow: hidden;
             background-color: white;
             box-shadow: 0 12px 20px rgba(0, 0, 0, 0.25), 0 -12px 20px rgba(0, 0, 0, 0.25);
+            float: left; /* Float items left for inline display */
         }
 
-
         /* New CSS for the filters container */
-        .filter-container {
+        .products-page-styles .filter-container {
             margin-top: 20px;
             padding: 10px;
             border-radius: 10px;
@@ -107,7 +108,22 @@
             margin-left: auto;
             margin-right: auto;
         }
-</style>
+
+        /* Navbar Styles */
+        .products-page-styles .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f4dc7a; /* Yellow background for navbar */
+            position:static; /* Fixed position */
+            bottom: 60px; /* Align to the bottom */
+            width: 100%; /* Full width */
+            text-align:center;
+            align-content:center;
+            height:60px;
+        }
+    </style>
+
 
 <div class="title-container">
     <h1 class="display-4" style="font-weight:900; color:#EDD146; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);">Products</h1>
@@ -137,7 +153,7 @@
     </form>
 </div>
 
-<div class="container">
+    <div class="container">
     @foreach (var product in Model.Products)
     {
         <div class="product-box">
@@ -150,14 +166,17 @@
                     <button type="submit">Add to Cart</button>
                 </form>
                 <a href="@Url.Action("ProductDetails", "Home", new { productId = product.Id })">View Details</a>
+                    
             </div>
         </div>
     }
+
 </div>
 
+ <div class="navbar">
 @if (Model.PaginationInfo.TotalNumPages > 1)
 {
-    <div class="pagination">
+    <div class="pagination", class="navbar">
         <ul class="pagination">
             @for (var i = 1; i <= Model.PaginationInfo.TotalNumPages; i++)
             {
@@ -168,6 +187,7 @@
         </ul>
     </div>
 }
+</div>
 
 @section scripts {
     <script>
