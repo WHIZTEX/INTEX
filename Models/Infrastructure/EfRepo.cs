@@ -110,7 +110,6 @@ public class EfRepo : IRepo
                 TotalItems = filteredProducts.Count()
             }
         };
-
         return model;
     }
 
@@ -122,13 +121,10 @@ public class EfRepo : IRepo
             // Return a new instance of Customer
             return new Customer();
         }
-        else
-        {
-            // Implement logic to retrieve product by ID
-            return _context.Customers
-                .Include(c => c.HomeAddress)
-                .FirstOrDefault(c => c.Id == customerId);
-        }
+        // Implement logic to retrieve customer by ID
+        return  _context.Customers
+            .Include(c => c.HomeAddress)
+            .First(c => c.Id == customerId);
     }
 
     public Customer GetCustomerByAspNetUserId(int aspNetUserId)
@@ -352,6 +348,24 @@ public class EfRepo : IRepo
 
     public CustomerRecommendationViewModel GenerateCustomerRecommendations(Customer customer)
     {
-        throw new NotImplementedException();
+        UserRecommendation? recommendation = _context.UserRecommendations
+            .FirstOrDefault(x => x.CustomerId == customer.Id);
+        if (recommendation is null)
+        {
+            return new CustomerRecommendationViewModel();
+        }
+        Product prod1 = _context.Products
+            .First(x => x.Id == recommendation.Recommendation1Id);
+        Product prod2 = _context.Products
+            .First(x => x.Id == recommendation.Recommendation2Id);
+        Product prod3 = _context.Products
+            .First(x => x.Id == recommendation.Recommendation3Id);
+        var model = new CustomerRecommendationViewModel
+        {
+            Recommendation1 = prod1,
+            Recommendation2 = prod2,
+            Recommendation3 = prod3
+        };
+        return model;
     }
 }

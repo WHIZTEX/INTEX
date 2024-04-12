@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using INTEX.Models.DatabaseModels;
 using INTEX.Models.Infrastructure;
 using INTEX.Models.ViewModels;
@@ -17,7 +18,10 @@ public class HomeController: Controller
     [HttpGet]
     public IActionResult Index()
     {
-        return View();
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var customer = _repo.GetCustomerById(userId);
+        CustomerRecommendationViewModel model = _repo.GenerateCustomerRecommendations(customer);
+        return View(model);
     }
     
     [HttpGet]
