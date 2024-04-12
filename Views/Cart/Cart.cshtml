@@ -4,82 +4,84 @@
     ViewData["Title"] = "Cart";
 }
 
-<h1 class="Cart">Cart</h1>
-@if (Model != null && Model.LineItems != null && Model.LineItems.Any())
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Total</th>
-                <th>Remove</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var lineItem in Model.LineItems)
-            {
-                <tr id="row-@lineItem.ProductId">
-                    <td>@(lineItem.Product != null ? lineItem.Product.Name : "")</td>
-                    <td>@lineItem.Quantity</td>
-                    <td>@(lineItem.Product != null ? lineItem.Product.Price.ToString("C") : "")</td>
-                    <td>@(lineItem.Product != null ? (lineItem.Quantity * lineItem.Product.Price).ToString("C") : "")</td>
-                    <td><button button class="remove-item" data-product-id="@lineItem.Product.Id">Remove Item</button></td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<div class="cart-page-container">
+    <div class="cart-page-content">
+        <h1 class="cart-title">Cart</h1>
+        @if (Model != null && Model.LineItems != null && Model.LineItems.Any())
+        {
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var lineItem in Model.LineItems)
+                    {
+                        <tr id="row-@lineItem.ProductId">
+                            <td>@(lineItem.Product != null ? lineItem.Product.Name : "")</td>
+                            <td>@lineItem.Quantity</td>
+                            <td>@(lineItem.Product != null ? lineItem.Product.Price.ToString("C") : "")</td>
+                            <td>@(lineItem.Product != null ? (lineItem.Quantity * lineItem.Product.Price).ToString("C") : "")</td>
+                            <td><button class="send-button" data-product-id="@lineItem.Product.Id">Remove Item</button></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
-    <div>
-        @{
-            decimal total = 0;
-            foreach (var lineItem in Model.LineItems)
-            {
-                if (lineItem.Product != null)
-                {
-                    total += lineItem.Quantity * lineItem.Product.Price;
+            <div class="cart-total">
+                @{
+                    decimal total = 0;
+                    foreach (var lineItem in Model.LineItems)
+                    {
+                        if (lineItem.Product != null)
+                        {
+                            total += lineItem.Quantity * lineItem.Product.Price;
+                        }
+                    }
                 }
-            }
+                <h3>Total: @total.ToString("C")</h3>
+            </div>
+            <a id="checkoutAction" class="send-button" asp-controller="Cart" asp-action="Checkout" asp-route-model="@Model">Proceed to Checkout</a>
         }
-        <h3 id="orderTotal">Total: @total.ToString("C")</h3>
+        else
+        {
+            <p class="cart-empty-message">Your cart is empty.</p>
+        }
     </div>
-    <a id="checkoutAction" asp-controller="Cart" asp-action="Checkout" asp-route-model="@Model">Proceed to Checkout</a>
-    
-}
-else
-{
-    <p>Your cart is empty.</p>
-}
-
+</div>
 
 @section scripts {
     <script>
         $(document).ready(function () {
-            $(".remove-item").click(function () {
+            $(".remove-item-btn").click(function () {
                 var productId = $(this).data("product-id");
                 $.post("/Cart/RemoveItem", { productId: productId }, function (data) {
                     $("#row-" + productId).remove();
                     // Recalculate total
                     let total = 0;
-                    $(".table tbody tr").each(function () {
+                    $(".cart-table tbody tr").each(function () {
                         let price = parseFloat($(this).find("td:eq(2)").text().replace("$", ""));
                         let quantity = parseInt($(this).find("td:eq(1)").text());
                         total += price * quantity;
                     });
-                    
+
                     // Update total display
-                    $("#orderTotal").text("Total: $" + total.toFixed(2));
-                    
+                    $(".cart-total h3").text("Total: $" + total.toFixed(2));
+
                     // Check if cart is empty and hide "Proceed to Checkout" button
-                    if ($(".table tbody tr").length === 0) {
+                    if ($(".cart-table tbody tr").length === 0) {
                         $("#checkoutAction").remove();
                     }
                 });
             });
-            
+
             // Check if cart is empty on page load and hide "Proceed to Checkout" button
-            if ($(".table tbody tr").length === 0) {
+            if ($(".cart-table tbody tr").length === 0) {
                 $("#checkoutAction").remove();
             }
         });

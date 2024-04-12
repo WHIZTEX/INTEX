@@ -5,211 +5,211 @@
 }
 
 <form asp-action="ConfirmOrder" asp-controller="Customer" method="post">
-    <h1>@ViewData["Title"]</h1>
+    <div class="cart-page-container">
+        <div class="cart-page-content">
+            <h1 class="cart-title">@ViewData["Title"]</h1>
 
-    <input type="hidden" asp-for="LineItems" value="@Model.LineItems" />
+            <input type="hidden" asp-for="LineItems" value="@Model.LineItems" />
 
-    <div class="row">
-        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-4">
 
-            <h2>Contact Information</h2>
+                    <h2>Contact Information</h2>
 
-            <div class="form-group">
-                <label asp-for="Order.Customer.FirstName">First Name</label>
-                <input asp-for="Order.Customer.FirstName" class="form-control" />
-                <span asp-validation-for="Order.Customer.FirstName" class="text-danger"></span>
-            </div>
+                    <div class="form-group">
+                        <label asp-for="Order.Customer.FirstName">First Name</label>
+                        <input asp-for="Order.Customer.FirstName" class="form-control" />
+                        <span asp-validation-for="Order.Customer.FirstName" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group">
-                <label asp-for="Order.Customer.LastName">Last Name</label>
-                <input asp-for="Order.Customer.LastName" class="form-control" />
-                <span asp-validation-for="Order.Customer.LastName" class="text-danger"></span>
-            </div>
+                    <div class="form-group">
+                        <label asp-for="Order.Customer.LastName">Last Name</label>
+                        <input asp-for="Order.Customer.LastName" class="form-control" />
+                        <span asp-validation-for="Order.Customer.LastName" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group">
-                <label asp-for="Order.Customer.Email">Email</label>
-                <input asp-for="Order.Customer.Email" type="email" class="form-control" />
-                <span asp-validation-for="Order.Customer.Email" class="text-danger"></span>
-            </div>
+                    <div class="form-group">
+                        <label asp-for="Order.Customer.Email">Email</label>
+                        <input asp-for="Order.Customer.Email" type="email" class="form-control" />
+                        <span asp-validation-for="Order.Customer.Email" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group">
-                <label asp-for="Order.Customer.PhoneNumber">Phone Number</label>
-                <input asp-for="Order.Customer.PhoneNumber" class="form-control" />
-                <span asp-validation-for="Order.Customer.PhoneNumber" class="text-danger"></span>
-            </div>
+                    <div class="form-group">
+                        <label asp-for="Order.Customer.PhoneNumber">Phone Number</label>
+                        <input asp-for="Order.Customer.PhoneNumber" class="form-control" />
+                        <span asp-validation-for="Order.Customer.PhoneNumber" class="text-danger"></span>
+                    </div>
 
-            <h2>Enter Shipping Address</h2>
-            <br />
-            <div class="form-group">
-                <label asp-for="Order.ShippingAddress.AddressLine1"></label>
-                <input asp-for="Order.ShippingAddress.AddressLine1" class="form-control" />
-                <span asp-validation-for="Order.ShippingAddress.AddressLine1" class="text-danger"></span>
-            </div>
+                    <h2>Enter Shipping Address</h2>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Order.ShippingAddress.AddressLine1">Address Line 1</label>
+                        <input asp-for="Order.ShippingAddress.AddressLine1" class="form-control" />
+                        <span asp-validation-for="Order.ShippingAddress.AddressLine1" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group">
-                <label asp-for="Order.ShippingAddress.AddressLine2"></label>
-                <input asp-for="Order.ShippingAddress.AddressLine2" class="form-control" />
-                <span asp-validation-for="Order.ShippingAddress.AddressLine2" class="text-danger"></span>
-            </div>
+                    <div class="form-group">
+                        <label asp-for="Order.ShippingAddress.AddressLine2">Address Line 2</label>
+                        <input asp-for="Order.ShippingAddress.AddressLine2" class="form-control" />
+                        <span asp-validation-for="Order.ShippingAddress.AddressLine2" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group">
-                <label asp-for="Order.ShippingAddress.City"></label>
-                <input asp-for="Order.ShippingAddress.City" class="form-control" />
-                <span asp-validation-for="Order.ShippingAddress.City" class="text-danger"></span>
-            </div>
+                    <div class="form-group">
+                        <label asp-for="Order.ShippingAddress.City">City</label>
+                        <input asp-for="Order.ShippingAddress.City" class="form-control" />
+                        <span asp-validation-for="Order.ShippingAddress.City" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group">
-                <label asp-for="Order.ShippingAddress.State"></label>
-                <input asp-for="Order.ShippingAddress.State" class="form-control" />
-                <span asp-validation-for="Order.ShippingAddress.State" class="text-danger"></span>
-            </div>
+                    <div class="form-group">
+                        <label asp-for="Order.ShippingAddress.State">State</label>
+                        <input asp-for="Order.ShippingAddress.State" class="form-control" />
+                        <span asp-validation-for="Order.ShippingAddress.State" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group">
-                <label asp-for="Order.ShippingAddress.Code"></label>
-                <input asp-for="Order.ShippingAddress.Code" class="form-control" />
-                <span asp-validation-for="Order.ShippingAddress.Code" class="text-danger"></span>
-            </div>
+                    <div class="form-group">
+                        <label asp-for="Order.ShippingAddress.Code">Postal Code</label>
+                        <input asp-for="Order.ShippingAddress.Code" class="form-control" />
+                        <span asp-validation-for="Order.ShippingAddress.Code" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group">
-                <label asp-for="Order.ShippingAddress.Country"></label>
-                <input asp-for="Order.ShippingAddress.Country" class="form-control" />
-                <span asp-validation-for="Order.ShippingAddress.Country" class="text-danger"></span>
-            </div>
-        </div>
+                    <div class="form-group">
+                        <label asp-for="Order.ShippingAddress.Country">Country</label>
+                        <input asp-for="Order.ShippingAddress.Country" class="form-control" />
+                        <span asp-validation-for="Order.ShippingAddress.Country" class="text-danger"></span>
+                    </div>
+                </div>
 
-        <div class="col-md-4">
+                <div class="col-md-4">
 
-            <h2>Card Information</h2>
+                    <h2>Card Information</h2>
 
+                    <div class="form-group">
+                        <label asp-for="Transaction.CardType">Card Type</label>
+                        <input asp-for="Transaction.CardType" class="form-control" />
+                        <span asp-validation-for="Transaction.CardType" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group">
-                <label asp-for="Transaction.CardType">Card Type</label>
-                <input asp-for="Transaction.CardType" class="form-control" />
-                <span asp-validation-for="Transaction.CardType" class="text-danger"></span>
-            </div>
+                    <div class="form-group">
+                        <label asp-for="Transaction.EntryMode">Entry Mode</label>
+                        <input asp-for="Transaction.EntryMode" class="form-control" />
+                        <span asp-validation-for="Transaction.EntryMode" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group">
-                <label asp-for="Transaction.EntryMode">Entry Mode</label>
-                <input asp-for="Transaction.EntryMode" class="form-control" />
-                <span asp-validation-for="Transaction.EntryMode" class="text-danger"></span>
-            </div>
+                    <div class="form-group">
+                        <label asp-for="Transaction.Bank">Bank</label>
+                        <input asp-for="Transaction.Bank" class="form-control" />
+                        <span asp-validation-for="Transaction.Bank" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group">
-                <label asp-for="Transaction.Bank">Bank</label>
-                <input asp-for="Transaction.Bank" class="form-control" />
-                <span asp-validation-for="Transaction.Bank" class="text-danger"></span>
-            </div>
+                    <h2>Enter Billing Address</h2>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Transaction.BillingAddress.AddressLine1">Address Line 1</label>
+                        <input asp-for="Transaction.BillingAddress.AddressLine1" class="form-control" />
+                        <span asp-validation-for="Transaction.BillingAddress.AddressLine1" class="text-danger"></span>
+                    </div>
 
-            
+                    <div class="form-group">
+                        <label asp-for="Transaction.BillingAddress.AddressLine2">Address Line 2</label>
+                        <input asp-for="Transaction.BillingAddress.AddressLine2" class="form-control" />
+                        <span asp-validation-for="Transaction.BillingAddress.AddressLine2" class="text-danger"></span>
+                    </div>
 
+                    <div class="form-group">
+                        <label asp-for="Transaction.BillingAddress.City">City</label>
+                        <input asp-for="Transaction.BillingAddress.City" class="form-control" />
+                        <span asp-validation-for="Transaction.BillingAddress.City" class="text-danger"></span>
+                    </div>
 
-            <h2>Enter Billing Address</h2>
-            <br />
-            <div class="form-group">
-                <label asp-for="Transaction.BillingAddress.AddressLine1"></label>
-                <input asp-for="Transaction.BillingAddress.AddressLine1" class="form-control" />
-                <span asp-validation-for="Transaction.BillingAddress.AddressLine1" class="text-danger"></span>
-            </div>
+                    <div class="form-group">
+                        <label asp-for="Transaction.BillingAddress.State">State</label>
+                        <input asp-for="Transaction.BillingAddress.State" class="form-control" />
+                        <span asp-validation-for="Transaction.BillingAddress.State" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group">
-                <label asp-for="Transaction.BillingAddress.AddressLine2"></label>
-                <input asp-for="Transaction.BillingAddress.AddressLine2" class="form-control" />
-                <span asp-validation-for="Transaction.BillingAddress.AddressLine2" class="text-danger"></span>
-            </div>
+                    <div class="form-group">
+                        <label asp-for="Transaction.BillingAddress.Code">Postal Code</label>
+                        <input asp-for="Transaction.BillingAddress.Code" class="form-control" />
+                        <span asp-validation-for="Transaction.BillingAddress.Code" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group">
-                <label asp-for="Transaction.BillingAddress.City"></label>
-                <input asp-for="Transaction.BillingAddress.City" class="form-control" />
-                <span asp-validation-for="Transaction.BillingAddress.City" class="text-danger"></span>
-            </div>
+                    <div class="form-group">
+                        <label asp-for="Transaction.BillingAddress.Country">Country</label>
+                        <input asp-for="Transaction.BillingAddress.Country" class="form-control" />
+                        <span asp-validation-for="Transaction.BillingAddress.Country" class="text-danger"></span>
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="Transaction.BillingAddress.State"></label>
-                <input asp-for="Transaction.BillingAddress.State" class="form-control" />
-                <span asp-validation-for="Transaction.BillingAddress.State" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Transaction.BillingAddress.Code"></label>
-                <input asp-for="Transaction.BillingAddress.Code" class="form-control" />
-                <span asp-validation-for="Transaction.BillingAddress.Code" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Transaction.BillingAddress.Country"></label>
-                <input asp-for="Transaction.BillingAddress.Country" class="form-control" />
-                <span asp-validation-for="Transaction.BillingAddress.Country" class="text-danger"></span>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <h2>Order Summary</h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var lineItem in Model.LineItems)
-                    {
-                        <tr>
-                            <td>@(lineItem.Product != null ? lineItem.Product.Name : "")</td>
-                            <td>@lineItem.Quantity</td>
-                            <td>@(lineItem.Product != null ? lineItem.Product.Price.ToString("C") : "")</td>
-                            <td>@(lineItem.Product != null ? (lineItem.Quantity * lineItem.Product.Price).ToString("C") : "")</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            <br />
-            <br />
-            <table class="table">
-                <tbody>
-                    <tr>
-                        @{
-                            // Calculate subtotal
-                            decimal subtotal = 0;
-                            foreach (var lineItem in Model.LineItems)
+                <div class="col-md-4">
+                    <h2>Order Summary</h2>
+                    <table class="cart-table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var lineItem in Model.LineItems)
                             {
-                                if (lineItem.Product != null)
-                                {
-                                    subtotal += lineItem.Quantity * lineItem.Product.Price;
-                                }
+                                <tr>
+                                    <td>@(lineItem.Product != null ? lineItem.Product.Name : "")</td>
+                                    <td>@lineItem.Quantity</td>
+                                    <td>@(lineItem.Product != null ? lineItem.Product.Price.ToString("C") : "")</td>
+                                    <td>@(lineItem.Product != null ? (lineItem.Quantity * lineItem.Product.Price).ToString("C") : "")</td>
+                                </tr>
                             }
+                        </tbody>
+                    </table>
+                    <br />
+                    <br />
+                    <table class="cart-table">
+                        <tbody>
+                            <tr>
+                                @{
+                                    // Calculate subtotal
+                                    decimal subtotal = 0;
+                                    foreach (var lineItem in Model.LineItems)
+                                    {
+                                        if (lineItem.Product != null)
+                                        {
+                                            subtotal += lineItem.Quantity * lineItem.Product.Price;
+                                        }
+                                    }
 
-                            // Calculate tax
-                            decimal taxRate = 0.1637m; // Tax rate as 16.37%
-                            decimal tax = subtotal * taxRate;
+                                    // Calculate tax
+                                    decimal taxRate = 0.1637m; // Tax rate as 16.37%
+                                    decimal tax = subtotal * taxRate;
 
-                            // Calculate total
-                            decimal total = subtotal + tax;
-                        }
-                        <td>Subtotal:</td>
-                        <td>@subtotal.ToString("C")</td>
-                    </tr>
-                    <tr>
-                        <td>Shipping:</td>
-                        <td>FREE</td>
-                    </tr>
-                    <tr>
-                        <td>Tax:</td>
-                        <td>@tax.ToString("C")</td>
-                    </tr>
-                    <tr>
-                        <td><b>TOTAL:</b></td>
-                        <td><b>@total.ToString("C")</b></td>
-                    </tr>
-                </tbody>
-            </table>
-            <button type="submit" class="btn btn-primary">Place Order</button>
-            <a asp-controller="Home" asp-action="Products">Continue Shopping</a>
+                                    // Calculate total
+                                    decimal total = subtotal + tax;
+                                }
+                                <td>Subtotal:</td>
+                                <td>@subtotal.ToString("C")</td>
+                            </tr>
+                            <tr>
+                                <td>Shipping:</td>
+                                <td>FREE</td>
+                            </tr>
+                            <tr>
+                                <td>Tax:</td>
+                                <td>@tax.ToString("C")</td>
+                            </tr>
+                            <tr>
+                                <td><b>TOTAL:</b></td>
+                                <td><b>@total.ToString("C")</b></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="submit" class="send-button">Place Order</button>
+                    <a href="@Url.Action("Products", "Home")" class="send-button">Continue Shopping</a>
+                </div>
+            </div>
+
+            <!-- Add any form fields or buttons here as needed -->
+
         </div>
     </div>
-
-    <!-- Add any form fields or buttons here as needed -->
-
 </form>
