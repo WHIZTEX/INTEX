@@ -50,7 +50,7 @@ namespace INTEX.Controllers
             // Apply filter for fraudulent orders if specified
             if (FraudPrediction.HasValue)
             {
-                ordersQuery = ordersQuery.Where(o => o.IsFraud == FraudPrediction.Value);
+                ordersQuery = ordersQuery.Where(o => o.FraudPrediction == FraudPrediction.Value);
             }
 
             // Paginate the orders
