@@ -103,7 +103,7 @@ public class EfRepo : IRepo
                 .Where(p => filter.SecondaryColor.Contains(p.SecondaryColor));
         }
 
-        var filteredProducts = products.ToList(); // Materialize the filtered query
+        var filteredProducts = products.ToList();
 
         var model = new ProductsListViewModel
         {
