@@ -169,7 +169,7 @@ public class EfRepo : IRepo
         // Retrieve line items from cart
         var cart = _httpContextAccessor.HttpContext.Session.Get<List<LineItem>>("Cart") ?? new List<LineItem>();
 
-        // Define all the object variables that will need to go in the new order item
+        // ==== Define all the object variables that will need to go in the new order item ====
 
         // Update the customer object
         string customerId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -231,7 +231,7 @@ public class EfRepo : IRepo
 
         };
 
-        // Create the new order item
+        // ==== Create the new order item based on the items that were previously defined =====
         Order order = new Order
         {
             CustomerId = customerId,
